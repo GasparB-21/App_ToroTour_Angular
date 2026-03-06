@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import * as Papa from 'papaparse';
 import { map, Observable } from 'rxjs';
 import { Monumento } from '../../../shared/models/monumento';
+
+declare var Papa: any;
 
 @Injectable({
   providedIn: 'root'
