@@ -1,0 +1,84 @@
+/* ===== */
+/* Cards */
+/* ===== */
+.info-card{
+    border: var(--border-thick);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--white-color);
+  }
+  .info-card__header{
+    background: var(--ui-tabbbar-active);
+    color: var(--ui-black);
+    padding: 12px 10px;
+    text-align: center;
+    font-weight: 900;
+    border-bottom: var(--border-thick);
+    font-size: 1.1rem;
+  }
+  
+  /* ===== "Caja" grande ===== */
+  .info-card--big .info-card__body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 6px; 
+  }
+  .info-card--big .illustration-big{
+    width: 100%;
+    max-width: 240px;
+    max-height: 220px;
+    height: auto;
+    object-fit: contain; 
+    display: block;
+  }
+  .info-card__value{
+    margin: 0;
+    text-align: center;
+    font-weight: 500;
+    font-size: 1.15rem;
+  }
+  
+  /* ===== "Cajas" pequeñas ===== */
+  .info-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .info-card,
+  .info-grid{
+    width: var(--monument-card-w);
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+  }
+  
+  .info-grid .info-card{
+    max-width: 150px;
+    width: 100%;
+    aspect-ratio: 1/1;
+  }
+  .info-grid .info-card__header{
+    font-size: 0.8rem;
+  }
+  .info-grid .info-card__value{
+    font-size: 0.9rem;  
+  }
+  .info-card__body--small{
+    padding: 12px 10px;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 12px;
+    gap: 10px;
+  }
+  
+  /* ====Iconos "cajas" pequeñas==== */
+  .img-medium{
+    width: 62px;
+    height: 62px;
+    object-fit: contain;
+    max-width: 100%;
+  }

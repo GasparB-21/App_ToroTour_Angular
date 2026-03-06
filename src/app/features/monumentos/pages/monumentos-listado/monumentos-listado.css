@@ -1,0 +1,132 @@
+/* ============= */
+/* Pantalla Mapa */
+/* ============= */
+/* Mapa a pantalla completa entre toolbar y tabbar */
+#map{
+    position: fixed;
+    inset: var(--toolbar-h) 0 var(--tabbar-h) 0;
+  }
+  
+  /* ======== */
+  /* API Mapa */
+  /* ======== */
+  /* Evita que los controles de Leaflet queden ocultos por toolbar/tabbar */
+  .leaflet-top    { top:    calc(var(--toolbar-h) + 8px); }
+  .leaflet-bottom { bottom: calc(var(--tabbar-h) + 8px); }
+  
+  /* =================== */
+  /* Botón accesibilidad */
+  /* =================== */
+  .map-fab{
+    position: fixed;
+    right: 25px;
+    bottom: calc(var(--tabbar-h) + 85px);
+    z-index: 1000;
+    transform: translateX(18px);
+  }
+  
+  /* ===== Botón activar botones accesibilidad ===== */
+  /* Base común a todos los botones circulares */
+  .map-fab button{
+    border-radius: 50%;
+    border: 2px solid var(--ui-black);
+    background: var(--white-color);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    font-size: 20px; 
+    font-weight: 700;
+  }
+  .map-fab__main{
+    inline-size: 56px; 
+    block-size: 56px;
+    box-shadow: 0 2px 8px var(--ui-black);
+  }
+  
+  /* ===== Botón accesibilidad ===== */
+  .map-fab__btn{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    inline-size: 52px; 
+    block-size: 52px;
+    box-shadow: 0 2px 6px var(--ui-black);
+    transition: transform .18s ease;
+  }
+  .map-fab--open .map-fab__actions{
+    transform: scale(0.9);
+    transform-origin: bottom right;
+  }
+  .map-fab--open .map-fab__actions .map-fab__btn{
+    transform: translate(var(--tx,0), var(--ty,0));
+  }
+  
+  /* ===== Botón centrar ubicación usuario ===== */
+  .map-fab__locate{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, calc(-50% + 72px));
+    inline-size: 52px;
+    block-size: 52px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.18);
+    transition: opacity .18s ease;
+  }
+  .map-fab__locate::before{
+    content:"";
+    width: 20px;
+    height: 20px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23007aff' d='m3 10.5 17-6.5-6.5 17-2-7z'/%3E%3C/svg%3E") center/contain no-repeat;
+  }
+  .map-fab__locate:disabled{
+    opacity: .4;
+    cursor: not-allowed;
+  }
+  /*Ocultamos el notón si se despliegan los botones de accesibilidad*/
+  .map-fab--open .map-fab__locate{
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  /* ===================== */
+  /*     Botón y Card      */
+  /* ===================== */
+  .cta-wrap--map{
+    position: fixed;
+    left: 50%;
+    bottom: calc(var(--tabbar-h) + 12px);
+    transform: translateX(-50%);
+    z-index: 1000;
+  }
+  
+  /* En este caso para que no haya conflicto con los botones lo posicionamos debajo del toolbar */
+  .card--map{
+    position: fixed;
+    top: calc(var(--toolbar-h) + 12px);
+    left: 12px;
+    right: 12px;
+    z-index: 900;
+  }
+  
+  .btn-cta:hover{ 
+    filter: brightness(1.05); 
+  }
+  
+  /* =========================== */
+  /* Pantalla listado monumentos */
+  /* =========================== */
+  #cta-wrap-monumentos{
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 8px);
+    width: min(640px, calc(100% - 24px));
+    z-index:1100;
+  }
+  
+  #btn-pill-monumentos{
+    border-color: var(--white-color);
+    text-decoration: none;
+  }
+  
+  
