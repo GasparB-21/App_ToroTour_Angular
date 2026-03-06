@@ -1,0 +1,82 @@
+/* ======= ToolBar ======= */
+.toolbar {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 15px;
+  gap: 10px;
+  position: fixed;
+  inset: 0 0 auto 0; /* Pegado arriba: top 0, left 0, right 0 */
+  height: 72px;
+  z-index: 1000;
+}
+
+.searchbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #FFFFFF; /* Blanco */
+  border: 2px solid #111111; /* Negro */
+  border-radius: 9999px; /* Forma de píldora */
+  padding-inline: 14px;
+  height: 44px;
+  min-width: min(530px, 80vw);
+}
+
+.searchbar input[type="search"] {
+  flex: 1;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-size: 16px;
+  color: #111111; /* Color de texto negro para que se lea bien */
+}
+
+/* Color del placeholder */
+.searchbar input::placeholder {
+  color: #a0a0a0;
+}
+
+.sb-img {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.searchbar:focus-within {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.7);
+}
+
+.btn-filtros {
+  display: grid; 
+  place-items: center;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 2px solid #111111;
+  cursor: pointer;
+  padding: 6px;
+  inline-size: 48px;
+  block-size: 48px;
+  aspect-ratio: 1 / 1;
+}
+
+.btn-filtros img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* SR-ONLY: Para accesibilidad sin que se vea */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

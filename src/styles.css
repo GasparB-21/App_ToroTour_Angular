@@ -1,0 +1,8 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'leaflet/dist/leaflet.css';
+
+body {
+    background-color: #75A9F6; /* El azul de fondo que tenías */
+    margin: 0;
+    padding: 0;
+}
