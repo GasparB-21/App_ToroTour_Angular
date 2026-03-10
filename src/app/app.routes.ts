@@ -1,10 +1,14 @@
 import { Routes } from '@angular/router';
+import { monumentosRoutes } from './features/monumentos/monumentos-routes';
 
 export const routes: Routes = [
     {
         path: 'monumentos',
-        loadChildren: () =>
+        children: monumentosRoutes
+
+        /*loadChildren: () =>
             import('./features/monumentos/monumentos-routes').then(m => m.monumentosRoutes)
+        */
     },
     {
         path: 'eventos',

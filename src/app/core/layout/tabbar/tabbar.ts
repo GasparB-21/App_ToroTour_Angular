@@ -8,5 +8,4 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './tabbar.css',
 })
 export class Tabbar {
-
 }

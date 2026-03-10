@@ -1,14 +1,13 @@
 /* ====== TabBar ====== */
 .tabbar {
-  background-color: #FFFFFF; /* Blanco */
-  color: #111111; /* Negro */
+  background-color: var( --ui-white);
+  color: var(--ui-black);
   font-size: 14px;
   position: fixed;
   inset: auto 0 0 0;
-  /* Altura fija de 72px como tenías en tus variables */
   height: 72px; 
   z-index: 1000;
-  border-top: 1px solid #111111;
+  border-top: 1px solid var(--ui-black);
 }
 
 .tabbar-icon {
@@ -43,16 +42,15 @@
 }
 
 .tabbar ul li a span {
-  color: #111111;
+  color: var(--ui-black);
 }
 
 /* ================================================= */
 /* ESTADO ACTIVO (Cuando Angular pone la clase .active) */
 /* ================================================= */
-
 /* Color azul para el texto cuando la pestaña está activa */
 .tabbar a.active span {
-  color: #0A84FF; /* Tu color azul activo */
+  color: var(--tabbar-active);
   font-weight: 800;
 }
 

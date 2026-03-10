@@ -1,8 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'leaflet/dist/leaflet.css';
 
+/* ========= */
+/* Variables */
+/* ========= */
+:root{
+  /* ===== Colores ===== */
+  --background-color:#75A9F6;
+  --tabbbar-active: #0A84FF;
+  --progress-color:#2BA74C;
+  --ui-white:#FFFFFF;
+  --ui-black: #111;
+  --ui-grey: #f9f9f9;
+  --ui-darker-grey: #e7e7e7;
+}
+
 body {
-    background-color: #75A9F6; /* El azul de fondo que tenías */
+    background-color: var(--background-color);
     margin: 0;
     padding: 0;
 }

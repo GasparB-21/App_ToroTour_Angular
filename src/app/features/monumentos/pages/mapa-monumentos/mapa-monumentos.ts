@@ -1,14 +1,14 @@
 import { Component, OnInit, AfterViewInit, signal, inject } from '@angular/core';
 import * as L from 'leaflet';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { CardPreview } from "../../../../core/layout/card-preview/card-preview";
+import { RouterLink } from '@angular/router';
+import { CardPreview } from "../../../../shared/layout/card-preview/card-preview";
 import { MonumentoService } from '../../services/monumento-service';
-import { Monumento } from '../../../../shared/models/monumento';
+import { Monumento } from '../../models/monumento';
 
 @Component({
   selector: 'app-mapa-monumentos',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, CardPreview],
+  imports: [RouterLink, CardPreview],
   templateUrl: './mapa-monumentos.html',
   styleUrl: './mapa-monumentos.css',
 })

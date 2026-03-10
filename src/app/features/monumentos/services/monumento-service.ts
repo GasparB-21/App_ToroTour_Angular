@@ -1,22 +1,26 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { Monumento } from '../../../shared/models/monumento';
+import { Monumento } from '../models/monumento';
 
 declare var Papa: any;
 
 @Injectable({
   providedIn: 'root'
 })
-export class MonumentoService {
-  // Ruta al archivo que descargaste de la JCyL
-  private readonly csv = '/csv/relacion-monumentos.csv';
 
+export class MonumentoService {
+  // Ruta al archivo con los datos de la JCyL
+  private readonly csv = '/csv/relacion-monumentos.csv';
   constructor(private http: HttpClient) {}
 
+  //Esta función devolvera un Observable q emitira un array de monumentos
   getMonumentos(): Observable<Monumento[]> {
+    //Leemos el CSV y especificamos q el formato es "text"
     return this.http.get(this.csv, { responseType: 'text' }).pipe(
+      //Transformamos los elementos del observable al formato q especifiquemos
       map(csvData => {
+        //Especificamos q se haga la conversión a objetos JavaScript mediante Papa parse
         const results = Papa.parse(csvData, {
           header: true,
           skipEmptyLines: true

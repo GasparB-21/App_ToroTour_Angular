@@ -16,7 +16,7 @@ export const monumentosRoutes: Routes = [
                 component: MonumentosListado
             },
             {
-                path: 'detalle',
+                path: 'detalles/:id',
                 component: DetalleMonumento
             },
             {
