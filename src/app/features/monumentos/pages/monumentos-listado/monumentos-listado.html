@@ -1,19 +1,19 @@
+<app-toolbar></app-toolbar>
 
-        <main class="content--listado">
-            <h1>Listado de monumentos</h1>
+<section class="monumentos-page">
+    <h1>Listado de Monumentos</h1>
 
-            <div class="lista-elementos-scroll">
-                <ul class="lista-elementos" id="lista" aria-label="Listado de monumentos">
-                    <!-- Cada <li> contendrá una card con los datos del evento -->
-                </ul>
-            </div>
+    <!--Como listadoMonumentos es un observable no podemos iterar directamente sobre él-->
+    <!--Solución: usamos async para suscribirnos al Observable y poder extraer el array. Usamos ?? para establacer como default un array vacío-->
+    @for(monumento of (listadoMonumentos | async) ?? []; track monumento.id)
+    {
+        <app-monument-card [monumento] = "monumento"></app-monument-card>
+    }
+    @empty
+    {
+        <p>No hay monumentos para mostrar.</p>
+    }
 
-            <div class="cta-wrap" id="cta-wrap-monumentos">
-                <a class="btn-pill" id="btn-pill-monumentos" 
-                    routerLink="/monumentos/mapa" routerLinkActive="active"
-                    aria-label="Ir a la vista de calendario">
-                    Mostrar mapa
-                </a>
-            </div>
-        </main>
+    <button class="btn-pill">Mostrar Mapa</button>
+</section>
 

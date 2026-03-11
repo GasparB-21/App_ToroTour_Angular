@@ -1,84 +1,257 @@
+/* ================= */
+/* Pantakka Detalles */
+/* ================= */
+.screen--monumento {
+  /*Resolucion pantalla*/
+  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.detail-header {
+  /*Posición*/
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  /*Tamaño y espaciado*/
+  height: 88px;
+  padding: 16px 56px 16px 20px;
+  box-sizing: border-box;
+  /*Color*/
+  background: var(--tabbar-active);
+}
+
+.detail-header h1 {
+  text-align: center;
+  font-size: 1.7rem;
+  left: 40px;
+}
+
+.btn-close {
+  /*Posición*/
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /*Tamaño y forma*/
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  /*Color*/
+  color: var(--ui-white);
+  background: var(--ui-black);
+}
+.btn-close svg {
+  width: 15px;
+  height: 15px;
+}
+
+.detail-content {
+  /*Posicion*/
+  position: fixed;
+  top: 88px;
+  bottom: var(--tabbar-height);
+  overflow-y: auto;
+  overscroll-behavior: none;
+  /*Disposicion*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 0 0.3rem 0 0.3rem;
+  /*Apariencia*/
+  background-color: var(--ui-white);
+}
+
+.location-bar {
+  /*Posición*/
+  display: flex;
+  margin-top: 1.5rem;
+  margin-bottom: 0.7rem;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.location-info {
+  /*Disposicion*/
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+}
+
+.location-strong,
+.location-soft {
+  /*Formato texto*/
+  text-overflow: ellipsis;
+  font-size: 1rem;
+}
+.location-strong {
+  font-weight: 800;
+}
+
+.btn-directions {
+  /*Disposicion*/
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  /*Apariencia*/
+  border: none;
+  background: transparent;
+}
+
+.location-icon {
+  /*Tamaño*/
+  width: 2rem;
+  height: 2rem;
+  /*Apariencia*/
+  color: var(--ui-black);
+  background: transparent;
+}
+
+.btn-directions img{
+  width: 2rem;
+  height: 2rem;
+  filter: brightness(0) saturate(100%) invert(40%) sepia(95%) saturate(1850%) hue-rotate(199deg) brightness(96%) contrast(96%);
+}
+
 /* ===== */
 /* Cards */
 /* ===== */
 .info-card{
-    border: var(--border-thick);
-    border-radius: var(--radius);
-    overflow: hidden;
-    background: var(--white-color);
-  }
-  .info-card__header{
-    background: var(--ui-tabbbar-active);
-    color: var(--ui-black);
-    padding: 12px 10px;
-    text-align: center;
-    font-weight: 900;
-    border-bottom: var(--border-thick);
-    font-size: 1.1rem;
-  }
+  /*Disposición*/
+  display: flex;
+  flex-direction: column;
+  /*Apariencia*/
+  border: 0.5px solid var(--ui-black);
+  box-shadow: 0 0 0 2px var(--ui-black);
+  border-radius: 18px;
+  margin-bottom: 0.7rem;
+}
+
+.info-card--big,
+.info-grid,
+.description-section {
+  width: min(100%, 320px);
+}
+.info-card__header{
+  /*Posicion*/
+  padding: 12px 10px;
+  text-align: center;
+  /*Apariencia*/
+  background: var(--tabbar-active);
+  color: var(--ui-black);
+  font-weight: 900;
+  font-size: 1.1rem;
+  border-radius: 18px 18px 0 0;
+}
   
-  /* ===== "Caja" grande ===== */
-  .info-card--big .info-card__body{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-bottom: 6px; 
-  }
-  .info-card--big .illustration-big{
-    width: 100%;
-    max-width: 240px;
-    max-height: 220px;
-    height: auto;
-    object-fit: contain; 
-    display: block;
-  }
-  .info-card__value{
-    margin: 0;
-    text-align: center;
-    font-weight: 500;
-    font-size: 1.15rem;
-  }
+/* ===== "Caja" grande ===== */
+.info-card--big .info-card__body{
+  /*Disposicion*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px 12px 16px;
+  box-sizing: border-box;
+}
+.info-card--big .illustration-big{
+  /*Tamaño*/
+  width: 100%;
+  max-width: 220px;
+  max-height: 200px;
+  object-fit: contain; 
+  /*Posicion*/
+  display: block;
+  margin-top: 0;
+}
+.info-card__value{
+  /*Apariencia*/
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
   
-  /* ===== "Cajas" pequeñas ===== */
-  .info-grid{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-  }
-  .info-card,
-  .info-grid{
-    width: var(--monument-card-w);
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 100%;
-  }
+/* ===== "Cajas" pequeñas ===== */
+.info-grid{
+  /*Disposición*/
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5%;
+}
   
-  .info-grid .info-card{
-    max-width: 150px;
-    width: 100%;
-    aspect-ratio: 1/1;
-  }
-  .info-grid .info-card__header{
-    font-size: 0.8rem;
-  }
-  .info-grid .info-card__value{
-    font-size: 0.9rem;  
-  }
-  .info-card__body--small{
-    padding: 12px 10px;
-    min-height: 150px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding-top: 12px;
-    gap: 10px;
-  }
+.info-grid .info-card{
+  /*Tamaño*/
+  max-width: 150px;
+  width: 100%;
+  aspect-ratio: 1/1;
+}
+.info-grid .info-card__header{
+  /*Apariencia*/
+  font-size: 0.9rem;
+  font-weight: bolder;
+}
+.info-grid .info-card__value{
+  /*Apariencia*/
+  font-size: 0.8rem;
+  font-weight: 600; 
+}
+.info-card__body--small{
+  /*Disposición*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 10px;
+  gap: 10px;
+}
   
-  /* ====Iconos "cajas" pequeñas==== */
-  .img-medium{
-    width: 62px;
-    height: 62px;
-    object-fit: contain;
-    max-width: 100%;
-  }
+/* ====Iconos "cajas" pequeñas==== */
+.img-medium{
+  /*Tamaño*/
+  width: 50%;
+  height: 50%;
+  object-fit: contain;
+  margin-top: 5%;
+}
+
+.description-section {
+  /*Disposición*/
+  margin: 0;
+  padding-bottom: 16px;
+}
+
+#monumento-descripcion {
+  margin: 0;
+  line-height: 1.45;
+  font-size: 0.98rem;
+  text-align: left;
+}
+
+.monument-card__icon-button--favorite {
+  /*Disposición*/
+  position: fixed;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  right: 20px;
+  bottom: calc(var(--tabbar-height) + 20px);
+  z-index: 120;
+  /*Tamaño*/
+  width: 7vh;
+  height: 7vh;
+  /*Apariencia*/
+  background: var(--ui-white);
+  color: var(--ui-black);
+  border-radius: 50%;
+  border: 2px solid var(--ui-black);
+  font-size: 1.4rem;
+  line-height: 1;
+}

@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Detalle del Monumento</title>
-
-    <link rel="stylesheet" href="./detalle-monumento.css" />
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Detalle del Monumento</title>
     </head>
 
     <body class="screen screen--monumento">
-
         <!-- Header -->
         <header class="detail-header">
-            <h1 id="monumento-titulo">Catedrales de Salamanca</h1>
+            <h1> {{monumento()?.nombre}} </h1>
 
+            <!--REVISAR-->
             <a href="javascript:history.back()" class="btn-close" aria-label="Cerrar y volver">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
-                <path d="M18 6L6 18M6 6l12 12"></path>
-            </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
+                    <path d="M18 6L6 18M6 6l12 12"></path>
+                </svg>
             </a>
         </header>
 
@@ -26,61 +24,71 @@
             <!-- Ubicación -->
             <section class="location-bar" aria-label="Ubicación y direcciones">
                 <div class="location-info">
-                    <img src="../../resources/shared/detalles/pin.png" alt="" class="icon-pin" aria-hidden="true">
-                    <span class="location-strong" id="monumento-ciudad">Salamanca</span>
+                    <svg viewBox="0 0 24 24" class="location-icon" aria-hidden="true">
+                        <path
+                            d="M12 21c-3.5-4-6-7.2-6-11a6 6 0 1 1 12 0c0 3.8-2.5 7-6 11Z"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                        <circle cx="12" cy="10" r="2" fill="currentColor" />
+                    </svg>
+                    <span class="location-strong" id="monumento-ciudad"> {{monumento()?.localidad}} </span>
                     <span class="location-dot">•</span>
-                    <span class="location-soft" id="monumento-provincia">Salamanca</span>
+                    <span class="location-soft" id="monumento-provincia"> {{monumento()?.provincia}} </span>
                 </div>
 
                 <button class="btn-directions" type="button" aria-label="Abrir direcciones">
-                    <img src="../../resources/shared/detalles/direction.png" class="img-dir" alt="" aria-hidden="true">
+                    <img src="icons/detalles/direction.png">
                     <span>Directions</span>
                 </button>
             </section>
 
             <!-- Card grande: Período histórico -->
             <section class="info-card info-card--big" aria-label="Período histórico">
-                <header class="info-card__header">Período histórico</header>
+                <header class="info-card__header"> Período Histórico </header>
 
                 <div class="info-card__body">
                     <img
-                    src="../../resources/monumentos/periodo/toro_medieval.png"
+                    src="images/monumentos/periodo/toro_moderno.png"
                     alt="Ilustración del período histórico"
                     class="illustration-big"
                     id="monumento-periodo-img"
                     />
 
-                    <p class="info-card__value" id="monumento-periodo">Edad media</p>
+                    <p class="info-card__value" id="monumento-periodo"> {{monumento()?.periodoHistorico}} </p>
                 </div>
             </section>
 
             <!-- 2 cards pequeñas -->
             <section class="info-grid" aria-label="Información del monumento">
                 <article class="info-card" aria-label="Tipo de construcción">
-                    <header class="info-card__header">Tipo de construcción</header>
+                    <header class="info-card__header"><b>Tipo de construcción</b></header>
                     <div class="info-card__body info-card__body--small">
                         <img
-                            src="../../resources/monumentos/tipo/church.png"
+                            src="images/monumentos/tipo/church.png"
                             alt=""
                             aria-hidden="true"
                             class="img-medium"
                             id="monumento-tipo-icon"
                         />
-                        <p class="info-card__value" id="monumento-tipo">Cathedral</p>
+                        <p class="info-card__value" id="monumento-tipo"> {{monumento()?.tipoMonumento}} </p>
                     </div>
                 </article>
 
                 <article class="info-card" aria-label="Estilo de construcción">
-                    <header class="info-card__header">Estilo construcción</header>
+                    <header class="info-card__header"><b>Estilo construcción</b></header>
                     <div class="info-card__body info-card__body--small">
                         <img
-                            src="../../resources/monumentos/estilo/cross.png"
+                            src="images/monumentos/estilo/cross.png"
                             alt=""
                             aria-hidden="true"
                             class="img-medium"
                             id="monumento-estilo-icon"
                         />
-                        <p class="info-card__value" id="monumento-estilo">Arquitectura religiosa</p>
+                        <p class="info-card__value" id="monumento-estilo"> {{monumento()?.clasificacion}} </p>
                     </div>
                 </article>
             </section>
@@ -88,25 +96,30 @@
             <!-- Descripción -->
             <section class="description-section" aria-label="Descripción del monumento">
                 <p id="monumento-descripcion">
-                    Salamanca cuenta con dos catedrales, ubicadas una junto a la otra. La Nueva es de estilo gótico y la Vieja permite disfrutar de un bello monumento románico...
-                    Salamanca cuenta con dos catedrales, ubicadas una junto a la otra. La Nueva es de estilo gótico y la Vieja permite disfrutar de un bello monumento románico...
+                    {{monumento()?.descripcion}}   
                 </p>
             </section>
 
             <!-- Botón Favoritos -->
-            <button class="fab-fav" id="btn-fav-detail" aria-label="Añadir a favoritos" type="button">
+            <!--button class="fab-fav" id="btn-fav-detail" aria-label="Añadir a favoritos" type="button">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
                     <path d="M12 21s-7.5-4.6-9.3-8.9C1.7 8.6 3.8 6 6.7 6c1.8 0 3 .9 3.6 2.1C11.3 6.9 12.5 6 14.3 6c2.9 0 5 2.6 3.9 6.1C19.5 16.4 12 21 12 21z"></path>
+                </svg>
+            </button-->
+             <button class="monument-card__icon-button monument-card__icon-button--favorite" type="button" aria-label="Anadir a favoritos">
+                <svg 
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="30"
+                    height="30"
+                    fill="currentColor"
+                    aria-hidden="true">
+
+                    <path d="M12 21s-6.716-4.39-9.192-7.086C1.124 12.29 1 10.964 1 10a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 .964-.124 2.29-1.808 3.914C18.716 16.61 12 21 12 21z"/>
+
                 </svg>
             </button>
 
         </main>
-
-        <!-- Tabbar -->
-        <div data-include="../../shared/partials/tabbar.html"></div>
-        <script type="module" src="../../shared/js/tabbar.js"></script>
-
-        <script type="module" src="../js/detalleMonumento.js"></script>
-
     </body>
 </html>

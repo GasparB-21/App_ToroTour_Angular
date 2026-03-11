@@ -1,14 +1,16 @@
 import { Component, OnInit, AfterViewInit, signal, inject } from '@angular/core';
-import * as L from 'leaflet';
 import { RouterLink } from '@angular/router';
+
+import * as L from 'leaflet';
 import { CardPreview } from "../../../../shared/layout/card-preview/card-preview";
 import { MonumentoService } from '../../services/monumento-service';
 import { Monumento } from '../../models/monumento';
+import { Toolbar } from '../../../../shared/layout/toolbar/toolbar';
 
 @Component({
   selector: 'app-mapa-monumentos',
   standalone: true,
-  imports: [RouterLink, CardPreview],
+  imports: [RouterLink, CardPreview, Toolbar],
   templateUrl: './mapa-monumentos.html',
   styleUrl: './mapa-monumentos.css',
 })
@@ -56,7 +58,7 @@ export class MapaMonumentos implements OnInit, AfterViewInit {
     // Configuramos el icono personalizado "pin.png"
     // Asegúrate de que pin.png esté en public/icons/ o ajusta la ruta
     const customIcon = L.icon({
-      iconUrl: 'icons/pin.png', 
+      iconUrl: 'icons/mapa/pin.png', 
       iconSize: [32, 32],
       iconAnchor: [16, 32],
       popupAnchor: [0, -32]

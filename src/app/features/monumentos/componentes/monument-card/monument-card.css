@@ -1,0 +1,92 @@
+/*Formato de la lista*/
+:host {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.monument-card {
+  /*Posicion*/
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr) auto;
+  align-items: center;
+  /*Tamaño y espaciado*/
+  min-height: 120px;
+  gap: 12px;
+  padding: 12px;
+  box-sizing: border-box;
+  /*Color, borde y forma*/
+  background-color: var(--ui-white);
+  border: 2px solid var(--ui-black);
+  border-radius: 20px;
+  box-shadow: 0 6px 14px rgba(17, 17, 17, 0.12);
+}
+
+.monument-card__image {
+  /*Tamaño y forma*/
+  inline-size: 72px;
+  block-size: 72px;
+  border-radius: 16px;
+  /*Color y borde*/
+  background: linear-gradient(135deg, var(--ui-darker-grey), var(--ui-grey));
+  border: 1px solid rgba(17, 17, 17, 0.12);
+}
+
+.monument-card__content {
+  /*Posición */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /*Tamaño y espaciado*/
+  min-width: 0;
+  gap: 4px;
+}
+
+.monument-card__title {
+  margin: 0;
+  /*Formato texto*/
+  color: var(--ui-black);
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.monument-card__meta {
+  margin: 0;
+  /*Opciones de texto*/
+  color: var(--ui-darker-grey);
+  font-size: 0.88rem;
+  line-height: 1.2;
+}
+
+.monument-card__actions {
+  /*Posición*/
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.monument-card__icon-button {
+  /*Posición*/
+  block-size: 40px;
+  aspect-ratio: 1/1;
+  display: grid;
+  place-items: center;
+  /*Espaciado*/
+  padding: 0;
+  /*Color y borde*/
+  color: var(--ui-black);
+  background-color: var(--ui-white);
+  border: 2px solid var(--ui-black);
+  /*Estilo*/
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.monument-card__icon-button--favorite {
+  border-radius: 50%;
+}
+
+.monument-card__icon-button--detail {
+  border-radius: 10px;
+}

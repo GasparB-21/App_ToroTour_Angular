@@ -1,0 +1,18 @@
+<article class="monument-card">
+  <div class="monument-card__image" aria-hidden="true"></div>
+
+  <div class="monument-card__content">
+    <h3 class="monument-card__title">{{ monumento().nombre }}</h3>
+    <p class="monument-card__meta"><u>Tipo:</u> {{ monumento().tipoMonumento }}</p>
+    <p class="monument-card__meta"><u>Localidad:</u> {{ monumento().localidad }}</p>
+  </div>
+
+  <div class="monument-card__actions">
+    <button class="monument-card__icon-button monument-card__icon-button--favorite" type="button" aria-label="Anadir a favoritos">
+      ♥
+    </button>
+    <button class="monument-card__icon-button monument-card__icon-button--detail" type="button" aria-label="Ver detalle del monumento">
+      &gt;
+    </button>
+  </div>
+</article>

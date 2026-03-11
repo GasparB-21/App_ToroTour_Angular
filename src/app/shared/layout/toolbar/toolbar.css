@@ -1,79 +1,110 @@
 /* ======= ToolBar ======= */
 .toolbar {
+  /*Fijamos el elemento en la vista*/
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  /*Ajustamos superposicion para asegurarnos q queda por encima resto elementos*/
+  z-index: 1000;
+  /*Ajustamos su altura*/
+  height: var(--toolbar-height);
+  /*Alineamos los elementos hijos*/
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding: 15px;
-  gap: 10px;
-  position: fixed;
-  inset: 0 0 auto 0; /* Pegado arriba: top 0, left 0, right 0 */
-  height: 72px;
-  z-index: 1000;
+  align-items: center;
+  /*Ajustamos espaciado en los margenes y entre elementos*/
+  padding: 0 10px;
+  gap: 15px;
+  background-color: var(--background-color);
+  /*Calculamos tamano con margen y padding*/
+  box-sizing: border-box;
 }
 
 .searchbar {
+  /*Alinemos y espaciamos los elementos hijos*/
   display: flex;
   align-items: center;
   gap: 10px;
-  background: #FFFFFF; /* Blanco */
-  border: 2px solid #111111; /* Negro */
+  flex: 1;
+  /*Definimos paleta de colores, forma, tamaño y espaciado*/
+  background: var(--ui-white); 
+  border: 2px solid var(--ui-black);
   border-radius: 9999px; /* Forma de píldora */
-  padding-inline: 14px;
-  height: 44px;
+  height: 45px;
   min-width: min(530px, 80vw);
+  padding-inline: 14px;
+  box-sizing: border-box;
 }
 
 .searchbar input[type="search"] {
+  /*Definimos posicion*/
   flex: 1;
+  /*Definimos color, borde, opciones texto */
+  background: transparent;
   border: 0;
   outline: none;
-  background: transparent;
   font-size: 16px;
-  color: #111111; /* Color de texto negro para que se lea bien */
+  color: var(--ui-black); /* Color de texto negro para que se lea bien */
+  min-width: 0;
 }
 
-/* Color del placeholder */
 .searchbar input::placeholder {
-  color: #a0a0a0;
+  /*Color del placeholder*/
+  color: var(--ui-black);
 }
 
 .sb-img {
+  /*Tamaño y posicion del "icono"*/
   width: 20px;
   height: 20px;
   margin-right: 5px;
 }
 
+/*
 .searchbar:focus-within {
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.7);
+  /*Q se dibuje un contorno recibir foco/
+  box-shadow: 0 0 0 3px var(--ui-white);
 }
+*/
+
 
 .btn-filtros {
+  /*Poscicion*/
   display: grid; 
   place-items: center;
+  /*Color, borde, forma, tamaño y espaciado */
+  background: var(--ui-white);
+  border: 2px solid var(--ui-black);
   border-radius: 50%;
-  background: #FFFFFF;
-  border: 2px solid #111111;
-  cursor: pointer;
-  padding: 6px;
+  aspect-ratio: 1 / 1;
   inline-size: 48px;
   block-size: 48px;
-  aspect-ratio: 1 / 1;
+  padding: 6px;
+  /*Cambiar forma cursos (No tiene mucho sentido en app móvil)/
+  cursor: pointer;
+  */
 }
 
 .btn-filtros img {
+  /*Posicion*/
   display: block;
+  /*Tamaño*/
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  /*Omitimos interacciones con el elemento*/
   pointer-events: none;
 }
 
 /* SR-ONLY: Para accesibilidad sin que se vea */
 .sr-only {
+  /*Posicion, tamaño y espaciado*/
   position: absolute;
   width: 1px;
   height: 1px;
   padding: 0;
+  /*Patrón para ahcer q el elemento sea invisible para el usuario pero disponible para el lector de pantalla*/
   margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
