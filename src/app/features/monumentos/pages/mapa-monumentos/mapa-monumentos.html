@@ -11,7 +11,7 @@
 
             <button class="map-button-controls" (click)="toggleFab()" type="button">⛶</button>
 
-            <button class="map-button-location" (click)="executeAction('locate')" [disabled]="!userCoords">
+            <button class="map-button-location" (click)="executeAction('locate')" [disabled]="!userCoords()">
                     <img src="icons/mapa/flecha-ubicacion.png" alt="" aria-hidden="true">
             </button>
 
@@ -28,11 +28,11 @@
         </div>
     </section>   
 
-    
-    
-
-    <app-card-preview 
-        [titulo]="selectedPoi().name" 
-        [tipo]="selectedPoi().type">
-    </app-card-preview>
+    @if (selectedMonumento()) {
+        <app-card-preview 
+            [titulo]="selectedMonumento()?.nombre ?? ''" 
+            [tipo]="selectedMonumento()?.clasificacion ?? ''"
+            [monumentoId]="selectedMonumento()?.id ?? ''">
+        </app-card-preview>
+    }
 </main>

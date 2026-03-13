@@ -1,10 +1,14 @@
 <article class="card-map">
     <div class="card-content">
         <div class="card-text">
-            <h3 class="card-title"> Catedral de Salamanca </h3>
-            <p class="card-meta"><u>Tipo de monumento:</u> Catedral</p>
+            <h3 class="card-title">{{ titulo() || 'Selecciona un monumento' }}</h3>
+            <p class="card-meta"><u>Estilo</u>: {{ tipo() || '-' }}</p>
         </div>
-        <button class="btn-ver-detalles" [routerLink]="['/monumentos/detalles/', titulo]" routerLinkActive="active">
+        <button 
+            class="btn-ver-detalles" 
+            [routerLink]="['/monumentos', 'detalles', monumentoId()]" 
+            routerLinkActive="active"
+            [disabled]="!monumentoId()">
             Ver detalles
         </button>
     </div>

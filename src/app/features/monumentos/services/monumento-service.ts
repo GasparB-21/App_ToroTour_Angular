@@ -29,35 +29,59 @@ export class MonumentoService {
         });
 
         // Mapeamos los nombres de las columnas del CSV de la JCyL a nuestro modelo
-        return results.data.map((item: any) => ({
-          id: String(item['identificador'] ?? '').trim(),
-          nombre: item['nombre'],
-          tipoMonumento: item['tipoMonumento'],
-          identificadorBienInteresCultural: item['identificadorBienInteresCultural'],
-          calle: item['calle'],
-          clasificacion: item['clasificacion'],
-          tipoConstruccion: item['tipoConstruccion'],
-          codigoPostal: item['codigoPostal'],
-          descripcion: item['Descripcion'],
-          periodoHistorico: item['periodoHistorico'],
-          provincia: item['poblacion_provincia'],
-          municipio: item['poblacion_municipio'],
-          localidad: item['poblacion_localidad'],
-          coordenadas: {
-            latitud: parseFloat(item['coordenadas_latitud']),
-            longitud: parseFloat(item['coordenadas_longitud'])
-          }      
-        }));
+        const toText = (value: any) => String(value ?? '').trim();
+
+        return results.data
+          .map((item: any) => ({
+            id: toText(item['identificador']),
+            nombre: toText(item['nombre']),
+            tipoMonumento: toText(item['tipoMonumento']),
+            identificadorBienInteresCultural: toText(item['identificadorBienInteresCultural']),
+            calle: toText(item['calle']),
+            clasificacion: toText(item['clasificacion']),
+            tipoConstruccion: toText(item['tipoConstruccion']),
+            codigoPostal: toText(item['codigoPostal']),
+            descripcion: toText(item['Descripcion']),
+            periodoHistorico: toText(item['periodoHistorico']),
+            provincia: toText(item['poblacion_provincia']),
+            municipio: toText(item['poblacion_municipio']),
+            localidad: toText(item['poblacion_localidad']),
+            coordenadas: {
+              latitud: parseFloat(item['coordenadas_latitud']),
+              longitud: parseFloat(item['coordenadas_longitud'])
+            }      
+          }))
+          .filter((m: Monumento) => this.esMonumentoValido(m));
       })
     );
   }
 
-// devuelve undefined si no existe ningún monumento con ese id
-getMonumentoById(id: string): Observable<Monumento | undefined> {
-  const normalizedId = id.trim();
+  // devuelve undefined si no existe ningún monumento con ese id
+  getMonumentoById(id: string): Observable<Monumento | undefined> {
+    const normalizedId = id.trim();
 
-  return this.getMonumentos().pipe(
-    map(monumentos => monumentos.find(m => m.id === normalizedId))
-  );
-}
+    return this.getMonumentos().pipe(
+      map(monumentos => monumentos.find(m => m.id === normalizedId))
+    );
+  }
+
+  private esMonumentoValido(monumento: Monumento): boolean {
+    const requiredStrings = [
+      monumento.id,
+      monumento.nombre,
+      monumento.tipoMonumento,
+      monumento.clasificacion,
+      monumento.periodoHistorico,
+      monumento.descripcion,
+      monumento.localidad,
+      monumento.provincia,
+    ];
+
+    const hasRequiredStrings = requiredStrings.every(v => typeof v === 'string' && v.trim().length > 0);
+    const hasCoords = monumento.coordenadas &&
+      !isNaN(monumento.coordenadas.latitud) &&
+      !isNaN(monumento.coordenadas.longitud);
+
+    return hasRequiredStrings && hasCoords;
+  }
 }

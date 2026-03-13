@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, signal, inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, signal, inject, NgZone } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import * as L from 'leaflet';
@@ -14,17 +14,17 @@ import { Toolbar } from '../../../../shared/layout/toolbar/toolbar';
   templateUrl: './mapa-monumentos.html',
   styleUrl: './mapa-monumentos.css',
 })
-
 export class MapaMonumentos implements OnInit, AfterViewInit {
   private monumentoService = inject(MonumentoService);
+  private zone = inject(NgZone);
   
   // Estado para controlar el menú de accesibilidad
   isFabOpen = signal(false);
-  userCoords: [number, number] | null = null;
+  userCoords = signal<[number, number] | null>(null);
   private map!: L.Map;
   
-  // Datos para la card (se inicializa con valores vacíos o por defecto)
-  selectedPoi = signal({ name: 'Selecciona un monumento', type: '-' });
+  // Monumento actualmente seleccionado en el mapa
+  selectedMonumento = signal<Monumento | null>(null);
   
   readonly FAB_LAYOUT: any = {
     'pan-up':    { x: -120, y: -60 }, 
@@ -73,10 +73,7 @@ export class MapaMonumentos implements OnInit, AfterViewInit {
             L.marker([m.coordenadas.latitud, m.coordenadas.longitud], { icon: customIcon })
               .addTo(this.map)
               .on('click', () => {
-                this.selectedPoi.set({ 
-                  name: m.nombre, 
-                  type: m.clasificacion // Usamos el atributo del modelo
-                });
+                this.selectedMonumento.set(m);
               });
           }
         });
@@ -86,17 +83,24 @@ export class MapaMonumentos implements OnInit, AfterViewInit {
   }
 
   getUserLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(({ coords }) => {
-        this.userCoords = [coords.latitude, coords.longitude];
-        L.circleMarker(this.userCoords, { 
+    if (!navigator.geolocation) return;
+
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        const coordsTuple: [number, number] = [coords.latitude, coords.longitude];
+        this.zone.run(() => this.userCoords.set(coordsTuple));
+
+        L.circleMarker(coordsTuple, { 
           radius: 8, 
-          color: '#0A84FF', 
-          fillColor: '#0A84FF', 
+          color: 'var(--tabbar-active)', 
+          fillColor: 'var(--tabbar-active)', 
           fillOpacity: 1 
         }).addTo(this.map);
-      });
-    }
+      },
+      (error) => {
+        console.error('No se pudo obtener la ubicación del usuario', error);
+      }
+    );
   }
 
   toggleFab() {
@@ -120,8 +124,9 @@ export class MapaMonumentos implements OnInit, AfterViewInit {
       case 'pan-left':  this.map.panBy([-120, 0]); break;
       case 'pan-right': this.map.panBy([120, 0]); break;
       case 'locate':   
-        if(this.userCoords) {
-          this.map.flyTo(this.userCoords, 15);
+        const coords = this.userCoords();
+        if(coords) {
+          this.map.flyTo(coords, 15);
         }
         break;
     }

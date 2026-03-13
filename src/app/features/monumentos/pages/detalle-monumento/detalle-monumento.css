@@ -17,7 +17,7 @@
   z-index: 100;
   display: flex;
   align-items: center;
-  justify-items: center;
+  justify-content: center;
   /*Tamaño y espaciado*/
   height: 88px;
   padding: 16px 56px 16px 20px;
@@ -27,9 +27,10 @@
 }
 
 .detail-header h1 {
+  flex: 1;
+  margin: 0;
   text-align: center;
   font-size: 1.7rem;
-  left: 40px;
 }
 
 .btn-close {
@@ -99,7 +100,7 @@
 .btn-directions {
   /*Disposicion*/
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   gap: 0.5rem;
   /*Apariencia*/

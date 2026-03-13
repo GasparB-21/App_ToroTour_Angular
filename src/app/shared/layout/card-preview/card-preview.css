@@ -4,13 +4,14 @@
     bottom: var(--tabbar-height);
     left: 2px;
     right: 2px;
-    padding: 20px;
+    padding: 16px 18px;
     z-index: 1500;
     /*Apariencia*/
     background: var(--ui-white);
     border-radius: 28px 28px 0 0; 
     box-shadow: 0 -4px 15px rgba(0,0,0,0.75);
     border: 1px solid var(--ui-black);
+    
 }
 
 .card-content {
@@ -18,6 +19,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
+}
+
+.card-text {
+    flex: 1;
+    min-width: 0; /* permite elipsis */
 }
 
 .card-title {
@@ -26,6 +33,9 @@
     font-size: 22px;
     font-weight: 800;
     color: var(--ui-black);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .card-meta {
@@ -35,6 +45,9 @@
     /*Apariencia*/
     color: var(--ui-dark-grey);
     font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Botón "Ver detalles" (Dentro de la card) */
