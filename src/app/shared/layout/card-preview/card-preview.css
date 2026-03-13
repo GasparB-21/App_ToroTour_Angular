@@ -1,42 +1,50 @@
-.card--map {
+.card-map {
+    /*Posición*/
     position: fixed;
-    bottom: 72px; /* Pegada al Tabbar */
-    left: 0;
-    right: 0;
-    background: white;
+    bottom: var(--tabbar-height);
+    left: 2px;
+    right: 2px;
     padding: 20px;
+    z-index: 1500;
+    /*Apariencia*/
+    background: var(--ui-white);
     border-radius: 28px 28px 0 0; 
-    box-shadow: 0 -4px 15px rgba(0,0,0,0.15);
-    z-index: 1001;
-    border: 1px solid #111;
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.75);
+    border: 1px solid var(--ui-black);
 }
 
-.card__content {
+.card-content {
+    /*Disposición*/
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.card__title {
+.card-title {
+    /*Apariencia*/
     margin: 0;
     font-size: 22px;
     font-weight: 800;
-    color: #111;
+    color: var(--ui-black);
 }
 
-.card__meta {
-    margin: 4px 0 0 0;
-    color: #444;
+.card-meta {
+    /*Posicion*/
+    padding-top: 5px;
+    margin: 4px;
+    /*Apariencia*/
+    color: var(--ui-dark-grey);
     font-size: 16px;
 }
 
 /* Botón "Ver detalles" (Dentro de la card) */
 .btn-ver-detalles {
-    background-color: #3b82f6;
-    color: white;
     padding: 12px 20px;
+    /*Apariencia*/
+    background-color: var(--tabbar-active);
+    color: var(--ui-white);
     border-radius: 12px;
     text-decoration: none;
     font-weight: 600;
-    border: 1px solid #111;
+    border: 1px solid var(--ui-black);
 }

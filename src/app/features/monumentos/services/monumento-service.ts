@@ -23,12 +23,14 @@ export class MonumentoService {
         //Especificamos q se haga la conversión a objetos JavaScript mediante Papa parse
         const results = Papa.parse(csvData, {
           header: true,
-          skipEmptyLines: true
+          skipEmptyLines: true,
+          delimiter: ';',
+          transformHeader: (header: string) => header.trim()
         });
 
         // Mapeamos los nombres de las columnas del CSV de la JCyL a nuestro modelo
         return results.data.map((item: any) => ({
-          id: item['identificador'],
+          id: String(item['identificador'] ?? '').trim(),
           nombre: item['nombre'],
           tipoMonumento: item['tipoMonumento'],
           identificadorBienInteresCultural: item['identificadorBienInteresCultural'],
@@ -49,4 +51,13 @@ export class MonumentoService {
       })
     );
   }
+
+// devuelve undefined si no existe ningún monumento con ese id
+getMonumentoById(id: string): Observable<Monumento | undefined> {
+  const normalizedId = id.trim();
+
+  return this.getMonumentos().pipe(
+    map(monumentos => monumentos.find(m => m.id === normalizedId))
+  );
+}
 }

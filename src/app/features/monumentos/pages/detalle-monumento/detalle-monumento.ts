@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
+import { map, of, switchMap } from 'rxjs';
 
 import { Monumento } from '../../models/monumento';
 import { MonumentoService } from '../../services/monumento-service';
@@ -13,11 +14,14 @@ import { MonumentoService } from '../../services/monumento-service';
   styleUrl: './detalle-monumento.css',
 })
 export class DetalleMonumento {
+  private route = inject(ActivatedRoute);
   private monumentosService = inject(MonumentoService);
 
   readonly monumento = toSignal(
-    this.monumentosService.getMonumentos()
-                          .pipe(map((monumentos): Monumento | null => monumentos[0] ?? null)),
-                          { initialValue: null as Monumento | null },
+    this.route.paramMap.pipe(
+      map((params) => params.get('id')?.trim() ?? ''),
+      switchMap((id) => (id ? this.monumentosService.getMonumentoById(id) : of(undefined)))
+    ),
+    { initialValue: undefined }
   );
 }

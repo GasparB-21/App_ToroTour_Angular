@@ -4,11 +4,8 @@ import { monumentosRoutes } from './features/monumentos/monumentos-routes';
 export const routes: Routes = [
     {
         path: 'monumentos',
-        children: monumentosRoutes
-
-        /*loadChildren: () =>
-            import('./features/monumentos/monumentos-routes').then(m => m.monumentosRoutes)
-        */
+        //children: monumentosRoutes
+        loadChildren: () => import('./features/monumentos/monumentos-routes').then(m => m.monumentosRoutes)
     },
     {
         path: 'eventos',

@@ -8,7 +8,7 @@ export const monumentosRoutes: Routes = [
         path: '',
         children: [
             {
-                path: 'mapa',
+                path: '',
                 component: MapaMonumentos
             },
             {
@@ -17,12 +17,8 @@ export const monumentosRoutes: Routes = [
             },
             {
                 /*path: 'detalles/:id'*/
-                path: 'detalles',
+                path: 'detalles/:id',
                 component: DetalleMonumento
-            },
-            {
-                path: '**',
-                redirectTo: 'mapa'
             }
         ]
     }

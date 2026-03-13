@@ -16,7 +16,7 @@
   /*Ajustamos espaciado en los margenes y entre elementos*/
   padding: 0 10px;
   gap: 15px;
-  background-color: var(--background-color);
+  background-color: transparent;
   /*Calculamos tamano con margen y padding*/
   box-sizing: border-box;
 }

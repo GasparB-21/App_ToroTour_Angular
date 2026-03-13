@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, signal, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import * as L from 'leaflet';
 import { CardPreview } from "../../../../shared/layout/card-preview/card-preview";
@@ -10,10 +10,11 @@ import { Toolbar } from '../../../../shared/layout/toolbar/toolbar';
 @Component({
   selector: 'app-mapa-monumentos',
   standalone: true,
-  imports: [RouterLink, CardPreview, Toolbar],
+  imports: [RouterLink, RouterLinkActive, CardPreview, Toolbar],
   templateUrl: './mapa-monumentos.html',
   styleUrl: './mapa-monumentos.css',
 })
+
 export class MapaMonumentos implements OnInit, AfterViewInit {
   private monumentoService = inject(MonumentoService);
   

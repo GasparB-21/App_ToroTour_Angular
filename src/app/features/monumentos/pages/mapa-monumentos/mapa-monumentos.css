@@ -1,85 +1,127 @@
 /* Contenedor del Mapa */
 #map {
-  height: 100vh; /* Ocupa toda la pantalla */
+  /*Disposición*/
+  height: calc(100vh - var(--tabbar-height));
   width: 100%;
   display: block;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
-/* Botón "Mostrar lista" - Posicionado sobre la card */
-.cta-wrap--map {
-  position: fixed;
-  /* Calculamos: 72px (Tabbar) + altura estimada de la card + margen */
-  bottom: 210px; 
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1002; /* Un nivel por encima de la card */
-}
-
-.btn-pill {
-  background-color: #2b6df5;
-  color: white;
-  padding: 10px 24px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 16px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-  border: 2px solid white;
-  display: inline-block;
-  white-space: nowrap; /* Evita que el texto se parta en dos líneas */
-}
-
-/* Ocultar botones de Leaflet que puedan molestar */
-.leaflet-control-zoom {
-    display: none;
-}
-.map-fab {
-  position: fixed;
-  right: 80px; /* Separado del borde para que los botones tengan espacio a la derecha */
-  bottom: 250px; 
-  z-index: 1010;
-}
-
-.map-fab button {
-  border-radius: 50%;
-  border: 1px solid #ccc;
-  background: #FFFFFF;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  width: 50px;
-  height: 50px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  position: absolute; /* Todos nacen del mismo punto */
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.map-fab__main {
-  z-index: 1015;
-  width: 54px !important;
-  height: 54px !important;
-  font-size: 24px;
-  border: 2px solid #111 !important;
-  /* El botón principal es el (0,0) */
-  top: -27px;
-  left: -27px;
-}
-
-.map-fab__locate {
-  z-index: 1016;
-  top: -100px; /* Siempre visible encima */
-  left: -25px;
-  color: #0A84FF;
-}
-
-.map-fab__actions {
+/* ============================ */
+/* Botones control mapa y lista */
+/* ============================ */
+.map-button-group{
+  /*Disposicion*/
   position: relative;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  right: 1rem;
+  bottom: 7rem;
+  gap: 1rem;
 }
 
-.map-fab__btn {
-  z-index: 1014;
-  top: -25px;
-  left: -25px;
-  font-size: 20px;
-  color: #555;
+.map-button-location,
+.map-button-controls,
+.map-button-list {
+  /*Disposición*/
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  /*Tamaño y forma*/
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  /*Apariencia*/
+  border: 2px solid var(--ui-black);
+  appearance: none;
+  box-shadow: 0 4px 10px var(--ui-black);
+}
+
+.map-button-location,
+.map-button-list {
+  background: var(--tabbar-active);
+}
+
+.map-button-controls {
+  background: var(--ui-white);
+  color: var(--ui-black);
+  font-size: 1.5rem;
+}
+
+.map-button-location img,
+.map-button-list img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.map-button-actions {
+  /*Posicion*/
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 40%;
+  transform: translateY(-50%);
+  /*Disposición*/
+  display: grid;
+  grid-template-columns: repeat(3, 0px);
+  grid-template-rows: repeat(3, 0px);
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.map-fab-btn {
+  /*Disposición*/
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  /*Tamaño*/
+  width: 48px;
+  height: 48px;
+  box-sizing: border-box;
+  /*Apariencia*/
+  border: 2px solid var(--ui-black);
+  border-radius: 50%;
+  background: var(--ui-white);
+  color: var(--ui-black);
+  appearance: none;
+  box-shadow: 0 4px 10px var(--ui-black);
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.map-button-actions .map-fab-btn:nth-child(1) {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.map-button-actions .map-fab-btn:nth-child(2) {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.map-button-actions .map-fab-btn:nth-child(3) {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.map-button-actions .map-fab-btn:nth-child(4) {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.map-button-actions .map-fab-btn:nth-child(5) {
+  grid-column: 3;
+  grid-row: 3;
+}
+
+.map-button-actions .map-fab-btn:nth-child(6) {
+  grid-column: 1;
+  grid-row: 2;
 }

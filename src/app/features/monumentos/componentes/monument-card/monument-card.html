@@ -11,8 +11,10 @@
     <button class="monument-card__icon-button monument-card__icon-button--favorite" type="button" aria-label="Anadir a favoritos">
       ♥
     </button>
-    <button class="monument-card__icon-button monument-card__icon-button--detail" type="button" aria-label="Ver detalle del monumento">
-      &gt;
+    <button class="monument-card__icon-button monument-card__icon-button--detail" type="button" aria-label="Ver detalle del monumento"
+            [routerLink]="['/monumentos', 'detalles', monumento().id]" routerLinkActive="active">
+      <!--&gt;-->
+      >
     </button>
   </div>
 </article>
