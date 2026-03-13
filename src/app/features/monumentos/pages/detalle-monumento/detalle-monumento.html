@@ -106,7 +106,12 @@
                     <path d="M12 21s-7.5-4.6-9.3-8.9C1.7 8.6 3.8 6 6.7 6c1.8 0 3 .9 3.6 2.1C11.3 6.9 12.5 6 14.3 6c2.9 0 5 2.6 3.9 6.1C19.5 16.4 12 21 12 21z"></path>
                 </svg>
             </button-->
-             <button class="monument-card__icon-button monument-card__icon-button--favorite" type="button" aria-label="Anadir a favoritos">
+            <button class="monument-card__icon-button monument-card__icon-button--favorite"
+                    [class.is-favorite]="esFavorito()"
+                    type="button"
+                    aria-label="Anadir o quitar de favoritos"
+                    [attr.aria-pressed]="esFavorito()"
+                    (click)="actualizarFavorito()">
                 <svg 
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"

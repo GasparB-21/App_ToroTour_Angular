@@ -1,6 +1,7 @@
-import { Component, input, output } from '@angular/core';
+import { Component, inject, input, output, computed } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Monumento } from '../../models/monumento';
+import { MonumentoService } from '../../services/monumento-service';
 
 @Component({
   selector: 'app-monument-card',
@@ -14,5 +15,9 @@ export class MonumentCard {
   //favorito = output
 
   //FUNCIONALIDADES
-  //Añadir la funcionalidad para añadir a favoritos
+  //Añadir a favoritos
+  servicioMonumentos = inject(MonumentoService)
+  readonly esFavorito = computed(() => this.servicioMonumentos.esFavorito(this.monumento().id));
+
+  actualizarFavorito(){ this.servicioMonumentos.actualizarFavorito(this.monumento()) }
 }

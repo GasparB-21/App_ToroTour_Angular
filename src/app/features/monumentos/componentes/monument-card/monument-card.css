@@ -85,8 +85,26 @@
 
 .monument-card__icon-button--favorite {
   border-radius: 50%;
+  background-color: var(--ui-white);
+  color: var(--ui-black);
 }
 
 .monument-card__icon-button--detail {
   border-radius: 10px;
+}
+
+.monument-card__icon-button--favorite.is-favorite {
+  background-color: var(--ui-white);
+  color: var(--ui-black);
+}
+
+.monument-card__icon-button--favorite svg path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.1;
+}
+
+.monument-card__icon-button--favorite.is-favorite svg path {
+  fill: currentColor;
+  stroke: currentColor;
 }

@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { effect, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Monumento } from '../models/monumento';
+import { environment } from '../../../../environments/environment.development';
 
 declare var Papa: any;
 
@@ -10,6 +11,8 @@ declare var Papa: any;
 })
 
 export class MonumentoService {
+
+  //TRATAMIENTO DATOS CSV JCyL
   // Ruta al archivo con los datos de la JCyL
   private readonly csv = '/csv/relacion-monumentos.csv';
   constructor(private http: HttpClient) {}
@@ -84,4 +87,50 @@ export class MonumentoService {
 
     return hasRequiredStrings && hasCoords;
   }
+
+
+  //LOGICA FAVORITOS EN LOCALSTORAGE
+  //Lista con los monumentos favoritos
+  listaMonumentosFavoritos = signal<Monumento[]>(this.cargarMonumentosFavoritos())
+
+  //Funcion para recuperar los favoritos desde localStorage al iniciar la app
+  cargarMonumentosFavoritos()
+  {
+    const monumentosFavoritos = localStorage.getItem(environment.MONUMENTS_STORAGE_KEY)
+    //NOS interesa transformarlos a JSON???
+    return monumentosFavoritos ? JSON.parse(monumentosFavoritos) : []
+  }
+
+  actualizarFavorito(monumento: Monumento)
+  {
+    /*
+    Alterna la presencia del monumento en la lista de favoritos:
+    - Si no está, lo añade.
+    - Si ya está, lo elimina.
+    La lista al tratarse de una signal actualizará el localStorage automaticamente haciendo uso de los effects
+    */
+    this.listaMonumentosFavoritos.update( monumentosFavoritos => {
+      const yaGuardado = monumentosFavoritos.some(m => m.id === monumento.id);
+      return yaGuardado
+        ? monumentosFavoritos.filter(m => m.id !== monumento.id)
+        : [...monumentosFavoritos, monumento];
+    });
+
+    console.log(`Favorito ${monumento.nombre} actualizado en la lista (signal)`);
+  }
+
+  esFavorito(id: string): boolean {
+    return this.listaMonumentosFavoritos().some(m => m.id === id);
+  }
+
+  actualizarLocalStorage = effect( () => {
+                                          //"Vinculamos" el effect a nuestra lista de favoritos
+                                          const monumentosFavoritos = this.listaMonumentosFavoritos()
+                                          //Actualizamos el localStorage
+                                          localStorage.setItem(environment.MONUMENTS_STORAGE_KEY, JSON.stringify(monumentosFavoritos))
+                                          //Para DEBUGGING
+                                          console.log('Listado de monumentos favoritos actualizado en el LocalStorage')
+                                         }
+                                 )
+
 }

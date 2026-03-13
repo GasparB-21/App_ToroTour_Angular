@@ -1,1 +1,45 @@
-<p>favoritos works!</p>
+<app-toolbar></app-toolbar>
+
+<section class="favoritos-page">
+  <h1>Listado de favoritos</h1>
+
+  <div class="chip-selector" role="tablist" aria-label="Filtrar favoritos">
+    <button
+      type="button"
+      role="tab"
+      class="chip"
+      [class.chip--active]="categoriaSeleccionada() === 'monumentos'"
+      [attr.aria-selected]="categoriaSeleccionada() === 'monumentos'"
+      (click)="seleccionarCategoria('monumentos')">
+      Monumentos
+    </button>
+    <button
+      type="button"
+      role="tab"
+      class="chip"
+      [class.chip--active]="categoriaSeleccionada() === 'eventos'"
+      [attr.aria-selected]="categoriaSeleccionada() === 'eventos'"
+      (click)="seleccionarCategoria('eventos')">
+      Eventos
+    </button>
+  </div>
+
+  @switch (categoriaSeleccionada()) {
+    @case ('monumentos') {
+      @if (monumentosFavoritos().length === 0) {
+        <p class="empty-state">Aún no tienes monumentos favoritos.</p>
+      } @else {
+        @for (monumento of monumentosFavoritos(); track monumento.id) {
+          <app-monument-card [monumento]="monumento"></app-monument-card>
+        }
+      }
+    }
+    @case ('eventos') {
+      @if (eventosFavoritos().length === 0) {
+        <p class="empty-state">Aún no tienes eventos favoritos.</p>
+      } @else {
+        <p class="empty-state">Aquí aparecerán tus eventos guardados.</p>
+      }
+    }
+  }
+</section>

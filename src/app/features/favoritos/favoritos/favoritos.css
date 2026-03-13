@@ -1,0 +1,61 @@
+/* ======================= */
+/* Pantalla de Favoritos   */
+/* ======================= */
+
+.favoritos-page {
+  position: fixed;
+  top: var(--toolbar-height);
+  right: 0;
+  bottom: var(--tabbar-height);
+  left: 0;
+  padding: 16px var(--page-side-gap) 96px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+h1 {
+  margin: 0 0 18px;
+  text-align: center;
+}
+
+.chip-selector {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.chip {
+  appearance: none;
+  border: 2px solid var(--ui-black);
+  background-color: var(--ui-white);
+  color: var(--ui-black);
+  border-radius: 999px;
+  padding: 10px 12px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  box-shadow: 0 6px 14px rgba(17, 17, 17, 0.12);
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+
+.chip--active {
+  background-color: var(--tabbar-active);
+  border-color: var(--tabbar-active);
+  color: var(--ui-white);
+  box-shadow: 0 10px 18px rgba(10, 132, 255, 0.25);
+}
+
+.chip:focus-visible {
+  outline: 3px solid var(--ui-black);
+  outline-offset: 3px;
+}
+
+.empty-state {
+  margin: 24px 0 0;
+  text-align: center;
+  color: var(--ui-darker-grey);
+  font-weight: 700;
+}
