@@ -1,7 +1,7 @@
 import { Routes } from "@angular/router";
-import { MapaMonumentos } from "./pages/mapa-monumentos/mapa-monumentos";
+import { MapaMonumentos } from "./pages/mapa-monumentos/monumentos-mapa";
 import { MonumentosListado } from "./pages/monumentos-listado/monumentos-listado";
-import { DetalleMonumento } from "./pages/detalle-monumento/detalle-monumento";
+import { DetalleMonumento } from "./pages/detalle-monumento/monumentos-detalles";
 
 export const monumentosRoutes: Routes = [
     {
@@ -16,7 +16,6 @@ export const monumentosRoutes: Routes = [
                 component: MonumentosListado
             },
             {
-                /*path: 'detalles/:id'*/
                 path: 'detalles/:id',
                 component: DetalleMonumento
             }

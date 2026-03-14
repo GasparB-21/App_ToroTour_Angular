@@ -5,6 +5,7 @@
 
 .monumentos-page {
   /*La seccion ocupa solo el hueco libre entre toolbar y tabbar*/
+  /*Disposición*/
   position: fixed;
   top: var(--toolbar-height);
   right: 0;
@@ -17,12 +18,14 @@
 }
 
 h1 {
+  /*Disposición*/
   margin-top: 0;
   margin-bottom: 20px;
   text-align: center;
 }
 
 .btn-pill {
+  /*Disposición*/
   position: fixed;
   left: 50%;
   bottom: calc(var(--tabbar-height) + 12px);
@@ -31,15 +34,17 @@ h1 {
   display: block;
   width: fit-content;
   margin: 0;
+  padding: 10px 24px;
+  /*Apariencia*/
   background-color: var(--tabbar-active);
   color: var(--ui-white);
-  padding: 10px 24px;
   border-radius: 50px;
   font-weight: bold;
   font-size: 16px;
   border: 2px solid var(--ui-white);
   box-shadow: 0 8px 18px rgba(17, 17, 17, 0.18);
   white-space: nowrap;
+  text-decoration: none;
 }
 
 

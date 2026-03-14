@@ -5,7 +5,7 @@
 
     <!--Como listadoMonumentos es un observable no podemos iterar directamente sobre él-->
     <!--Solución: usamos async para suscribirnos al Observable y poder extraer el array. Usamos ?? para establacer como default un array vacío-->
-    @for(monumento of (listadoMonumentos | async) ?? []; track monumento.id)
+    @for(monumento of (listadoMonumentos$ | async) ?? []; track monumento.id)
     {
         <app-monument-card [monumento] = "monumento"></app-monument-card>
     }
@@ -14,6 +14,6 @@
         <p>No hay monumentos para mostrar.</p>
     }
 
-    <button routerLink="/monumentos/mapa" routerLinkActive="active" class="btn-pill">Mostrar Mapa</button>
+    <a routerLink="/monumentos/mapa" routerLinkActive="active" class="btn-pill" >Mostrar Mapa</a>
 </section>
 

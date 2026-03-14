@@ -12,7 +12,7 @@
             <h1> {{monumento()?.nombre}} </h1>
 
             <!--REVISAR-->
-            <a href="javascript:history.back()" class="btn-close" aria-label="Cerrar y volver">
+            <a href="javascript:history.back()" class="btn-close" aria-label="Cerrar y volver a la página anterior">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
                     <path d="M18 6L6 18M6 6l12 12"></path>
                 </svg>
@@ -22,8 +22,9 @@
         <main class="detail-content">
 
             <!-- Ubicación -->
-            <section class="location-bar" aria-label="Ubicación y direcciones">
+            <section class="location-bar" aria-label="Ubicación y acceso a direcciones">
                 <div class="location-info">
+                    <!--Como el icono es decorativo no ponemos alt / aria-label-->
                     <svg viewBox="0 0 24 24" class="location-icon" aria-hidden="true">
                         <path
                             d="M12 21c-3.5-4-6-7.2-6-11a6 6 0 1 1 12 0c0 3.8-2.5 7-6 11Z"
@@ -40,10 +41,11 @@
                     <span class="location-soft" id="monumento-provincia"> {{monumento()?.provincia}} </span>
                 </div>
 
-                <button class="btn-directions" type="button" aria-label="Abrir direcciones">
-                    <img src="icons/detalles/direction.png">
-                    <span>Directions</span>
-                </button>
+                <!--Este lo pongo como un a pq más adelante podremos abrir Google Maps desde aquí-->
+                <a class="btn-directions">
+                    <img src="icons/detalles/icon-direction.png" alt="" aria-hidden="true">
+                    <span>Direcciones</span>
+                </a>
             </section>
 
             <!-- Card grande: Período histórico -->
@@ -52,7 +54,7 @@
 
                 <div class="info-card__body">
                     <img
-                    src="images/monumentos/periodo/toro_moderno.png"
+                    src="images/monumentos/periodo/img-toro-moderno.png"
                     alt="Ilustración del período histórico"
                     class="illustration-big"
                     id="monumento-periodo-img"
@@ -68,7 +70,7 @@
                     <header class="info-card__header"><b>Tipo de construcción</b></header>
                     <div class="info-card__body info-card__body--small">
                         <img
-                            src="images/monumentos/tipo/church.png"
+                            src="images/monumentos/tipo/img-church.png"
                             alt=""
                             aria-hidden="true"
                             class="img-medium"
@@ -82,7 +84,7 @@
                     <header class="info-card__header"><b>Estilo construcción</b></header>
                     <div class="info-card__body info-card__body--small">
                         <img
-                            src="images/monumentos/estilo/cross.png"
+                            src="images/monumentos/estilo/img-cross.png"
                             alt=""
                             aria-hidden="true"
                             class="img-medium"
@@ -112,16 +114,8 @@
                     aria-label="Anadir o quitar de favoritos"
                     [attr.aria-pressed]="esFavorito()"
                     (click)="actualizarFavorito()">
-                <svg 
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    width="30"
-                    height="30"
-                    fill="currentColor"
-                    aria-hidden="true">
-
-                    <path d="M12 21s-6.716-4.39-9.192-7.086C1.124 12.29 1 10.964 1 10a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 .964-.124 2.29-1.808 3.914C18.716 16.61 12 21 12 21z"/>
-
+                <svg viewBox="0 0 24 24"  width="30"  height="30" fill="currentColor" aria-hidden="true">
+                    <path d="M12 20l-7-7a4 4 0 0 1 6-5l1 1 1-1a4 4 0 0 1 6 5z"/>
                 </svg>
             </button>
 

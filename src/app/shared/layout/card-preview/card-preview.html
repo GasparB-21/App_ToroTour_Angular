@@ -4,12 +4,13 @@
             <h3 class="card-title">{{ titulo() || 'Selecciona un monumento' }}</h3>
             <p class="card-meta"><u>Estilo</u>: {{ tipo() || '-' }}</p>
         </div>
-        <button 
+        <a 
             class="btn-ver-detalles" 
             [routerLink]="['/monumentos', 'detalles', monumentoId()]" 
             routerLinkActive="active"
-            [disabled]="!monumentoId()">
+            aria-label="Ver detalles del monumento">
+            <!--Uso aria label para dar más contexto al lector de pantallas-->
             Ver detalles
-        </button>
+        </a>
     </div>
 </article>

@@ -1,22 +1,25 @@
 /* ====== TabBar ====== */
 .tabbar {
-  background-color: var( --ui-white);
-  color: var(--ui-black);
-  font-size: 14px;
+  /*Disposición y tamaño*/
   position: fixed;
   inset: auto 0 0 0;
   height: 75px; 
   z-index: 3000;
+  /*Apariencia*/
+  background-color: var( --ui-white);
+  color: var(--ui-black);
+  font-size: 14px;
   border-top: 1px solid var(--ui-black);
 }
 
 .tabbar-icon {
+  display: block;
   width: 30px;
   height: 30px;
-  display: block;
 }
 
 .tabbar ul {
+  /*Disposición*/
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -32,22 +35,23 @@
 }
 
 .tabbar ul li a {
+  /*Disposición*/
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 6px;
-  text-decoration: none;
   padding: 8px 0;
+  text-decoration: none;
 }
 
 .tabbar ul li a span {
   color: var(--ui-black);
 }
 
-/* ================================================= */
+/* ==================================================== */
 /* ESTADO ACTIVO (Cuando Angular pone la clase .active) */
-/* ================================================= */
+/* ==================================================== */
 /* Color azul para el texto cuando la pestaña está activa */
 .tabbar a.active span {
   color: var(--tabbar-active);

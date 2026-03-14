@@ -48,11 +48,11 @@
   background: var(--tabbar-active);
 }
 
-.map-button-controls {
+/*.map-button-controls {
   background: var(--ui-white);
   color: var(--ui-black);
   font-size: 1.5rem;
-}
+}*/
 
 .map-button-location img,
 .map-button-list img {

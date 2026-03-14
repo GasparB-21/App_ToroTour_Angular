@@ -3,25 +3,25 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import * as L from 'leaflet';
 import { CardPreview } from "../../../../shared/layout/card-preview/card-preview";
-import { MonumentoService } from '../../services/monumento-service';
-import { Monumento } from '../../models/monumento';
+import { MonumentoService } from '../../services/monumentos.service';
+import { Monumento } from '../../models/monumento.interface';
 import { Toolbar } from '../../../../shared/layout/toolbar/toolbar';
 
 @Component({
   selector: 'app-mapa-monumentos',
   standalone: true,
   imports: [RouterLink, RouterLinkActive, CardPreview, Toolbar],
-  templateUrl: './mapa-monumentos.html',
-  styleUrl: './mapa-monumentos.css',
+  templateUrl: './monumentos-mapa.html',
+  styleUrl: './monumentos-mapa.css',
 })
 export class MapaMonumentos implements OnInit, AfterViewInit {
-  private monumentoService = inject(MonumentoService);
-  private zone = inject(NgZone);
+  private _monumentoService = inject(MonumentoService);
+  private _zone = inject(NgZone);
   
   // Estado para controlar el menú de accesibilidad
   isFabOpen = signal(false);
   userCoords = signal<[number, number] | null>(null);
-  private map!: L.Map;
+  private _map!: L.Map;
   
   // Monumento actualmente seleccionado en el mapa
   selectedMonumento = signal<Monumento | null>(null);
@@ -48,30 +48,30 @@ export class MapaMonumentos implements OnInit, AfterViewInit {
 
   private initMap() {
     // Inicializamos el mapa centrado en Salamanca
-    this.map = L.map('map', { zoomControl: false }).setView([40.965, -5.664], 14);
+    this._map = L.map('map', { zoomControl: false }).setView([40.965, -5.664], 14);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap'
-    }).addTo(this.map);
+    }).addTo(this._map);
   }
 
   private cargarMonumentosReales() {
     // Configuramos el icono personalizado "pin.png"
     // Asegúrate de que pin.png esté en public/icons/ o ajusta la ruta
     const customIcon = L.icon({
-      iconUrl: 'icons/mapa/pin.png', 
+      iconUrl: 'icons/mapa/icon-pin.png', 
       iconSize: [32, 32],
       iconAnchor: [16, 32],
       popupAnchor: [0, -32]
     });
 
-    this.monumentoService.getMonumentos().subscribe({
+    this._monumentoService.getMonumentos().subscribe({
       next: (monumentos: Monumento[]) => {        
         monumentos.forEach(m => {
           // Validamos que tenga coordenadas válidas antes de intentar pintarlo
           if (!isNaN(m.coordenadas.latitud) && !isNaN(m.coordenadas.longitud)) {
             L.marker([m.coordenadas.latitud, m.coordenadas.longitud], { icon: customIcon })
-              .addTo(this.map)
+              .addTo(this._map)
               .on('click', () => {
                 this.selectedMonumento.set(m);
               });
@@ -88,14 +88,14 @@ export class MapaMonumentos implements OnInit, AfterViewInit {
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
         const coordsTuple: [number, number] = [coords.latitude, coords.longitude];
-        this.zone.run(() => this.userCoords.set(coordsTuple));
+        this._zone.run(() => this.userCoords.set(coordsTuple));
 
         L.circleMarker(coordsTuple, { 
           radius: 8, 
           color: 'var(--tabbar-active)', 
           fillColor: 'var(--tabbar-active)', 
           fillOpacity: 1 
-        }).addTo(this.map);
+        }).addTo(this._map);
       },
       (error) => {
         console.error('No se pudo obtener la ubicación del usuario', error);
@@ -117,16 +117,16 @@ export class MapaMonumentos implements OnInit, AfterViewInit {
 
   executeAction(action: string) {
     switch (action) {
-      case 'zoom-in':  this.map.zoomIn(); break;
-      case 'zoom-out': this.map.zoomOut(); break;
-      case 'pan-up':    this.map.panBy([0, -120]); break;
-      case 'pan-down':  this.map.panBy([0, 120]); break;
-      case 'pan-left':  this.map.panBy([-120, 0]); break;
-      case 'pan-right': this.map.panBy([120, 0]); break;
+      case 'zoom-in':  this._map.zoomIn(); break;
+      case 'zoom-out': this._map.zoomOut(); break;
+      case 'pan-up':    this._map.panBy([0, -120]); break;
+      case 'pan-down':  this._map.panBy([0, 120]); break;
+      case 'pan-left':  this._map.panBy([-120, 0]); break;
+      case 'pan-right': this._map.panBy([120, 0]); break;
       case 'locate':   
         const coords = this.userCoords();
         if(coords) {
-          this.map.flyTo(coords, 15);
+          this._map.flyTo(coords, 15);
         }
         break;
     }

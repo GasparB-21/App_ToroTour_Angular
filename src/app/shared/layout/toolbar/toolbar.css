@@ -61,12 +61,11 @@
   margin-right: 5px;
 }
 
-/*
+
 .searchbar:focus-within {
-  /*Q se dibuje un contorno recibir foco/
-  box-shadow: 0 0 0 3px var(--ui-white);
+  /*Como usamos outline es recomendable redefinir el "foco"*/
+  outline: 2px solid var(--ui-primary);
 }
-*/
 
 
 .btn-filtros {

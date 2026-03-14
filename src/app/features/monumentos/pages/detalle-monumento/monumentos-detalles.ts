@@ -3,45 +3,45 @@ import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map, of, switchMap } from 'rxjs';
 
-import { Monumento } from '../../models/monumento';
-import { MonumentoService } from '../../services/monumento-service';
+import { Monumento } from '../../models/monumento.interface';
+import { MonumentoService } from '../../services/monumentos.service';
 
 @Component({
   selector: 'app-detalle-monumento',
   standalone: true,
   imports: [],
-  templateUrl: './detalle-monumento.html',
-  styleUrl: './detalle-monumento.css',
+  templateUrl: './monumentos-detalles.html',
+  styleUrl: './monumentos-detalles.css',
 })
 export class DetalleMonumento {
-  private route = inject(ActivatedRoute);
-  private monumentosService = inject(MonumentoService);
+  private _route = inject(ActivatedRoute);
+  private _monumentosService = inject(MonumentoService);
 
   readonly monumento = toSignal(
-    this.route.paramMap.pipe(
+    this._route.paramMap.pipe(
       map((params) => params.get('id')?.trim() ?? ''),
-      switchMap((id) => (id ? this.monumentosService.getMonumentoById(id) : of(undefined)))
+      switchMap((id) => (id ? this._monumentosService.getMonumentoById(id) : of(undefined)))
     ),
     { initialValue: undefined }
   );
 
   //FUNCIONALIDADES
   //Añadir a favoritos
-  servicioMonuemntos = inject(MonumentoService)
+  servicioMonumentos = inject(MonumentoService)
 
   readonly esFavorito = computed(() => {
     const monumento = this.monumento();
-    return monumento ? this.servicioMonuemntos.esFavorito(monumento.id) : false;
+    return monumento ? this.servicioMonumentos.esFavorito(monumento.id) : false;
   });
 
   actualizarFavorito(){
-    const currentMonumento = this.monumento();
-    if (currentMonumento) {
-      this.servicioMonuemntos.actualizarFavorito(currentMonumento);
+    const monumentoActual = this.monumento();
+    if (monumentoActual) {
+      this.servicioMonumentos.actualizarFavorito(monumentoActual);
     } else {
       //En este caso como recuperamos el monumento a partir del segment del path puede q se produzca un error y obtenegamos undefined
       //Manejamos el error mediante un guard
-      console.error('No monumento available to add to favorites');
+      console.error('El monumento no puede añadirse a favoritos');
     }
   }
 }

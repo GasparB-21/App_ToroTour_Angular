@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
-import { monumentosRoutes } from './features/monumentos/monumentos-routes';
+import { monumentosRoutes } from './features/monumentos/monumentos.routes';
 
 export const routes: Routes = [
     {
         path: 'monumentos',
         //children: monumentosRoutes
-        loadChildren: () => import('./features/monumentos/monumentos-routes').then(m => m.monumentosRoutes)
+        loadChildren: () => import('./features/monumentos/monumentos.routes').then(m => m.monumentosRoutes)
     },
     {
         path: 'eventos',
@@ -15,7 +15,7 @@ export const routes: Routes = [
     {
         path: 'favoritos',
         loadChildren: () =>
-            import('./features/favoritos/favoritos-routes').then(m => m.favoritosRoutes)
+            import('./features/favoritos/favoritos.routes').then(m => m.favoritosRoutes)
     },
     {
         path: '**',
