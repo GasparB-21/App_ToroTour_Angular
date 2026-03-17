@@ -1,5 +1,23 @@
 <main aria-label="Mapa de monumentos">
-    <app-toolbar></app-toolbar>
+    <app-toolbar
+        (onSearch)="actualizarBusqueda($event)"
+        (onFilterClick)="abrirPanelCategorias()">
+    </app-toolbar>
+    @if (categoriasAbiertas()) {
+        <div class="calbar__picker calbar__picker--top">
+            <h3 style="grid-column: span 2; margin: 0; font-size: 14px; color: #666;">Filtrar por clasificación</h3>
+            <div class="categories-grid" style="grid-column: span 2; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;">
+                <button class="filter-chip" [class.active]="clasificacionSeleccionada() === null" (click)="filtrarPorCategoria(null)">
+                    Todos
+                </button>
+                @for (cat of categoriasDisponibles(); track cat) {
+                    <button class="filter-chip" [class.active]="clasificacionSeleccionada() === cat" (click)="filtrarPorCategoria(cat)">
+                        {{ cat }}
+                    </button>
+                }
+            </div>
+        </div>
+    }
 
     <section id="map" aria-label="Mapa de monumentos">
         <div class="map-button-group">
@@ -75,7 +93,8 @@
         <app-card-preview 
             [titulo]="selectedMonumento()?.nombre ?? ''" 
             [tipo]="selectedMonumento()?.clasificacion ?? ''"
-            [monumentoId]="selectedMonumento()?.id ?? ''">
+            [monumentoId]="selectedMonumento()?.id ?? ''"
+            [seccion]="'monumentos'">
         </app-card-preview>
     }
 </main>

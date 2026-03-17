@@ -16,7 +16,7 @@ export const eventosRoutes: Routes = [
                 component: EventosListado
             },
             {
-                path: 'detalle',
+                path: 'detalles/:id',
                 component: DetalleEvento
             },
             {

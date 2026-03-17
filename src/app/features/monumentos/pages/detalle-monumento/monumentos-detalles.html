@@ -22,32 +22,12 @@
         <main class="detail-content">
 
             <!-- Ubicación -->
-            <section class="location-bar" aria-label="Ubicación y acceso a direcciones">
-                <div class="location-info">
-                    <!--Como el icono es decorativo no ponemos alt / aria-label-->
-                    <svg viewBox="0 0 24 24" class="location-icon" aria-hidden="true">
-                        <path
-                            d="M12 21c-3.5-4-6-7.2-6-11a6 6 0 1 1 12 0c0 3.8-2.5 7-6 11Z"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-                        <circle cx="12" cy="10" r="2" fill="currentColor" />
-                    </svg>
-                    <span class="location-strong" id="monumento-ciudad"> {{monumento()?.localidad}} </span>
-                    <span class="location-dot">•</span>
-                    <span class="location-soft" id="monumento-provincia"> {{monumento()?.provincia}} </span>
-                </div>
-
-                <!--Este lo pongo como un a pq más adelante podremos abrir Google Maps desde aquí-->
-                <a class="btn-directions">
-                    <img src="icons/detalles/icon-direction.png" alt="" aria-hidden="true">
-                    <span>Direcciones</span>
-                </a>
-            </section>
-
+            <app-directions
+                [coordenadas]="monumento()?.coordenadas"
+                [localidad]="monumento()?.localidad"
+                [provincia]="monumento()?.provincia">
+            </app-directions>  
+    
             <!-- Card grande: Período histórico -->
             <section class="info-card info-card--big" aria-label="Período histórico">
                 <header class="info-card__header"> Período Histórico </header>
@@ -97,8 +77,7 @@
 
             <!-- Descripción -->
             <section class="description-section" aria-label="Descripción del monumento">
-                <p id="monumento-descripcion">
-                    {{monumento()?.descripcion}}   
+                <p id="monumento-descripcion" [innerHTML]="monumento()?.descripcion">
                 </p>
             </section>
 

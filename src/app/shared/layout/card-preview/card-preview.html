@@ -6,7 +6,7 @@
         </div>
         <a 
             class="btn-ver-detalles" 
-            [routerLink]="['/monumentos', 'detalles', monumentoId()]" 
+            [routerLink]="['/', seccion(), 'detalles', monumentoId()]" 
             routerLinkActive="active"
             aria-label="Ver detalles del monumento">
             <!--Uso aria label para dar más contexto al lector de pantallas-->

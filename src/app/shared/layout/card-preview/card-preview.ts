@@ -11,4 +11,5 @@ export class CardPreview {
   titulo = input<string>();
   tipo = input<string>();
   monumentoId = input<string>();
+  seccion = input<string>('monumentos');
 }

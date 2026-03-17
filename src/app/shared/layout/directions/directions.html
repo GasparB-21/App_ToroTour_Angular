@@ -1,0 +1,22 @@
+<section class="location-bar">
+    <div class="location-info">
+        <svg viewBox="0 0 24 24" class="location-icon" aria-hidden="true">
+            <path
+                d="M12 21c-3.5-4-6-7.2-6-11a6 6 0 1 1 12 0c0 3.8-2.5 7-6 11Z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+            <circle cx="12" cy="10" r="2" fill="currentColor" />
+        </svg>
+        <span class="location-strong">{{ localidad() }}</span>
+        <span class="location-dot">•</span>
+        <span class="location-soft">{{ provincia() }}</span>
+    </div>
+    <a class="btn-directions" (click)="abrirMapa(coordenadas())">
+        <img src="icons/detalles/icon-direction.png" alt="" aria-hidden="true">
+        <span>Direcciones</span>
+    </a>
+</section>

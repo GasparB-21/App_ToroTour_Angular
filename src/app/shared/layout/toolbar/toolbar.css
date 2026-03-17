@@ -1,23 +1,16 @@
 /* ======= ToolBar ======= */
 .toolbar {
-  /*Fijamos el elemento en la vista*/
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  /*Ajustamos superposicion para asegurarnos q queda por encima resto elementos*/
   z-index: 1000;
-  /*Ajustamos su altura*/
-  height: var(--toolbar-height);
-  /*Alineamos los elementos hijos*/
+  height: var(--toolbar-height);  
   display: flex;
   justify-content: center;
   align-items: center;
-  /*Ajustamos espaciado en los margenes y entre elementos*/
   padding: 0 10px;
   gap: 15px;
-  background-color: transparent;
-  /*Calculamos tamano con margen y padding*/
   box-sizing: border-box;
 }
 

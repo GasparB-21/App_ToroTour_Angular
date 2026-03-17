@@ -1,5 +1,28 @@
-<app-toolbar></app-toolbar>
-
+<app-toolbar 
+  (onSearch)="actualizarBusqueda($event)"
+  (onFilterClick)="togglePanelCategorias()">
+</app-toolbar>
+@if (categoriasAbiertas()) {
+  <div class="calbar__picker calbar__picker--top">
+      <h3 style="margin: 0 0 10px 0; font-size: 14px; color: #666;">
+          Filtrar {{ tabActual() }} por tipo
+      </h3>
+      <div class="categories-grid" style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <button class="filter-chip" 
+              [class.active]="filtroCategoria() === null" 
+              (click)="aplicarFiltroCategoria(null)">
+              Todos
+          </button>
+          @for (cat of categoriasDisponibles(); track cat) {
+              <button class="filter-chip" 
+                  [class.active]="filtroCategoria() === cat" 
+                  (click)="aplicarFiltroCategoria(cat)">
+                  {{ cat }}
+              </button>
+          }
+      </div>
+  </div>
+}
 <section class="favoritos-page">
   <h1>Listado de favoritos</h1>
 
@@ -10,7 +33,8 @@
       class="chip"
       [class.chip--active]="categoriaSeleccionada() === 'monumentos'"
       [attr.aria-selected]="categoriaSeleccionada() === 'monumentos'"
-      (click)="seleccionarCategoria('monumentos')">
+      (click)="seleccionarCategoria('monumentos')"
+      (click)="seleccionarTab('monumentos')">
       Monumentos
     </button>
     <button
@@ -19,26 +43,29 @@
       class="chip"
       [class.chip--active]="categoriaSeleccionada() === 'eventos'"
       [attr.aria-selected]="categoriaSeleccionada() === 'eventos'"
-      (click)="seleccionarCategoria('eventos')">
+      (click)="seleccionarCategoria('eventos')"
+      (click)="seleccionarTab('eventos')">
       Eventos
     </button>
   </div>
 
   @switch (categoriaSeleccionada()) {
     @case ('monumentos') {
-      @if (monumentosFavoritos().length === 0) {
+      @if (monumentosFiltrados().length === 0) {
         <p class="empty-state">Aún no tienes monumentos favoritos.</p>
       } @else {
-        @for (monumento of monumentosFavoritos(); track monumento.id) {
+        @for (monumento of monumentosFiltrados(); track monumento.id) {
           <app-monument-card [monumento]="monumento"></app-monument-card>
         }
       }
     }
     @case ('eventos') {
-      @if (eventosFavoritos().length === 0) {
+      @if (eventosFiltrados().length === 0) {
         <p class="empty-state">Aún no tienes eventos favoritos.</p>
       } @else {
-        <p class="empty-state">Aquí aparecerán tus eventos guardados.</p>
+        @for (evento of eventosFiltrados(); track evento.id) {
+          <app-eventos-card [evento]="evento"></app-eventos-card>
+        }
       }
     }
   }

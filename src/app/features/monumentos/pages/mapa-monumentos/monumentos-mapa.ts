@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, signal, inject, NgZone } from '@angular/core';
+import { Component, OnInit, AfterViewInit, signal, inject, NgZone, computed, effect } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import * as L from 'leaflet';
@@ -6,6 +6,7 @@ import { CardPreview } from "../../../../shared/layout/card-preview/card-preview
 import { MonumentoService } from '../../services/monumentos.service';
 import { Monumento } from '../../models/monumento.interface';
 import { Toolbar } from '../../../../shared/layout/toolbar/toolbar';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-mapa-monumentos',
@@ -21,11 +22,18 @@ export class MapaMonumentos implements OnInit, AfterViewInit {
   // Estado para controlar el menú de accesibilidad
   isFabOpen = signal(false);
   userCoords = signal<[number, number] | null>(null);
-  private _map!: L.Map;
-  
-  // Monumento actualmente seleccionado en el mapa
   selectedMonumento = signal<Monumento | null>(null);
   
+  private _map!: L.Map;
+  private _mapReady = signal(false);
+  
+  searchTerm = signal('');
+  clasificacionSeleccionada = signal<string | null>(null);
+  categoriasAbiertas = signal(false);
+
+  private allMonumentos = toSignal(this._monumentoService.getMonumentos(), { initialValue: [] });
+  private _markers: L.Marker[] = [];
+
   readonly FAB_LAYOUT: any = {
     'pan-up':    { x: -120, y: -60 }, 
     'zoom-in':   { x: -60, y: -60 }, 
@@ -43,13 +51,11 @@ export class MapaMonumentos implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.initMap();
     this.getUserLocation();
-    this.cargarMonumentosReales();
+    this._mapReady.set(true);
   }
 
   private initMap() {
-    // Inicializamos el mapa centrado en Salamanca
     this._map = L.map('map', { zoomControl: false }).setView([40.965, -5.664], 14);
-
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap'
     }).addTo(this._map);
@@ -131,4 +137,62 @@ export class MapaMonumentos implements OnInit, AfterViewInit {
         break;
     }
   }  
+  categoriasDisponibles = computed(() => {
+    const cats = this.allMonumentos().map(m => m.clasificacion);
+    return [...new Set(cats)];
+  });
+
+  constructor() {
+    effect(() => {
+      if (this._mapReady()) { 
+        this.aplicarFiltrosEnMapa();
+      }
+    });
+  }
+
+  actualizarBusqueda(texto: string) {
+    this.searchTerm.set(texto);
+  }
+
+  abrirPanelCategorias() {
+    this.categoriasAbiertas.set(!this.categoriasAbiertas());
+  }
+
+  filtrarPorCategoria(cat: string | null) {
+    this.clasificacionSeleccionada.set(cat);
+    this.categoriasAbiertas.set(false);
+  }
+
+  private aplicarFiltrosEnMapa() {
+    const monumentos = this.allMonumentos();
+    const term = this.searchTerm().toLowerCase();
+    const cat = this.clasificacionSeleccionada();
+
+    this._markers.forEach(m => this._map.removeLayer(m));
+    this._markers = [];
+
+    const customIcon = L.icon({
+      iconUrl: 'icons/mapa/icon-pin.png', 
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32]
+    });
+
+    monumentos.forEach(m => {
+      if (isNaN(m.coordenadas.latitud) || isNaN(m.coordenadas.longitud)) return;
+
+      const cumpleTexto = !term || m.nombre.toLowerCase().includes(term);
+      const cumpleCat = !cat || m.clasificacion === cat;
+
+      if (cumpleTexto && cumpleCat) {
+        const marker = L.marker([m.coordenadas.latitud, m.coordenadas.longitud], { icon: customIcon })
+          .addTo(this._map)
+          .on('click', () => {
+            this._zone.run(() => this.selectedMonumento.set(m));
+          });
+        
+        this._markers.push(marker);
+      }
+    });
+  }
 }

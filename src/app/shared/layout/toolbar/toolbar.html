@@ -12,15 +12,17 @@
             id="sb"
             name="search"
             type="search"
-            placeholder="Buscar eventos"
+            placeholder="Buscar"
             autocomplete="off"
             aria-controls="lista-eventos"
+            (input)="handleInput($event)"
         >
     </form>
 
     <button class="btn-filtros" 
             type="button"
-            aria-label="Abrir filtros">
+            aria-label="Abrir filtros"
+            (click)="handleFilter()">
         <img src="icons/toolbar/icon-filter.png" alt="" aria-hidden="true" />
     </button>
 </header>

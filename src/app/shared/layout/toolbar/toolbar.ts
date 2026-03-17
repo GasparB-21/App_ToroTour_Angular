@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 
 @Component({
   selector: 'app-toolbar',
@@ -7,5 +7,15 @@ import { Component } from '@angular/core';
   styleUrl: './toolbar.css',
 })
 export class Toolbar {
+  onSearch = output<string>();
+  onFilterClick = output<void>();
 
+  handleInput(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.onSearch.emit(value);
+  }
+
+  handleFilter() {
+    this.onFilterClick.emit();
+  }
 }

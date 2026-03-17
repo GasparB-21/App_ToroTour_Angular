@@ -1,1 +1,43 @@
-<p>eventos-listado works!</p>
+<app-toolbar
+    (onSearch)="actualizarBusqueda($event)"
+    (onFilterClick)="abrirPanelCategorias()">
+</app-toolbar>
+@if (categoriasAbiertas()) {
+    <div class="calbar__picker calbar__picker--top">
+        <h3 style="grid-column: span 2; margin: 0; font-size: 14px; color: #666;">Filtrar por categoría</h3>
+        <div class="categories-grid" style="grid-column: span 2; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;">
+            <button 
+                class="filter-chip" 
+                [class.active]="categoriaSeleccionada() === null"
+                (click)="filtrarPorCategoria(null)">
+                Todos
+            </button>
+
+            @for (cat of categoriasDisponibles(); track cat) {
+                <button 
+                    class="filter-chip"
+                    [class.active]="categoriaSeleccionada() === cat"
+                    (click)="filtrarPorCategoria(cat)">
+                    {{ cat }}
+                </button>
+            }
+        </div>
+    </div>
+}
+<section class="eventos-page">
+    <h1>Listado de Eventos</h1>
+
+    <!--Como listadoEventos es un observable no podemos iterar directamente sobre él-->
+    <!--Solución: usamos async para suscribirnos al Observable y poder extraer el array. Usamos ?? para establacer como default un array vacío-->
+    @for(evento of (listadoEventos$ | async) ?? []; track evento.id)
+    {
+        <app-eventos-card [evento] = "evento"></app-eventos-card>
+    }
+    @empty
+    {
+        <p>No hay eventos para mostrar.</p>
+    }
+
+    <a routerLink="/eventos/calendario" routerLinkActive="active" class="btn-pill" >Mostrar Calendario</a>
+</section>
+

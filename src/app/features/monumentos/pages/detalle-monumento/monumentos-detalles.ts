@@ -5,11 +5,12 @@ import { map, of, switchMap } from 'rxjs';
 
 import { Monumento } from '../../models/monumento.interface';
 import { MonumentoService } from '../../services/monumentos.service';
+import { Directions } from "../../../../shared/layout/directions/directions";
 
 @Component({
   selector: 'app-detalle-monumento',
   standalone: true,
-  imports: [],
+  imports: [Directions],
   templateUrl: './monumentos-detalles.html',
   styleUrl: './monumentos-detalles.css',
 })

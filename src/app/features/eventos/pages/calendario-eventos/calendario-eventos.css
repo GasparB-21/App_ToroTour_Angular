@@ -1,0 +1,336 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - var(--toolbar-height) - var(--tabbar-height));
+  padding-top: var(--toolbar-height);
+  overflow: hidden; 
+  box-sizing: border-box;
+}
+
+/* --- Modificación en el calendario --- */
+.cal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border: 2px solid var(--ui-black);
+  border-top: 0;
+  background: white;
+  overflow-x: auto; 
+  -webkit-overflow-scrolling: touch;
+}
+  
+  /* --- Barra Superior (Mes/Año) --- */
+  
+.calbar {  
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #007BFF;
+  padding: 16px 20px;
+  z-index: 20; 
+}
+    
+.calbar__actions {  
+  width: 40px;
+  display: flex;
+  justify-content: center;
+}
+    
+.calbar__title {  
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+    
+.calbar__btn {
+  background: rgba(255, 255, 255, 0.2);  
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: white;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.3s;
+}
+    
+.calbar__btn:hover {  
+  background: rgba(255, 255, 255, 0.3);
+}
+    
+.calbar__picker {
+    position: absolute;
+    top: 100%; 
+    right: 12px;
+    left: 12px; 
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    border: 1px solid #eee;
+    z-index: 100;
+    animation: slideDown 0.3s ease-out;
+    max-height: 300px;
+    overflow-y: auto;    
+  }
+
+.calbar__picker--top {
+    position: fixed; 
+    top: var(--toolbar-height);
+    left: 12px;
+    right: 12px;
+    z-index: 2000; 
+}
+    
+  /* --- Días de la Semana (L M X J V S D) --- */
+.cal__week {  
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  min-width: 600px;
+  background-color: #F8F9FA; 
+  color: #6C757D; 
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid #DEE2E6;
+}
+  
+  /* --- Rejilla de Días (The Grid) --- */  
+.cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: minmax(80px, 1fr); 
+  min-height: 0;
+  min-width: 600px; 
+}  
+  
+  /* --- Estilo Base de Cada Celda (Día) --- */
+.cal__cell {
+    padding: 4px;
+    border-right: 1px solid var(--ui-darker-grey);
+    border-top: 1px solid var(--ui-darker-grey);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 4px;
+    min-height: 80px;
+    position: relative;  
+}
+  
+.cal__badge {
+    font-size: 10px;
+    white-space: normal; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical; 
+    padding: 2px;
+    border-radius: 5px;
+}
+  
+/* --- ESTILOS PARA CATEGORÍAS PRINCIPALES (CSV) --- */  
+.cal__badge--cine {  
+  background-color: #f7eb5e;
+  color: #000;
+}  
+  
+.cal__badge--espectaculos {  
+  background-color: #ff9f43;
+  color: #fff;
+} 
+  
+.cal__badge--conciertos {  
+  background-color: #ee5253;
+  color: #fff;
+}
+  
+.cal__badge--libros {  
+  background-color: #54a0ff;
+  color: #fff;
+}
+    
+.cal__badge--teatro,
+.cal__badge--danza {
+  background-color: #f26d6d;
+  color: #fff;  
+}
+    
+.cal__badge--música,
+.cal__badge--musica {  
+  background-color: #6df26d;
+  color: #000;
+}  
+  
+.cal__badge--exposiciones {  
+  background-color: #6de2f2;
+  color: #000;
+}
+  
+.cal__badge--infantil,
+.cal__badge--animación {
+  background-color: #f2a46d;  
+  color: #fff;
+}
+
+.cal__badge--conferencias,
+.cal__badge--cursos,  
+.cal__badge--educación {  
+  background-color: #b38df2;
+  color: #fff;  
+}
+  
+.cal__badge--default {  
+  background-color: #e0e0e0;
+  color: #333;
+}
+  
+.cal__cell:not(.cal__cell--blank):hover {  
+  background-color: #E9ECEF;  
+}
+  
+.cal__num {
+  margin: 0;  
+  font-size: 16px;
+  font-weight: 500;
+  color: #212529;
+}
+    
+/* --- Estilos Especiales de Celdas --- */
+.cal__cell--blank {  
+  background-color: #F8F9FA; 
+  cursor: default;
+}
+    
+.cal__cell--blank .cal__num {  
+  color: #ADB5BD;
+}
+    
+.cal__cell--today .cal__num {
+  background-color: #007BFF; 
+  color: #FFFFFF; 
+  width: 32px; 
+  height: 32px;
+  border-radius: 50%; 
+  display: grid;
+  place-items: center; 
+  margin-top: -6px;
+  margin-right: -6px;
+}  
+  
+.card--sticky {  
+  margin-top: 8px;
+  flex-shrink: 0; 
+}
+  
+.cta-wrap {  
+  padding: 8px 0;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+   
+.btn-pill {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--tabbar-height) + 12px);
+  transform: translateX(-50%);
+  z-index: 1100;
+  display: block;
+  width: fit-content;
+  margin: 0;
+  padding: 10px 24px;
+  background-color: var(--tabbar-active);
+  color: var(--ui-white);
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 16px;
+  border: 2px solid var(--ui-white);
+  box-shadow: 0 8px 18px rgba(17, 17, 17, 0.18);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.btn-pill--pushed {
+  bottom: calc(var(--tabbar-height) + 110px); 
+}
+  
+.picker__group {  
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+    
+.picker__group label {  
+  font-size: 12px;
+  font-weight: 700;
+  color: #666;
+  text-transform: uppercase;
+}
+    
+.calbar__picker select {
+  padding: 10px;  
+  border-radius: 8px;
+  border: 2px solid #f0f0f0;
+  background: #f9f9f9;
+  font-size: 16px;
+  color: #333;
+  outline: none;
+}
+    
+.calbar__picker select:focus {  
+  border-color: #007BFF;
+}
+    
+/* Botón aplicar ocupa las dos columnas */  
+.calbar__apply {  
+  grid-column: span 2;
+  background: #007BFF;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.filter-chip {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--ui-black);
+    background: white;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.filter-chip.active {
+    background: #007BFF;
+    color: white;
+    border-color: #007BFF;
+}  
+  
+/* Animación de entrada */  
+@keyframes slideDown {  
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}  
+
+@media (min-width: 1024px) {
+    .cal__grid {
+      min-width: auto; 
+      grid-template-rows: repeat(6, 1fr); 
+    }
+    .cal__week {
+      min-width: auto;
+    }
+}

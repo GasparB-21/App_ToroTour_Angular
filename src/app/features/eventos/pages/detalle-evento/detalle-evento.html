@@ -1,1 +1,69 @@
-<p>detalle-evento works!</p>
+<main class="wrap">
+    <header class="detail-header">
+      <h1 class="detail-header__title">{{ evento()?.titulo }}</h1>
+      <a href="javascript:history.back()" class="btn-close" aria-label="Cerrar y volver a la página anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
+            <path d="M18 6L6 18M6 6l12 12"></path>
+        </svg>
+      </a>
+    </header>
+  
+    <div class="detail-scroll-area">
+      <section class="event-tags">
+        <div class="info-box box-blue">
+          <span class="label">Categoría:</span>
+          <span class="value">{{ evento()?.categoria }}</span>
+        </div>
+        <div class="info-box box-blue">
+          <span class="label">Temática:</span>
+          <span class="value">{{ evento()?.tematica }}</span>
+        </div>
+      </section>
+  
+      <section class="main-visual-container">
+        <img [src]="evento()?.imagen"
+             [alt]="evento()?.titulo" 
+             class="event-image-fit" />
+      </section>
+      <app-directions
+        [coordenadas]="evento()?.coordenadas"
+        [localidad]="evento()?.nombreLocalidad"
+        [provincia]="evento()?.nombreProvincia">
+      </app-directions>  
+      <section class="event-info-table">
+        <div class="info-box box-yellow">
+          <span class="label">Fechas evento:</span>
+          <span class="value">{{ evento()?.fecha?.inicio }}</span>
+        </div>
+        <div class="info-box box-yellow">
+          <span class="label">Horario evento:</span>
+          <span class="value">{{ evento()?.hora?.inicio }}</span>
+        </div>
+        <div class="info-split">
+          <div class="info-box box-white">
+            <span class="label">Público:</span>
+            <span class="value">{{ evento()?.destinatarios || 'General' }}</span>
+          </div>
+          <div class="info-box box-white">
+            <span class="label">Precio:</span>
+            <span class="value">{{ evento()?.precio || 'Gratuito' }}</span>
+          </div>
+        </div>
+      </section>
+  
+      <section class="description-section">
+        <div class="description-box" [innerHTML]="evento()?.descripcion"></div>
+      </section>
+    </div>
+  
+    <button class="event-card__icon-button event-card__icon-button--favorite"
+      [class.is-favorite]="esFavorito()"
+      type="button"
+      aria-label="Anadir o quitar de favoritos"
+      [attr.aria-pressed]="esFavorito()"
+      (click)="actualizarFavorito()">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+      </svg>
+    </button>
+  </main>

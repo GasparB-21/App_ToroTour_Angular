@@ -1,1 +1,112 @@
-<p>calendario-eventos works!</p>
+<app-toolbar 
+    (onSearch)="actualizarBusqueda($event)"
+    (onFilterClick)="abrirPanelCategorias()">
+</app-toolbar>
+
+@if (categoriasAbiertas()) {
+    <div class="calbar__picker calbar__picker--top">
+        <h3 style="grid-column: span 2; margin: 0; font-size: 14px; color: #666;">Filtrar por categoría</h3>
+        <div class="categories-grid" style="grid-column: span 2; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;">
+            <button 
+                class="filter-chip" 
+                [class.active]="categoriaSeleccionada() === null"
+                (click)="filtrarPorCategoria(null)">
+                Todos
+            </button>
+
+            @for (cat of categoriasDisponibles(); track cat) {
+                <button 
+                    class="filter-chip"
+                    [class.active]="categoriaSeleccionada() === cat"
+                    (click)="filtrarPorCategoria(cat)">
+                    {{ cat }}
+                </button>
+            }
+        </div>
+    </div>
+}
+<main class="wrap">
+    <section class="calbar" aria-label="Selector de mes">
+        <h1 class="calbar__title">{{ MONTHS[mesActual()] }} {{ anioActual() }}</h1>
+        
+        <div class="calbar__actions">
+            <button 
+                class="calbar__btn" 
+                (click)="pickerAbierto.set(!pickerAbierto()); categoriasAbiertas.set(false)"
+                [attr.aria-expanded]="pickerAbierto()">
+                {{ pickerAbierto() ? '▲' : '▼' }}
+            </button>
+        </div>
+
+        @if (pickerAbierto()) {
+            <div class="calbar__picker">
+                <div class="picker__group">
+                    <label>Mes</label>
+                    <select #selM [value]="mesActual()">
+                        @for (m of MONTHS; track m; let i = $index) {
+                            <option [value]="i">{{ m }}</option>
+                        }
+                    </select>
+                </div>
+                <div class="picker__group">
+                    <label>Año</label>
+                    <select #selY [value]="anioActual()">
+                        @for (a of [2025, 2026, 2027]; track a) {
+                            <option [value]="a">{{ a }}</option>
+                        }
+                    </select>
+                </div>
+                <button class="calbar__apply" (click)="aplicarFiltro(selM.value, selY.value)">
+                    Aplicar cambios
+                </button>
+            </div>
+        }
+    </section>  
+    <section class="cal">
+        <div class="cal__week">
+            @for (d of DAYS_WEEK; track d) {
+                <span>{{ d }}</span>
+            }
+        </div>
+        <div class="cal__grid" role="grid">
+            @for (cell of grid(); track $index) {
+                <div 
+                    class="cal__cell"
+                    [class.cal__cell--blank]="!cell.day"
+                    [class.cal__cell--today]="cell.isToday"
+                    [class.cal__cell--has-event]="cell.hasEvent"
+                    (click)="cell.day && seleccionarDia(cell)"
+                    [attr.role]="cell.day ? 'gridcell' : null">
+
+                    <p class="cal__num">{{ cell.day }}</p>
+
+                    @if (cell.day && cell.hasEvent && cell.evento) {
+                        <span class="cal__badge" 
+                            [class]="'cal__badge--' + cell.evento.categoria.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')">
+                            {{ cell.evento.categoria }}
+                        </span>
+                    }
+                </div>
+            }
+        </div>    
+    </section>
+  
+    <div class="cta-wrap">
+        <a class="btn-pill" 
+            routerLink="/eventos/listado" 
+            routerLinkActive="active" 
+            [class.btn-pill--pushed]="eventoSeleccionado()">
+            Mostrar lista
+        </a>
+    </div>
+    @if (eventoSeleccionado(); as evento) {
+        <div class="card--sticky">
+            <app-card-preview 
+                [titulo]="evento.titulo" 
+                [tipo]="evento.categoria"
+                [monumentoId]="evento.id"
+                [seccion]="'eventos'">
+            </app-card-preview>
+        </div>
+    }
+</main>
