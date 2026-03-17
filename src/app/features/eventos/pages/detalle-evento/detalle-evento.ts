@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { EventosService } from '../../services/eventos.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map, of, switchMap } from 'rxjs';
-import { Directions } from "../../../../shared/layout/directions/directions";
+import { Directions } from '../../../../shared/layout/directions/directions';
 
 @Component({
   selector: 'app-detalle-evento',
