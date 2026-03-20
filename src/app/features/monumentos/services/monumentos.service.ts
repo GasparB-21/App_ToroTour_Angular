@@ -1,7 +1,10 @@
 import { effect, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
 import { map, Observable } from 'rxjs';
+
 import { Monumento } from '../models/monumento.interface';
+
 import { environment } from '../../../../environments/environment.development';
 
 /*
@@ -129,13 +132,13 @@ export class MonumentoService {
   }
 
   actualizarLocalStorage = effect( () => {
-                                          //"Vinculamos" el effect a nuestra lista de favoritos
-                                          const monumentosFavoritos = this.listaMonumentosFavoritos()
-                                          //Actualizamos el localStorage
-                                          localStorage.setItem(environment.MONUMENTS_STORAGE_KEY, JSON.stringify(monumentosFavoritos))
-                                          //Para DEBUGGING
-                                          console.log('Listado de monumentos favoritos actualizado en el LocalStorage')
-                                         }
-                                 )
+    //"Vinculamos" el effect a nuestra lista de favoritos
+    const monumentosFavoritos = this.listaMonumentosFavoritos()
+    //Actualizamos el localStorage
+    localStorage.setItem(environment.MONUMENTS_STORAGE_KEY, JSON.stringify(monumentosFavoritos))
+    //Para DEBUGGING
+    console.log('Listado de monumentos favoritos actualizado en el LocalStorage')
+    }
+  )
 
 }

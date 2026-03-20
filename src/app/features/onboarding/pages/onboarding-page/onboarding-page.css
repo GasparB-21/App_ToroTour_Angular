@@ -1,0 +1,119 @@
+/*Conteneder de la pagina*/
+.onboarding-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/*Div título e ilustración*/
+.decoration{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.archivo-black-regular {
+  font-family: "Archivo Black", sans-serif;
+  font-style: italic;
+  font-weight: 900;
+  font-size: 3rem;
+  letter-spacing: 0.03em;
+}
+
+.onboarding-ilustracion-image {
+  max-width: 100%;
+  max-height: 40vh;
+  object-fit: contain;
+  margin-top: -4rem;
+}
+
+/*Como la 1º imagen es más pequeña la reescalamos*/
+.scale {
+  transform: scale(0.7);
+}
+
+/*Div tutorial*/
+.tutorial{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -7.5rem;
+}
+
+.onboarding-tabbar-image,
+.tutorial p {
+  max-width: 300px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.tutorial p{
+  text-align: justify;
+  margin-top: -5rem;;
+}
+
+/*Div barra de progreso y controles*/
+.control{
+  margin-top: 4rem;
+}
+
+.progress {
+  width: 100%;
+  max-width: 320px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 20px 0;
+  margin-bottom: 3rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--progress-color);
+  width: 0;
+  transition: width 200ms ease;
+}
+
+.buttons {
+  display: flex;
+  gap: 6rem;
+}
+
+.btn {
+  width: 70px;
+  height: 70px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.prev-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.next-btn {
+  background-color: var(--progress-color);
+  color: var(--ui-white);
+}
+
+.prev-btn {
+  background-color: var(--ui-black);
+  opacity: 0.5;
+  color: var(--ui-white);
+}

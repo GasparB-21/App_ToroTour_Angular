@@ -1,8 +1,20 @@
+/*
 .location-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 2rem;
     padding: 10px 0;
+}
+*/
+
+.location-bar {
+  /*Posición*/
+  display: flex;
+  margin-top: 1.5rem;
+  margin-bottom: 0.7rem;
+  justify-content: center;
+  gap: 2rem;
 }
   
 .location-info {
@@ -14,13 +26,17 @@
 }
   
 .location-icon {
-    width: 18px;
-    height: 18px;
+    width: 30px;
+    height: 30px;
     flex-shrink: 0;
+}
+
+.location-strong{
+    font-weight: 700;
 }
   
 .location-dot {
-    color: var(--ui-darker-grey); 
+    color: var(--ui-black); 
     font-weight: bold;
 }  
   
@@ -37,4 +53,8 @@
     width: 2rem;
     height: 2rem;
     filter: brightness(0) saturate(100%) invert(40%) sepia(95%) saturate(1850%) hue-rotate(199deg) brightness(96%) contrast(96%);
+}
+
+.btn-directions span{
+   font-weight: 900;
 }

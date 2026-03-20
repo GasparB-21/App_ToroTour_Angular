@@ -1,103 +1,88 @@
-<!DOCTYPE html>
-<html lang="es">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Detalle del Monumento</title>
-    </head>
+<main class="detail-content">
+    <!-- Header -->
+    <div class="detail-header">
+        <h1> {{monumento()?.nombre}} </h1>
 
-    <body class="screen screen--monumento">
-        <!-- Header -->
-        <header class="detail-header">
-            <h1> {{monumento()?.nombre}} </h1>
+        <!--REVISAR-->
+        <a href="javascript:history.back()" class="btn-close" aria-label="Cerrar y volver a la página anterior">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
+                <path d="M18 6L6 18M6 6l12 12"></path>
+            </svg>
+        </a>
+    </div>
 
-            <!--REVISAR-->
-            <a href="javascript:history.back()" class="btn-close" aria-label="Cerrar y volver a la página anterior">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
-                    <path d="M18 6L6 18M6 6l12 12"></path>
-                </svg>
-            </a>
-        </header>
+    <!-- Ubicación -->
+    <app-directions
+        [coordenadas]="monumento()?.coordenadas"
+        [localidad]="monumento()?.localidad"
+        [provincia]="monumento()?.provincia">
+    </app-directions>  
 
-        <main class="detail-content">
+    <!-- Card grande: Período histórico -->
+    <section class="info-card info-card-big" aria-label="Período histórico">
+        <h2 class="info-card-h2" id="monumento-periodo-titulo"> Período Histórico </h2>
+        <div class="info-card-div">
+            <img
+            [src]="imagenPeriodo()"
+            alt="Ilustración del período histórico"
+            class="img-big"
+            id="monumento-periodo-img"
+            />
+            <p class="info-card-text" id="monumento-periodo"> {{nombrePeriodo()}} </p>
+        </div>
+    </section>
 
-            <!-- Ubicación -->
-            <app-directions
-                [coordenadas]="monumento()?.coordenadas"
-                [localidad]="monumento()?.localidad"
-                [provincia]="monumento()?.provincia">
-            </app-directions>  
-    
-            <!-- Card grande: Período histórico -->
-            <section class="info-card info-card--big" aria-label="Período histórico">
-                <header class="info-card__header"> Período Histórico </header>
+    <!-- 2 cards pequeñas -->
+    <section class="info-grid" aria-label="Información del monumento">
+        <div class="info-card info-card-small" aria-label="Tipo de construcción">
+            <h2 class="info-card-h2" id="monumento-tipo-titulo"><b>Tipo de construcción</b></h2>
+            <div class="info-card-div">
+                <img
+                    [src]="imagenTipo()"
+                    alt=""
+                    aria-hidden="true"
+                    class="img-small"
+                    id="monumento-tipo-img"
+                />
+                <p class="info-card-text" id="monumento-tipo"> {{nombreTipo()}}</p>
+            </div>
+        </div>
 
-                <div class="info-card__body">
-                    <img
-                    src="images/monumentos/periodo/img-toro-moderno.png"
-                    alt="Ilustración del período histórico"
-                    class="illustration-big"
-                    id="monumento-periodo-img"
-                    />
+        <div class="info-card info-card-small" aria-label="Estilo de construcción">
+            <h2 class="info-card-h2" id="monumento-clasificacion-titulo"><b>Clasificación</b></h2>
+            <div class="info-card-div">
+                <img
+                    [src]="imagenClasificacion()"
+                    alt=""
+                    aria-hidden="true"
+                    class="img-small"
+                    id="monumento-estilo-img"
+                />
+                <p class="info-card-text" id="monumento-clasificacion"> {{nombreClasificacion()}} </p>
+            </div>
+        </div>
+    </section>
 
-                    <p class="info-card__value" id="monumento-periodo"> {{monumento()?.periodoHistorico}} </p>
-                </div>
-            </section>
+    <!-- Descripción -->
+    <section class="description-section" aria-label="Descripción del monumento">
+        <p id="monumento-descripcion" [innerHTML]="monumento()?.descripcion"></p>
+    </section>
 
-            <!-- 2 cards pequeñas -->
-            <section class="info-grid" aria-label="Información del monumento">
-                <article class="info-card" aria-label="Tipo de construcción">
-                    <header class="info-card__header"><b>Tipo de construcción</b></header>
-                    <div class="info-card__body info-card__body--small">
-                        <img
-                            src="images/monumentos/tipo/img-church.png"
-                            alt=""
-                            aria-hidden="true"
-                            class="img-medium"
-                            id="monumento-tipo-icon"
-                        />
-                        <p class="info-card__value" id="monumento-tipo"> {{monumento()?.tipoMonumento}} </p>
-                    </div>
-                </article>
+    <!-- Botón Favoritos -->
+    <!--button class="fab-fav" id="btn-fav-detail" aria-label="Añadir a favoritos" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
+            <path d="M12 21s-7.5-4.6-9.3-8.9C1.7 8.6 3.8 6 6.7 6c1.8 0 3 .9 3.6 2.1C11.3 6.9 12.5 6 14.3 6c2.9 0 5 2.6 3.9 6.1C19.5 16.4 12 21 12 21z"></path>
+        </svg>
+    </button-->
+    <button class="monument-detail-button"
+            [class.is-favorite]="esFavorito()"
+            type="button"
+            aria-label="Anadir o quitar de favoritos"
+            [attr.aria-pressed]="esFavorito()"
+            (click)="actualizarFavorito()">
+        <svg viewBox="0 0 24 24"  width="50"  height="50" fill="currentColor" aria-hidden="true">
+            <path d="M12 20l-7-7a4 4 0 0 1 6-5l1 1 1-1a4 4 0 0 1 6 5z"/>
+        </svg>
+    </button>
 
-                <article class="info-card" aria-label="Estilo de construcción">
-                    <header class="info-card__header"><b>Estilo construcción</b></header>
-                    <div class="info-card__body info-card__body--small">
-                        <img
-                            src="images/monumentos/estilo/img-cross.png"
-                            alt=""
-                            aria-hidden="true"
-                            class="img-medium"
-                            id="monumento-estilo-icon"
-                        />
-                        <p class="info-card__value" id="monumento-estilo"> {{monumento()?.clasificacion}} </p>
-                    </div>
-                </article>
-            </section>
-
-            <!-- Descripción -->
-            <section class="description-section" aria-label="Descripción del monumento">
-                <p id="monumento-descripcion" [innerHTML]="monumento()?.descripcion">
-                </p>
-            </section>
-
-            <!-- Botón Favoritos -->
-            <!--button class="fab-fav" id="btn-fav-detail" aria-label="Añadir a favoritos" type="button">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true">
-                    <path d="M12 21s-7.5-4.6-9.3-8.9C1.7 8.6 3.8 6 6.7 6c1.8 0 3 .9 3.6 2.1C11.3 6.9 12.5 6 14.3 6c2.9 0 5 2.6 3.9 6.1C19.5 16.4 12 21 12 21z"></path>
-                </svg>
-            </button-->
-            <button class="monument-card__icon-button monument-card__icon-button--favorite"
-                    [class.is-favorite]="esFavorito()"
-                    type="button"
-                    aria-label="Anadir o quitar de favoritos"
-                    [attr.aria-pressed]="esFavorito()"
-                    (click)="actualizarFavorito()">
-                <svg viewBox="0 0 24 24"  width="30"  height="30" fill="currentColor" aria-hidden="true">
-                    <path d="M12 20l-7-7a4 4 0 0 1 6-5l1 1 1-1a4 4 0 0 1 6 5z"/>
-                </svg>
-            </button>
-
-        </main>
-    </body>
-</html>
+</main>
