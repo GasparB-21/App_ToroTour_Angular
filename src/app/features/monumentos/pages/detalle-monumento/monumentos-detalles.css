@@ -1,13 +1,18 @@
 /* ================= */
-/* Pantakka Detalles */
+/* Pantalla Detalles */
 /* ================= */
+
+/*
 .screen--monumento {
-  /*Resolucion pantalla*/
+  /*Resolucion pantalla/
   min-height: 100vh;
   height: 100vh;
   overflow: hidden;
-}
+}*/
 
+/* ====== */
+/* Header */
+/* ====== */
 .detail-header {
   /*Posición*/
   position: fixed;
@@ -49,10 +54,10 @@
   color: var(--ui-white);
   background: var(--ui-black);
 }
-.btn-close svg {
-  width: 15px;
-  height: 15px;
-}
+
+/* ================ */
+/* Contenido página */
+/* ================ */
 
 .detail-content {
   /*Posicion*/
@@ -71,61 +76,14 @@
   background-color: var(--ui-white);
 }
 
-.location-bar {
-  /*Posición*/
-  display: flex;
-  margin-top: 1.5rem;
-  margin-bottom: 0.7rem;
-  justify-content: center;
-  gap: 2rem;
+/* ===== Info Cards ===== */
+
+.info-card-big,
+.info-grid,
+.description-section {
+  width: min(100%, 320px);
 }
 
-.location-info {
-  /*Disposicion*/
-  display: flex;
-  gap: 0.5em;
-  align-items: center;
-}
-
-.location-strong,
-.location-soft {
-  /*Formato texto*/
-  text-overflow: ellipsis;
-  font-size: 1rem;
-}
-.location-strong {
-  font-weight: 800;
-}
-
-.btn-directions {
-  /*Disposicion*/
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  /*Apariencia*/
-  border: none;
-  background: transparent;
-}
-
-.location-icon {
-  /*Tamaño*/
-  width: 2rem;
-  height: 2rem;
-  /*Apariencia*/
-  color: var(--ui-black);
-  background: transparent;
-}
-
-.btn-directions img{
-  width: 2rem;
-  height: 2rem;
-  filter: brightness(0) saturate(100%) invert(40%) sepia(95%) saturate(1850%) hue-rotate(199deg) brightness(96%) contrast(96%);
-}
-
-/* ===== */
-/* Cards */
-/* ===== */
 .info-card{
   /*Disposición*/
   display: flex;
@@ -137,50 +95,55 @@
   margin-bottom: 0.7rem;
 }
 
-.info-card--big,
-.info-grid,
-.description-section {
-  width: min(100%, 320px);
-}
-.info-card__header{
+/* ===== Info Card Grande ===== */
+.info-card-h2{
   /*Posicion*/
+  margin: 0;
   padding: 12px 10px;
   text-align: center;
   /*Apariencia*/
   background: var(--tabbar-active);
   color: var(--ui-black);
   font-weight: 900;
-  font-size: 1.1rem;
+  font-size: xx-large;
   border-radius: 18px 18px 0 0;
 }
-  
-/* ===== "Caja" grande ===== */
-.info-card--big .info-card__body{
+
+#monumento-periodo-titulo{
+  font-size: x-large;
+}
+
+.info-card-big .info-card-div{
   /*Disposicion*/
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 14px 12px 16px;
   box-sizing: border-box;
+
+  gap: 6px; /* controla separación limpia */
 }
-.info-card--big .illustration-big{
+
+.info-card-big .img-big{
   /*Tamaño*/
   width: 100%;
-  max-width: 220px;
-  max-height: 200px;
+  max-width: 300px;
+  max-height: 300px;
   object-fit: contain; 
   /*Posicion*/
   display: block;
   margin-top: 0;
 }
-.info-card__value{
-  /*Apariencia*/
-  text-align: center;
-  font-weight: 700;
-  font-size: 1.5rem;
+
+#monumento-periodo{
+  font-size: x-large;
+  font-weight: 500;
+  margin: 0;
+  margin-top: -40px; /* Ajustamos a ojo la imagen pq tienen mucho espacio por debajo */
 }
+
   
-/* ===== "Cajas" pequeñas ===== */
+/* ===== Info Card Pequeñas ===== */
 .info-grid{
   /*Disposición*/
   display: grid;
@@ -188,23 +151,27 @@
   gap: 5%;
 }
   
-.info-grid .info-card{
+.info-card-small{
   /*Tamaño*/
   max-width: 150px;
   width: 100%;
   aspect-ratio: 1/1;
 }
-.info-grid .info-card__header{
+
+.info-grid .info-card-h2{
+  height: 2em;
+  align-content: center;
   /*Apariencia*/
   font-size: 0.9rem;
   font-weight: bolder;
 }
-.info-grid .info-card__value{
-  /*Apariencia*/
-  font-size: 0.8rem;
-  font-weight: 600; 
+
+#monumento-tipo-titulo,
+#monumento-clasificacion-titulo{
+  font-size: medium;
 }
-.info-card__body--small{
+
+.info-card-small .info-card-div{
   /*Disposición*/
   display: flex;
   flex-direction: column;
@@ -213,16 +180,32 @@
   padding-top: 10px;
   gap: 10px;
 }
-  
-/* ====Iconos "cajas" pequeñas==== */
-.img-medium{
+
+.img-small{
   /*Tamaño*/
-  width: 50%;
-  height: 50%;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
   margin-top: 5%;
 }
 
+.info-card-text{
+  /*Apariencia*/
+  font-size: 0.8rem;
+  font-weight: 600; 
+}
+
+#monumento-tipo{
+  font-size: small;
+  font-weight: 500;
+}
+
+#monumento-clasificacion{
+  font-size: small;
+  font-weight: 500;
+}
+  
+/* ===== Descripción ===== */
 .description-section {
   /*Disposición*/
   margin: 0;
@@ -236,7 +219,8 @@
   text-align: left;
 }
 
-.monument-card__icon-button--favorite {
+/* ===== Botón favoritos ===== */
+.monument-detail-button {
   /*Disposición*/
   position: fixed;
   display: inline-flex;
@@ -257,18 +241,17 @@
   line-height: 1;
 }
 
-.monument-card__icon-button--favorite.is-favorite {
-  background: var(--ui-white);
-  color: var(--ui-black);
-}
-
-.monument-card__icon-button--favorite svg path {
+.monument-detail-button svg path {
   fill: none;
   stroke: currentColor;
   stroke-width: 2.1;
 }
 
-.monument-card__icon-button--favorite.is-favorite svg path {
+/*Se aplica si el monumento esta marcado como favorito*/
+.monument-detail-button.is-favorite svg path {
   fill: currentColor;
   stroke: currentColor;
 }
+
+
+

@@ -1,9 +1,11 @@
-<article class="monument-card">
-  <div class="monument-card__image" aria-hidden="true"></div>
+<li class="monument-card">
+  <div class="monument-card__image" aria-hidden="true">
+    <img [src]="imagenPeriodo()">
+  </div>
 
   <div class="monument-card__content">
     <h3 class="monument-card__title">{{ monumento().nombre }}</h3>
-    <p class="monument-card__meta"><u>Tipo</u>: {{ monumento().tipoMonumento }}</p>
+    <p class="monument-card__meta"><u>Tipo</u>: {{ nombreTipo() }}</p>
     <p class="monument-card__meta"><u>Localidad</u>: {{ monumento().localidad }}</p>
   </div>
 
@@ -14,7 +16,6 @@
             aria-label="Anadir o quitar de favoritos"
             [attr.aria-pressed]="esFavorito()"
             (click)="actualizarFavorito()">
-      <!--♥-->
       <svg viewBox="0 0 24 24"  width="30"  height="30" fill="currentColor" aria-hidden="true">
         <path d="M12 20l-7-7a4 4 0 0 1 6-5l1 1 1-1a4 4 0 0 1 6 5z"/>
       </svg>
@@ -22,11 +23,9 @@
     
     <a class="monument-card__icon-button monument-card__icon-button--detail" aria-label="Navegar a detalles del monumento"
             [routerLink]="['/monumentos', 'detalles', monumento().id]" routerLinkActive="active">
-      <!--&gt;-->
-      <!-->-->
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"  aria-hidden="true">
         <polyline points="9 6 15 12 9 18"></polyline>
       </svg>
   </a>
   </div>
-</article>
+</li>

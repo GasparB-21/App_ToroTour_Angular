@@ -4,8 +4,8 @@
 </app-toolbar>
 @if (categoriasAbiertas()) {
   <div class="calbar__picker calbar__picker--top">
-      <h3 style="margin: 0 0 10px 0; font-size: 14px; color: #666;">
-          Filtrar {{ tabActual() }} por tipo
+      <h3 style="margin: 0 0 10px 0; font-size: 14px; color: var(--ui-blacke);">
+          Filtrar {{ tabActual() }} por {{ isTabMonumentos() ? 'tipo' : 'categoría' }}
       </h3>
       <div class="categories-grid" style="display: flex; flex-wrap: wrap; gap: 8px;">
           <button class="filter-chip" 

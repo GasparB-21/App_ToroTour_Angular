@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, Signal, signal } from '@angular/core';
 import { Toolbar } from '../../../shared/layout/toolbar/toolbar';
 import { MonumentoCard } from '../../monumentos/componentes/monument-card/monumentos-card';
 import { MonumentoService } from '../../monumentos/services/monumentos.service';
@@ -85,5 +85,15 @@ export class Favoritos {
   
   seleccionarCategoria(categoria: 'monumentos' | 'eventos') {
     this.categoriaSeleccionada.set(categoria);
+  }
+
+  //Metodo para saber el tipo mostrado
+  isTabMonumentos()
+  {
+    if(this.tabActual() == 'monumentos')
+    {
+      return true
+    }
+    return false
   }
 }
