@@ -5,7 +5,7 @@
 
 @if (categoriasAbiertas()) {
     <div class="calbar__picker calbar__picker--top">
-        <h3 style="grid-column: span 2; margin: 0; font-size: 14px; color: #666;">Filtrar por categoría</h3>
+        <h3 style="grid-column: span 2; margin: 0; font-size: 14px; color: var(--ui-black);">Filtrar por categoría</h3>
         <div class="categories-grid" style="grid-column: span 2; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;">
             <button 
                 class="filter-chip" 
@@ -26,12 +26,13 @@
     </div>
 }
 
-<main class="wrap">
-    <section class="calbar" aria-label="Selector de mes">
-        <h1 class="page-title">Calendario de Eventos</h1>
-        <h1 class="calbar__title">{{ MONTHS[mesActual()] }} {{ anioActual() }}</h1>
+<main class="contenido-pagina">
+    <h1>Calendario de Eventos</h1>
+
+    <section class="calendar" aria-label="Selector de mes">
         
-        <div class="calbar__actions">
+        <div class="calendar-header">
+            <h3 class="calbar__title">{{ MONTHS[mesActual()] }} {{ anioActual() }}</h3>
             <button 
                 class="calbar__btn" 
                 (click)="pickerAbierto.set(!pickerAbierto()); categoriasAbiertas.set(false)"
@@ -63,35 +64,36 @@
                 </button>
             </div>
         }
-    </section>  
-    <section class="cal">
-        <div class="cal__week">
-            @for (d of DAYS_WEEK; track d) {
-                <span>{{ d }}</span>
-            }
+
+        <div class="calendar-layout">
+            <div class="cal__week">
+                @for (d of DAYS_WEEK; track d) {
+                    <span>{{ d }}</span>
+                }
+            </div>
+            <div class="cal__grid" role="grid">
+                @for (cell of grid(); track $index) {
+                    <div 
+                        class="cal__cell"
+                        [class.cal__cell--blank]="!cell.day"
+                        [class.cal__cell--today]="cell.isToday"
+                        [class.cal__cell--has-event]="cell.hasEvent"
+                        (click)="seleccionarDia(cell)"
+                        [attr.role]="cell.day ? 'gridcell' : null">
+
+                        <p class="cal__num">{{ cell.day }}</p>
+
+                        @if (cell.day && cell.hasEvent && cell.evento) {
+                            <span class="cal__badge" 
+                                [class]="'cal__badge--' + cell.evento.categoria.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')">
+                                {{ cell.evento.categoria }}
+                            </span>
+                        }
+                    </div>
+                }
+            </div>    
         </div>
-        <div class="cal__grid" role="grid">
-            @for (cell of grid(); track $index) {
-                <div 
-                    class="cal__cell"
-                    [class.cal__cell--blank]="!cell.day"
-                    [class.cal__cell--today]="cell.isToday"
-                    [class.cal__cell--has-event]="cell.hasEvent"
-                    (click)="cell.day && seleccionarDia(cell)"
-                    [attr.role]="cell.day ? 'gridcell' : null">
-
-                    <p class="cal__num">{{ cell.day }}</p>
-
-                    @if (cell.day && cell.hasEvent && cell.evento) {
-                        <span class="cal__badge" 
-                            [class]="'cal__badge--' + cell.evento.categoria.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')">
-                            {{ cell.evento.categoria }}
-                        </span>
-                    }
-                </div>
-            }
-        </div>    
-    </section>
+    </section>  
   
     <div class="cta-wrap">
         <a class="btn-pill" 

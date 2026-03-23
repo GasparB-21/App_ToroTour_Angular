@@ -23,35 +23,11 @@ export class CalendarioEventos implements OnInit {
   categoriasAbiertas = signal(false);
   
   eventoSeleccionado = signal<Evento | null>(null);
-  //REVISAr
+  //REVISAR
   listaEventos = signal<Evento[]>([]);
   
   searchTerm = signal('');
   categoriaSeleccionada = signal<string | null>(null);
-
-  //Servicio 
-  /*
-  private _eventosService = inject(EventosService)
-  private allEventos = this._eventosService.getEventos()
-
-  calendario = computed(() => {
-                                //Obtenemos los datos de la fecha actual
-                                const ano = this.hoy.getFullYear();
-                                const mes = this.hoy.getMonth();
-
-                                //Obtenemos la lista de eventos
-                                const eventos = this._eventosService.getEventos()
-                                const cells = [];
-
-                                //
-                                const diaInicio = new Date(ano, mes, 1);
-                                const espaciosEnBlanco = (diaInicio.getDay() + 6) % 7;
-                                const totalDays = new Date(y, m + 1, 0).getDate();
-
-
-                              }
-)
-*/
 
 
   constructor(private eventosService: EventosService) {}
@@ -123,9 +99,8 @@ export class CalendarioEventos implements OnInit {
   }
   
   seleccionarDia(cell: any) {
-    if (cell.evento) {
-      this.eventoSeleccionado.set(cell.evento);
-    }
+    // Si no hay evento, limpamos la card seleccionada
+    this.eventoSeleccionado.set(cell?.evento ?? null);
   }
 
   aplicarFiltro(m: string, y: string) {

@@ -64,14 +64,15 @@
 .map-button-actions {
   /*Posicion*/
   position: absolute;
-  right: calc(100% + 10px);
-  top: 40%;
+  right: calc(100% + 56px); /* más cerca del stack principal */
+  top: 42%; /* centrado vertical con los botones principales */
   transform: translateY(-50%);
   /*Disposición*/
   display: grid;
-  grid-template-columns: repeat(3, 0px);
-  grid-template-rows: repeat(3, 0px);
-  gap: 8px;
+  grid-template-columns: repeat(3, 56px);
+  grid-template-rows: repeat(3, 56px);
+  column-gap: 2px;
+  row-gap: 2px;
   pointer-events: auto;
 }
 
