@@ -18,6 +18,10 @@ export const monumentosRoutes: Routes = [
             {
                 path: 'detalles/:id',
                 component: DetalleMonumento
+            },
+            {
+                path: '**',
+                redirectTo: 'mapa'
             }
         ]
     }
