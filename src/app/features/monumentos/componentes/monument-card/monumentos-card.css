@@ -21,14 +21,25 @@
   box-shadow: 0 6px 14px rgba(17, 17, 17, 0.12);
 }
 
+/*
 .monument-card__image {
+  /*Tamaño y forma/
+  inline-size: 72px;
+  block-size: 72px;
+  border-radius: 16px;
+  /*Color y borde/
+  background: linear-gradient(135deg, var(--ui-darker-grey), var(--ui-grey));
+  border: 1px solid rgba(17, 17, 17, 0.12);
+}
+*/
+
+.monument-card__image img{
   /*Tamaño y forma*/
   inline-size: 72px;
   block-size: 72px;
   border-radius: 16px;
   /*Color y borde*/
-  background: linear-gradient(135deg, var(--ui-darker-grey), var(--ui-grey));
-  border: 1px solid rgba(17, 17, 17, 0.12);
+  border: 2px solid var(--ui-black);
 }
 
 .monument-card__content {

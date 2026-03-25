@@ -1,7 +1,10 @@
 import { Component, inject, input, output, computed } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+
 import { Monumento } from '../../models/monumento.interface';
+
 import { MonumentoService } from '../../services/monumentos.service';
+import { ImagenesMonumentosService } from '../../services/imagenes-monumentos.service';
 
 @Component({
   selector: 'app-monument-card',
@@ -13,6 +16,17 @@ import { MonumentoService } from '../../services/monumentos.service';
 export class MonumentoCard {
   monumento = input.required<Monumento>();
   //favorito = output
+  private _imagenesService = inject(ImagenesMonumentosService);
+
+  //Obtenemos la imagen y tipo a partir de los diccionarios
+  readonly imagenPeriodo = computed(() => {
+    const monumento = this.monumento();
+    return this._imagenesService.getImagenPeriodo(monumento?.periodoHistorico);
+  });
+  readonly nombreTipo = computed(() => {
+    const monumento = this.monumento();
+    return this._imagenesService.getNombreTipo(monumento?.tipoMonumento);
+  }); 
 
   //FUNCIONALIDADES
   //Añadir a favoritos

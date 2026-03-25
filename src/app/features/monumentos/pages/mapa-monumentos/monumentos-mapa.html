@@ -5,7 +5,7 @@
     </app-toolbar>
     @if (categoriasAbiertas()) {
         <div class="calbar__picker calbar__picker--top">
-            <h3 style="grid-column: span 2; margin: 0; font-size: 14px; color: #666;">Filtrar por clasificación</h3>
+            <h3 style="grid-column: span 2; margin: 0; font-size: 14px; color: var(--ui-black);">Filtrar por tipo</h3>
             <div class="categories-grid" style="grid-column: span 2; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;">
                 <button class="filter-chip" [class.active]="clasificacionSeleccionada() === null" (click)="filtrarPorCategoria(null)">
                     Todos

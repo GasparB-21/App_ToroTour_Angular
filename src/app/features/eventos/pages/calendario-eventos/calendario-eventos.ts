@@ -1,4 +1,4 @@
-import { Component, computed, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { Evento } from '../../models/evento.interface';
 import { EventosService } from '../../services/eventos.service';
 import { CardPreview } from "../../../../shared/layout/card-preview/card-preview";
@@ -23,18 +23,44 @@ export class CalendarioEventos implements OnInit {
   categoriasAbiertas = signal(false);
   
   eventoSeleccionado = signal<Evento | null>(null);
+  //REVISAr
   listaEventos = signal<Evento[]>([]);
   
   searchTerm = signal('');
   categoriaSeleccionada = signal<string | null>(null);
 
-  constructor(private eventosService: EventosService) {}
+  //Servicio 
+  /*
+  private _eventosService = inject(EventosService)
+  private allEventos = this._eventosService.getEventos()
 
+  calendario = computed(() => {
+                                //Obtenemos los datos de la fecha actual
+                                const ano = this.hoy.getFullYear();
+                                const mes = this.hoy.getMonth();
+
+                                //Obtenemos la lista de eventos
+                                const eventos = this._eventosService.getEventos()
+                                const cells = [];
+
+                                //
+                                const diaInicio = new Date(ano, mes, 1);
+                                const espaciosEnBlanco = (diaInicio.getDay() + 6) % 7;
+                                const totalDays = new Date(y, m + 1, 0).getDate();
+
+
+                              }
+)
+*/
+
+
+  constructor(private eventosService: EventosService) {}
   ngOnInit() {
     this.eventosService.getEventos().subscribe(data => {
       this.listaEventos.set(data);
     });
   }
+
 
   // Computed: Genera la rejilla automáticamente cuando cambia el mes, año o la lista de eventos
   grid = computed(() => {

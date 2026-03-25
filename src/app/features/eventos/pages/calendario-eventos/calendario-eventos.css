@@ -7,17 +7,35 @@
   box-sizing: border-box;
 }
 
+/* Título de la página */
+.page-title {
+  text-align: center;
+  margin: 16px 0;
+  padding: 12px 16px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ui-black);
+  position: relative;
+  z-index: 2100;
+  background: #e6f3ff;
+  border-radius: 10px;
+}
+
 /* --- Modificación en el calendario --- */
 .cal {
   flex: 1;
   display: flex;
   flex-direction: column;
   min-height: 0;
+  width: 100%;
+  max-width: min(980px, 100vw);
+  margin: 0 auto;
+  padding: 0 8px;
   border: 2px solid var(--ui-black);
   border-top: 0;
   background: white;
-  overflow-x: auto; 
   -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
 }
   
   /* --- Barra Superior (Mes/Año) --- */
@@ -25,8 +43,10 @@
 .calbar {  
   position: relative;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
   background-color: #007BFF;
   padding: 16px 20px;
   z-index: 20; 
@@ -36,12 +56,19 @@
   width: 40px;
   display: flex;
   justify-content: center;
+  align-self: flex-end;
 }
     
 .calbar__title {  
   margin: 0;
-  font-size: 24px;
-  font-weight: 600;
+  width: auto;
+  text-align: left;
+  font-weight: 700;
+  background: #003c82;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  align-self: flex-start;
 }
     
 .calbar__btn {
@@ -91,8 +118,9 @@
   /* --- Días de la Semana (L M X J V S D) --- */
 .cal__week {  
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  min-width: 600px;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  width: 100%;
+  box-sizing: border-box;
   background-color: #F8F9FA; 
   color: #6C757D; 
   text-align: center;
@@ -105,11 +133,14 @@
   /* --- Rejilla de Días (The Grid) --- */  
 .cal__grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   grid-auto-rows: minmax(80px, 1fr); 
+  gap: 2px;
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
   min-height: 0;
-  min-width: 600px; 
-}  
+}
   
   /* --- Estilo Base de Cada Celda (Día) --- */
 .cal__cell {
@@ -327,10 +358,6 @@
 
 @media (min-width: 1024px) {
     .cal__grid {
-      min-width: auto; 
       grid-template-rows: repeat(6, 1fr); 
-    }
-    .cal__week {
-      min-width: auto;
     }
 }

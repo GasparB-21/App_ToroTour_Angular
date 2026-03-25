@@ -1,3 +1,5 @@
 <!--app-toolbar/-->
 <router-outlet />
-<app-tabbar />
+@if (showTabbar) {
+  <app-tabbar />
+}

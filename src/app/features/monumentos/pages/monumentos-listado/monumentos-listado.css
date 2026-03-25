@@ -2,7 +2,6 @@
 /* =========================== */
 /* Pantalla listado monumentos */
 /* =========================== */
-
 .monumentos-page {
   /*La seccion ocupa solo el hueco libre entre toolbar y tabbar*/
   /*Disposición*/
@@ -22,6 +21,10 @@ h1 {
   margin-top: 0;
   margin-bottom: 20px;
   text-align: center;
+}
+
+ul{
+  width: 100%;
 }
 
 .btn-pill {
@@ -47,19 +50,23 @@ h1 {
   text-decoration: none;
 }
 
+
+/* ================ */
+/* FILTRO (REVISAR) */
+/* ================ */
 .calbar__picker {
   position: absolute;
   top: 100%; 
   right: 12px;
   left: 12px; 
-  background: white;
+  background: var(--ui-white);
   border-radius: 12px;
   padding: 20px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 15px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-  border: 1px solid #eee;
+  border: 1px solid var(--ui-white);
   z-index: 100;
   animation: slideDown 0.3s ease-out;
   max-height: 300px;
@@ -71,35 +78,35 @@ h1 {
   top: var(--toolbar-height);
   left: 12px;
   right: 12px;
-  z-index: 2000; 
+  z-index: 2000;
 }
 
 .calbar__picker select {
-padding: 10px;  
-border-radius: 8px;
-border: 2px solid #f0f0f0;
-background: #f9f9f9;
-font-size: 16px;
-color: #333;
-outline: none;
+  padding: 10px;  
+  border-radius: 8px;
+  border: 2px solid var(--ui-white);
+  background: var(--ui-white);
+  font-size: 16px;
+  color: var(--ui-black);
+  outline: none;
 }
   
 .calbar__picker select:focus {  
-border-color: #007BFF;
+  border-color: var(--tabbar-active);
 }
 
 .filter-chip {
-padding: 6px 14px;
-border-radius: 20px;
-border: 1.5px solid var(--ui-black);
-background: white;
-font-weight: 600;
-font-size: 13px;
-cursor: pointer;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--ui-black);
+  background: var(--ui-white);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
 }
 
 .filter-chip.active {
-background: #007BFF;
-color: white;
-border-color: #007BFF;
+  background: var(--tabbar-active);
+  color: var(--ui-white);
+  border-color: var(--tabbar-active);
 }  
