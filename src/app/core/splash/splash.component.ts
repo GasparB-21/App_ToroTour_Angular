@@ -13,7 +13,7 @@ export class SplashComponent implements OnInit {
   ngOnInit(): void {
     // Espera 1 segundo y luego redirige
     setTimeout(() => {
-      this.router.navigate(['/monumentos']);
+      this.router.navigate(['monumentos', 'mapa']);
     }, 1500);
   }
 }

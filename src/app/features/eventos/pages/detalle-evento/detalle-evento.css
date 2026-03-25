@@ -17,7 +17,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 15px;
+  padding: 16px 56px;
   position: relative;
   border-bottom: 2px solid var(--ui-white);
   min-height: 60px;
@@ -31,16 +31,24 @@
 
 .btn-close {
   position: absolute;
-  right: 15px;
+  top: 14px;
+  left: 15px;
   background: var(--ui-black);
   color: var(--ui-white);
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: flex;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
+}
+
+.btn-close svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+  transform: translateX(-2px);
 }
 
 /* Área de contenido con scroll */

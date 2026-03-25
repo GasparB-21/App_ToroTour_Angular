@@ -49,7 +49,7 @@ export class OnboardingPage {
     } else {
       // Marca el onboarding como completado antes de navegar
       this.onboardingService.completeOnboarding();
-      this.router.navigate(['/monumentos']);
+      this.router.navigate(['monumentos', 'mapa']);
     }
   }
 

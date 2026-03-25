@@ -8,7 +8,7 @@ export const monumentosRoutes: Routes = [
         path: '',
         children: [
             {
-                path: '',
+                path: 'mapa',
                 component: MapaMonumentos
             },
             {

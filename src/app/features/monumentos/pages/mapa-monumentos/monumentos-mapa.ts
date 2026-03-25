@@ -35,12 +35,14 @@ export class MapaMonumentos implements OnInit, AfterViewInit {
   private _markers: L.Marker[] = [];
 
   readonly FAB_LAYOUT: any = {
+    /*
     'pan-up':    { x: -120, y: -60 }, 
     'zoom-in':   { x: -60, y: -60 }, 
     'pan-right': { x: -60, y: 0 }, 
     'zoom-out':  { x:   -60, y:  60 }, 
     'pan-down':  { x: -120, y:  60 }, 
     'pan-left':  { x: -180, y: 0 }, 
+    */
   };
 
   ngOnInit() {

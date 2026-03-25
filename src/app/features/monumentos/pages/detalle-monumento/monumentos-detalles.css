@@ -25,7 +25,7 @@
   justify-content: center;
   /*Tamaño y espaciado*/
   height: 88px;
-  padding: 16px 56px 16px 20px;
+  padding: 16px 56px;
   box-sizing: border-box;
   /*Color*/
   background: var(--tabbar-active);
@@ -42,17 +42,24 @@
   /*Posición*/
   position: absolute;
   top: 15px;
-  right: 15px;
+  left: 15px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   /*Tamaño y forma*/
-  width: 25px;
-  height: 25px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   /*Color*/
   color: var(--ui-white);
   background: var(--ui-black);
+}
+
+.btn-close svg {
+  width: 24px;
+  height: 24px;
+  display: block;
+  transform: translateX(-2px);
 }
 
 /* ================ */
