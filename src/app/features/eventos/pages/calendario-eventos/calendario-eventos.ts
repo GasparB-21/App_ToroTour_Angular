@@ -23,7 +23,6 @@ export class CalendarioEventos implements OnInit {
   categoriasAbiertas = signal(false);
   
   eventoSeleccionado = signal<Evento | null>(null);
-  //REVISAR
   listaEventos = signal<Evento[]>([]);
   
   searchTerm = signal('');

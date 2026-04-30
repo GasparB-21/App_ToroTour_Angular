@@ -12,7 +12,7 @@ Instakar los tipos:
 npm install papaparse
 npm install --save-dev @types/papaparse
 */
-declare var Papa: any;
+//declare var Papa: any;
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +22,12 @@ export class MonumentoService {
 
   //TRATAMIENTO DATOS CSV JCyL
   // Ruta al archivo con los datos de la JCyL
-  private readonly csv = '/csv/relacion-monumentos.csv';
+  //private readonly csv = '/csv/relacion-monumentos.csv';
+  private readonly apiUrl = 'http://localhost:3001/api/monumentos';
   constructor(private http: HttpClient) {}
 
   //Esta función devolvera un Observable q emitira un array de monumentos
+  /*
   getMonumentos(): Observable<Monumento[]> {
     //Leemos el CSV y especificamos q el formato es "text"
     return this.http.get(this.csv, { responseType: 'text' }).pipe(
@@ -66,13 +68,70 @@ export class MonumentoService {
       })
     );
   }
+  */
+
+  getMonumentos(): Observable<Monumento[]> {
+    return this.http.get<{ data: any[], message: string }>(this.apiUrl).pipe(
+      map(response => response.data),
+      map(dataArray => dataArray.map(item => ({
+        ...item,
+        id: item._id,
+        nombre: item.nombre,
+        tipoMonumento: item.tipoMonumento,
+        identificadorBienInteresCultural: item.identificadorBienInteresCultural,
+        calle: item.calle,
+        clasificacion: item.clasificacion,
+        tipoConstruccion: item.tipoConstruccion,
+        codigoPostal: item.codigoPostal,
+        descripcion: item.Descripcion,
+        periodoHistorico: item.periodoHistorico,
+        provincia: item.poblacion_provincia,
+        municipio: item.poblacion_municipio,
+        localidad: item.poblacion_localidad,
+        coordenadas: {
+          latitud: parseFloat(item.coordenadas?.latitud),
+          longitud: parseFloat(item.coordenadas?.longitud)
+        }
+      }))),
+      map(monumentos => monumentos.filter(m => this.esMonumentoValido(m)))
+    );
+  }
 
   // devuelve undefined si no existe ningún monumento con ese id
+  /*
   getMonumentoById(id: string): Observable<Monumento | undefined> {
     const normalizedId = id.trim();
 
     return this.getMonumentos().pipe(
       map(monumentos => monumentos.find(m => m.id === normalizedId))
+    );
+  }
+  */
+  getMonumentoById(id: string): Observable<Monumento | undefined> {
+    return this.http.get<{ data: any, message: string }>(`${this.apiUrl}/${id}`).pipe(
+      map(response => {
+        const item = response.data;
+        if (!item) return undefined;
+        return {
+          id: item._id,
+          nombre: item.nombre,
+          tipoMonumento: item.tipoMonumento,
+          identificadorBienInteresCultural: item.identificadorBienInteresCultural,
+          calle: item.calle,
+          clasificacion: item.clasificacion,
+          tipoConstruccion: item.tipoConstruccion,
+          codigoPostal: item.codigoPostal,
+          descripcion: item.Descripcion,
+          periodoHistorico: item.periodoHistorico,
+          provincia: item.poblacion_provincia,
+          municipio: item.poblacion_municipio,
+          localidad: item.poblacion_localidad,
+          coordenadas: {
+            latitud: parseFloat(item.coordenadas?.latitud),
+            longitud: parseFloat(item.coordenadas?.longitud)
+          }
+        } as Monumento;
+      })
     );
   }
 

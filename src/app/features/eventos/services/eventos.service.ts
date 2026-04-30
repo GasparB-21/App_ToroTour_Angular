@@ -4,16 +4,18 @@ import { Observable, map } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
 import { Evento } from '../models/evento.interface';
 
-declare var Papa: any;
+//declare var Papa: any;
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventosService {
-  private readonly csv = '/csv/eventos-de-la-agenda-cultural-categorizados-y-geolocalizados.csv';
+//  private readonly csv = '/csv/eventos-de-la-agenda-cultural-categorizados-y-geolocalizados.csv';
+  private readonly apiUrl = 'http://localhost:3001/api/eventos';
   constructor(private http: HttpClient) {}
 
   //Esta función devolvera un Observable q emitira un array de eventos
+  /*
   getEventos(): Observable<Evento[]> {
     return this.http.get(this.csv, { responseType: 'text' }).pipe(
       map(csvData => {
@@ -64,13 +66,91 @@ export class EventosService {
       })
     );
   }
+*/
+
+getEventos(): Observable<Evento[]> {
+  return this.http.get<{ data: any[], message: string }>(this.apiUrl).pipe(
+    map(response => response.data),
+    map(dataArray => dataArray.map(item => ({
+      ...item,
+      id: item._id,
+      titulo: item.Título,
+      descripcion: item.Descripción,
+      tematica: item.Temática,
+      categoria: item.Categoría,
+      fecha: {
+        inicio: item['Fecha de inicio'],
+        fin: item['Fecha de fin']
+      },
+      hora: {
+        inicio: item['Hora inicio'],
+        fin: item['Hora fin'] || ''
+      },
+      precio: item.Precio,
+      destinatarios: item.Destinatarios,
+      imagen: item['Imagen del evento'],
+      lugarCelebracion: item['Lugar de celebración'],
+      nombreLocalidad: item['Nombre Localidad'],
+      nombreProvincia: item['Nombre Provincia'],
+      calle: item.Calle,
+      cp: item.CP,
+      eventoEnBiblioteca: item['Evento en biblioteca'],
+      coordenadas: {
+        latitud: parseFloat(item.Latitud),
+        longitud: parseFloat(item.Longitud)
+      },
+      enlace: item['Enlace al contenido']
+    }))),
+    map(eventos => eventos.filter(e => this.esEventoValido(e)))
+  );
+}
 
   // devuelve undefined si no existe ningún evento con ese id
+  /*
   getEventoById(id: string): Observable<Evento | undefined> {
     const normalizedId = id.trim();
 
     return this.getEventos().pipe(
       map(eventos => eventos.find(e => e.id === normalizedId))
+    );
+  }
+  */
+
+  getEventoById(id: string): Observable<Evento | undefined> {
+    return this.http.get<{ data: any, message: string }>(`${this.apiUrl}/${id}`).pipe(
+      map(response => {
+        const item = response.data;
+        if (!item) return undefined;
+        return {
+          id: item._id,
+          titulo: item.Título,
+          descripcion: item.Descripción,
+          tematica: item.Temática,
+          categoria: item.Categoría,
+          fecha: {
+            inicio: item['Fecha de inicio'],
+            fin: item['Fecha de fin']
+          },
+          hora: {
+            inicio: item['Hora inicio'],
+            fin: item['Hora fin'] || ''
+          },
+          precio: item.Precio,
+          destinatarios: item.Destinatarios,
+          imagen: item['Imagen del evento'],
+          lugarCelebracion: item['Lugar de celebración'],
+          nombreLocalidad: item['Nombre Localidad'],
+          nombreProvincia: item['Nombre Provincia'],
+          calle: item.Calle,
+          cp: item.CP,
+          eventoEnBiblioteca: item['Evento en biblioteca'],
+          coordenadas: {
+            latitud: parseFloat(item.Latitud),
+            longitud: parseFloat(item.Longitud)
+          },
+          enlace: item['Enlace al contenido']
+        } as Evento;
+      })
     );
   }
 
