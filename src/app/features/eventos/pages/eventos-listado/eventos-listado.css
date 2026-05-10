@@ -1,8 +1,8 @@
 .eventos-page {
     position: fixed;
-    top: var(--toolbar-height);
+    top: var(--banner-height);
     right: 0;
-    bottom: var(--tabbar-height);
+    bottom: var(--toolbar-height);
     left: 0;
     padding: 16px var(--page-side-gap) 96px;
     box-sizing: border-box;
@@ -19,7 +19,7 @@ h1 {
 .btn-pill {
     position: fixed;
     left: 50%;
-    bottom: calc(var(--tabbar-height) + 12px);
+    bottom: calc(var(--toolbar-height) + 12px);
     transform: translateX(-50%);
     z-index: 1100;
     display: block;
@@ -57,11 +57,12 @@ h1 {
 }
 
 .calbar__picker--top {
-    position: fixed; 
-    top: var(--toolbar-height);
+    position: fixed;
+    bottom: var(--toolbar-height);
+    top: auto;
     left: 12px;
     right: 12px;
-    z-index: 2000; 
+    z-index: 2000;
 }
 
 .calbar__picker select {

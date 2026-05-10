@@ -1,10 +1,10 @@
 .contenido-pagina {
   display: flex;
   flex-direction: column;
-  height: calc(100dvh - var(--toolbar-height) - var(--tabbar-height));
-  padding-top: var(--toolbar-height);
+  height: calc(100dvh - var(--banner-height) - var(--toolbar-height));
+  padding-top: var(--banner-height);
   /* Permite que los overlays se vean completos */
-  overflow: visible; 
+  overflow: visible;
   box-sizing: border-box;
 }
 
@@ -17,11 +17,12 @@
 /*===============*/
 
 .calbar__picker--top {
-  position: fixed; 
-  top: var(--toolbar-height);
+  position: fixed;
+  bottom: var(--toolbar-height);
+  top: auto;
   left: 12px;
   right: 12px;
-  z-index: 2000; 
+  z-index: 2000;
 }
 
 .filter-chip {
@@ -306,7 +307,7 @@
   /*Disposición*/
   position: fixed;
   left: 50%;
-  bottom: calc(var(--tabbar-height) + 2rem);
+  bottom: calc(var(--toolbar-height) + 2rem);
   transform: translateX(-50%);
   z-index: 1100;
   display: block;

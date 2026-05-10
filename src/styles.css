@@ -24,6 +24,7 @@
   --ui-event-yellow: #f7eb5e;
 
   /* ===== Alturas ===== */
+  --banner-height: 56px;
   --toolbar-height: 75px;
   --tabbar-height: 72px;
   --page-side-gap: 16px;

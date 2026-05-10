@@ -1,5 +1,25 @@
-<!--app-toolbar/-->
-<router-outlet />
-@if (showTabbar) {
-  <app-tabbar />
-}
+<mat-sidenav-container class="app-container">
+  <mat-sidenav #sidenav mode="over" class="app-sidenav">
+    <nav class="sidenav-nav" aria-label="Navegación principal">
+      <a routerLink="/monumentos" routerLinkActive="sidenav-active" (click)="sidenav.close()">
+        <img src="icons/tabbar/icon-monumentos.png" class="sidenav-icon" alt="" aria-hidden="true">
+        <span>Monumentos</span>
+      </a>
+      <a routerLink="/eventos" routerLinkActive="sidenav-active" (click)="sidenav.close()">
+        <img src="icons/tabbar/icon-eventos.png" class="sidenav-icon" alt="" aria-hidden="true">
+        <span>Eventos</span>
+      </a>
+      <a routerLink="/favoritos" routerLinkActive="sidenav-active" (click)="sidenav.close()">
+        <img src="icons/tabbar/icon-favoritos.png" class="sidenav-icon" alt="" aria-hidden="true">
+        <span>Favoritos</span>
+      </a>
+    </nav>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    @if (showBanner) {
+      <app-banner (onMenuClick)="sidenav.toggle()" />
+    }
+    <router-outlet />
+  </mat-sidenav-content>
+</mat-sidenav-container>

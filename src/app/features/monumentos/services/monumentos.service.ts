@@ -10,11 +10,6 @@ import { environment } from '../../../../environments/environment';
 type FavoritoApi = {
   tipo?: string;
   itemID?: string | number;
-  /*itemId?: string | number;
-  item_id?: string | number;
-  elementoId?: string | number;
-  idElemento?: string | number;
-  monumentoId?: string | number;*/
 };
 
 @Injectable({
@@ -124,11 +119,6 @@ export class MonumentoService {
   private extraerItemIDFavorito(favorito: FavoritoApi): string {
     return String(
       favorito.itemID ??
-      /*favorito.itemId ??
-      favorito.item_id ??
-      favorito.elementoId ??
-      favorito.idElemento ??
-      favorito.monumentoId ??*/
       ''
     ).trim();
   }

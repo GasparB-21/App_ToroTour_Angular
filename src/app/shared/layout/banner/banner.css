@@ -1,0 +1,39 @@
+.banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: var(--banner-height);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  background-color: var(--ui-white);
+  border-bottom: 2px solid var(--ui-black);
+  box-sizing: border-box;
+}
+
+.banner__menu-btn {
+  display: grid;
+  place-items: center;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--ui-black);
+}
+
+.banner__logo {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.banner__title {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--ui-black);
+  letter-spacing: 0.02em;
+}

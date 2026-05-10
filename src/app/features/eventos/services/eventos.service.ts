@@ -7,11 +7,6 @@ import { Evento } from '../models/evento.interface';
 type FavoritoApi = {
   tipo?: string;
   itemID?: string | number;
-  /*itemId?: string | number;
-  item_id?: string | number;
-  elementoId?: string | number;
-  idElemento?: string | number;
-  eventoId?: string | number;*/
 };
 
 @Injectable({
@@ -114,11 +109,6 @@ export class EventosService {
   private extraerItemIDFavorito(favorito: FavoritoApi): string {
     return String(
       favorito.itemID ??
-      /*favorito.itemId ??
-      favorito.item_id ??
-      favorito.elementoId ??
-      favorito.idElemento ??
-      favorito.eventoId ??*/
       ''
     ).trim();
   }

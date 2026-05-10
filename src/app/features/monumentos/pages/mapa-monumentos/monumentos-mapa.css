@@ -1,7 +1,8 @@
 /* Contenedor del Mapa */
 #map {
   /*Disposición*/
-  height: calc(100vh - var(--tabbar-height));
+  height: calc(100vh - var(--banner-height) - var(--toolbar-height));
+  margin-top: var(--banner-height);
   width: 100%;
   display: block;
   display: flex;
@@ -150,8 +151,9 @@
 }
 
 .calbar__picker--top {
-  position: fixed; 
-  top: var(--toolbar-height);
+  position: fixed;
+  bottom: var(--toolbar-height);
+  top: auto;
   left: 12px;
   right: 12px;
   z-index: 2000;
