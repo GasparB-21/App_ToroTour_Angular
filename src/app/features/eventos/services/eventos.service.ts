@@ -13,7 +13,7 @@ type FavoritoApi = {
   providedIn: 'root',
 })
 export class EventosService {
-  private readonly apiUrl = environment.API_URL;
+  private readonly apiUrl = environment.apiUrl;
   private readonly eventosUrl = `${this.apiUrl}/eventos`;
   private readonly favoritosUrl = `${this.apiUrl}/favoritos`;
   listaEventosFavoritos = signal<Evento[]>([]);

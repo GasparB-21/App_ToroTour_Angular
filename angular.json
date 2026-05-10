@@ -65,7 +65,10 @@
             "builder": "@angular-devkit/build-angular:dev-server",
             "configurations": {
               "production": { "buildTarget": "ToroTour:build:production" },
-              "development": { "buildTarget": "ToroTour:build:development" }
+              "development": {
+                "buildTarget": "ToroTour:build:development",
+                "proxyConfig": "proxy.conf.json"
+              }
             },
             "defaultConfiguration": "development"
           }

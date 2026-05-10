@@ -17,7 +17,7 @@ type FavoritoApi = {
 })
 
 export class MonumentoService {
-  private readonly apiUrl = environment.API_URL;
+  private readonly apiUrl = environment.apiUrl;
   private readonly monumentosUrl = `${this.apiUrl}/monumentos`;
   private readonly favoritosUrl = `${this.apiUrl}/favoritos`;
   //Lista con los monumentos favoritos para mostrar en la interfaz, se mantiene sincronizada con la API
