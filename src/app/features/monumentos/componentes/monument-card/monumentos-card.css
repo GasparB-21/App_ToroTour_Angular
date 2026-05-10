@@ -15,10 +15,10 @@
   padding: 12px;
   box-sizing: border-box;
   /*Color, borde y forma*/
-  background-color: var(--ui-white);
+  background-color: var(--tabbar-active);
   border: 2px solid var(--ui-black);
   border-radius: 20px;
-  box-shadow: 0 6px 14px rgba(17, 17, 17, 0.12);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
 }
 
 /*
@@ -39,6 +39,7 @@
   block-size: 72px;
   border-radius: 16px;
   /*Color y borde*/
+  background-color: var(--ui-white);
   border: 2px solid var(--ui-black);
 }
 
@@ -55,7 +56,7 @@
 .monument-card__title {
   margin: 0;
   /*Formato texto*/
-  color: var(--ui-black);
+  color: var(--ui-white);
   font-size: 1.05rem;
   font-weight: 800;
   line-height: 1.2;
@@ -64,8 +65,9 @@
 .monument-card__meta {
   margin: 0;
   /*Opciones de texto*/
-  color: var(--ui-darker-grey);
+  color: var(--ui-black);
   font-size: 0.88rem;
+  font-weight: 600;
   line-height: 1.2;
 }
 
@@ -96,8 +98,6 @@
 
 .monument-card__icon-button--favorite {
   border-radius: 50%;
-  background-color: var(--ui-white);
-  color: var(--ui-black);
 }
 
 .monument-card__icon-button--detail {

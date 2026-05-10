@@ -1,3 +1,40 @@
+/* ================================= */
+/* Botón favoritos (esquina sup-der) */
+/* ================================= */
+.btn-favoritos-mapa {
+  position: fixed;
+  top: calc(var(--banner-height) + 12px);
+  right: 12px;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--ui-black);
+  background: var(--ui-white);
+  color: var(--ui-black);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  appearance: none;
+}
+
+.btn-favoritos-mapa svg path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+.btn-favoritos-mapa--active {
+  background: var(--tabbar-active);
+  color: var(--ui-black);
+}
+
+.btn-favoritos-mapa--active svg path {
+  fill: var(--ui-black);
+  stroke: var(--ui-black);
+}
+
 /* Contenedor del Mapa */
 #map {
   /*Disposición*/
@@ -41,7 +78,7 @@
   /*Apariencia*/
   border: 2px solid var(--ui-black);
   appearance: none;
-  box-shadow: 0 4px 10px var(--ui-black);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .map-button-location,
@@ -92,7 +129,7 @@
   background: var(--ui-white);
   color: var(--ui-black);
   appearance: none;
-  box-shadow: 0 4px 10px var(--ui-black);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   font-size: 1.2rem;
   line-height: 1;
 }
@@ -127,15 +164,39 @@
   grid-row: 2;
 }
 
+/*========================*/
+/* Boton cambiar de vista */
+/*========================*/
+.btn-pill {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--toolbar-height) + 12px);
+  transform: translateX(-50%);
+  z-index: 1100;
+  display: block;
+  width: fit-content;
+  margin: 0;
+  padding: 10px 24px;
+  background-color: var(--background-color);
+  color: var(--ui-white);
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 16px;
+  border: 2px solid var(--ui-black);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
 /* ================================ */
 /* FILTRO (REVISAR - Esta repetido) */
 /* ================================ */
 
 .calbar__picker {
   position: absolute;
-  top: 100%; 
+  top: 100%;
   right: 12px;
-  left: 12px; 
+  left: 12px;
   background: var(--ui-white);
   border-radius: 12px;
   padding: 20px;
@@ -143,11 +204,11 @@
   grid-template-columns: 1fr 1fr;
   gap: 15px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-  border: 1px solid var(--ui-white);
+  border: 1px solid var(--ui-medium-grey);
   z-index: 100;
   animation: slideDown 0.3s ease-out;
   max-height: 300px;
-  overflow-y: auto;    
+  overflow-y: auto;
 }
 
 .calbar__picker--top {
@@ -160,16 +221,16 @@
 }
 
 .calbar__picker select {
-  padding: 10px;  
+  padding: 10px;
   border-radius: 8px;
-  border: 2px solid var(--ui-white);
-  background: var(--ui-white);
+  border: 2px solid var(--ui-medium-grey);
+  background: var(--ui-grey);
   font-size: 16px;
   color: var(--ui-black);
   outline: none;
 }
-  
-.calbar__picker select:focus {  
+
+.calbar__picker select:focus {
   border-color: var(--tabbar-active);
 }
 
@@ -187,4 +248,4 @@
   background: var(--tabbar-active);
   color: var(--ui-white);
   border-color: var(--tabbar-active);
-}  
+}

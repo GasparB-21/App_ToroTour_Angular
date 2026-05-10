@@ -1,17 +1,16 @@
 .card-map {
     /*Posición*/
     position: fixed;
-    bottom: var(--tabbar-height);
+    bottom: var(--toolbar-height);
     left: 2px;
     right: 2px;
     padding: 16px 18px;
     z-index: 1500;
     /*Apariencia*/
-    background: var(--ui-white);
-    border-radius: 28px 28px 0 0; 
+    background: var(--background-color);
+    border-radius: 28px 28px 0 0;
     box-shadow: 0 -4px 15px rgba(0,0,0,0.75);
     border: 1px solid var(--ui-black);
-    
 }
 
 .card-content {
@@ -32,7 +31,7 @@
     margin: 0;
     font-size: 22px;
     font-weight: 800;
-    color: var(--ui-black);
+    color: var(--ui-white);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -43,7 +42,7 @@
     padding-top: 5px;
     margin: 4px;
     /*Apariencia*/
-    color: var(--ui-dark-grey);
+    color: var(--ui-black);
     font-size: 16px;
     white-space: nowrap;
     overflow: hidden;

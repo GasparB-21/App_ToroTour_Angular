@@ -6,7 +6,7 @@
 /* ====== Sidenav ====== */
 .app-sidenav {
   width: 260px;
-  background-color: var(--ui-white);
+  background-color: var(--background-color);
   border-right: 2px solid var(--ui-black);
 }
 
@@ -22,26 +22,28 @@
   gap: 14px;
   padding: 16px 24px;
   text-decoration: none;
-  color: var(--ui-black);
+  color: var(--ui-white);
   font-size: 1rem;
   font-weight: 600;
   transition: background-color 160ms ease;
 }
 
 .sidenav-nav a:hover {
-  background-color: var(--ui-grey);
+  background-color: var(--tabbar-active);
 }
 
 .sidenav-nav a.sidenav-active {
-  color: var(--tabbar-active);
-  background-color: rgba(10, 132, 255, 0.08);
+  color: var(--ui-white);
+  background-color: var(--tabbar-active);
+  font-weight: 800;
 }
 
 .sidenav-nav a.sidenav-active .sidenav-icon {
-  filter: invert(34%) sepia(93%) saturate(3025%) hue-rotate(202deg) brightness(101%) contrast(106%);
+  filter: brightness(0) invert(1);
 }
 
 .sidenav-icon {
   width: 28px;
   height: 28px;
+  filter: brightness(0) invert(1);
 }

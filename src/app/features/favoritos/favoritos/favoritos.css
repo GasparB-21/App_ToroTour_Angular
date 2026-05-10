@@ -29,14 +29,14 @@ h1 {
 .chip {
   appearance: none;
   border: 2px solid transparent;
-  background-color: var(--ui-white);
-  color: var(--ui-black);
+  background-color: var(--background-color);
+  color: var(--ui-white);
   border-radius: 999px;
   padding: 10px 12px;
   font-weight: 800;
   font-size: 0.95rem;
   letter-spacing: 0.01em;
-  box-shadow: 0 6px 14px rgba(17, 17, 17, 0.12);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
   cursor: pointer;
   transition: all 160ms ease;
 }
@@ -45,7 +45,7 @@ h1 {
   background-color: var(--tabbar-active);
   border-color: var(--ui-white);
   color: var(--ui-white);
-  box-shadow: 0 10px 18px rgba(10, 132, 255, 0.25);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.25);
 }
 
 .empty-state {
@@ -61,9 +61,9 @@ h1 {
 
 .calbar__picker {
   position: absolute;
-  top: 100%; 
+  top: 100%;
   right: 12px;
-  left: 12px; 
+  left: 12px;
   background: var(--ui-white);
   border-radius: 12px;
   padding: 20px;
@@ -71,11 +71,11 @@ h1 {
   grid-template-columns: 1fr 1fr;
   gap: 15px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-  border: 1px solid var(--ui-white);
+  border: 1px solid var(--ui-medium-grey);
   z-index: 100;
   animation: slideDown 0.3s ease-out;
   max-height: 300px;
-  overflow-y: auto;    
+  overflow-y: auto;
 }
 
 .calbar__picker--top {
@@ -88,16 +88,16 @@ h1 {
 }
 
 .calbar__picker select {
-  padding: 10px;  
+  padding: 10px;
   border-radius: 8px;
-  border: 2px solid var(--ui-white);
-  background: var(--ui-white);
+  border: 2px solid var(--ui-medium-grey);
+  background: var(--ui-grey);
   font-size: 16px;
   color: var(--ui-black);
   outline: none;
 }
-  
-.calbar__picker select:focus {  
+
+.calbar__picker select:focus {
   border-color: var(--tabbar-active);
 }
 
@@ -115,4 +115,4 @@ h1 {
   background: var(--tabbar-active);
   color: var(--ui-white);
   border-color: var(--tabbar-active);
-}  
+}

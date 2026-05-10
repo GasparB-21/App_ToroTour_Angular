@@ -30,6 +30,7 @@ export class MapaMonumentos implements OnInit, AfterViewInit {
   searchTerm = signal('');
   clasificacionSeleccionada = signal<string | null>(null);
   categoriasAbiertas = signal(false);
+  soloFavoritos = signal(false);
 
   private allMonumentos = toSignal(this._monumentoService.getMonumentos(), { initialValue: [] });
   private _markers: L.Marker[] = [];
@@ -61,6 +62,10 @@ export class MapaMonumentos implements OnInit, AfterViewInit {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap'
     }).addTo(this._map);
+
+    this._map.on('click', () => {
+      this._zone.run(() => this.selectedMonumento.set(null));
+    });
   }
 
   private cargarMonumentosReales() {
@@ -165,10 +170,15 @@ export class MapaMonumentos implements OnInit, AfterViewInit {
     this.categoriasAbiertas.set(false);
   }
 
+  toggleFavoritos() {
+    this.soloFavoritos.update(v => !v);
+  }
+
   private aplicarFiltrosEnMapa() {
     const monumentos = this.allMonumentos();
     const term = this.searchTerm().toLowerCase();
     const cat = this.clasificacionSeleccionada();
+    const favOnly = this.soloFavoritos();
 
     this._markers.forEach(m => this._map.removeLayer(m));
     this._markers = [];
@@ -185,8 +195,9 @@ export class MapaMonumentos implements OnInit, AfterViewInit {
 
       const cumpleTexto = !term || m.nombre.toLowerCase().includes(term);
       const cumpleCat = !cat || m.clasificacion === cat;
+      const cumpleFav = !favOnly || this._monumentoService.esFavorito(m.id);
 
-      if (cumpleTexto && cumpleCat) {
+      if (cumpleTexto && cumpleCat && cumpleFav) {
         const marker = L.marker([m.coordenadas.latitud, m.coordenadas.longitud], { icon: customIcon })
           .addTo(this._map)
           .on('click', () => {

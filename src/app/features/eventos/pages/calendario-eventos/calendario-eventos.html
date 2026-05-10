@@ -26,7 +26,7 @@
     </div>
 }
 
-<main class="contenido-pagina">
+<main class="contenido-pagina" (click)="eventoSeleccionado.set(null)">
     <h1>Calendario de Eventos</h1>
 
     <section class="calendar" aria-label="Selector de mes">
@@ -78,7 +78,7 @@
                         [class.cal__cell--blank]="!cell.day"
                         [class.cal__cell--today]="cell.isToday"
                         [class.cal__cell--has-event]="cell.hasEvent"
-                        (click)="seleccionarDia(cell)"
+                        (click)="seleccionarDia(cell); $event.stopPropagation()"
                         [attr.role]="cell.day ? 'gridcell' : null">
 
                         <p class="cal__num">{{ cell.day }}</p>

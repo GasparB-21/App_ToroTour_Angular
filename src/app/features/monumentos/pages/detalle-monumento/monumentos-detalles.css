@@ -28,7 +28,8 @@
   padding: 16px 56px;
   box-sizing: border-box;
   /*Color*/
-  background: var(--tabbar-active);
+  background: var(--background-color);
+  border-bottom: 2px solid var(--ui-black);
 }
 
 .detail-header h1 {
@@ -36,6 +37,7 @@
   margin: 0;
   text-align: center;
   font-size: 1.7rem;
+  color: var(--ui-white);
 }
 
 .btn-close {
@@ -70,7 +72,9 @@
   /*Posicion*/
   position: fixed;
   top: 88px;
-  bottom: var(--tabbar-height);
+  bottom: 0;
+  left: 0;
+  right: 0;
   overflow-y: auto;
   overscroll-behavior: none;
   /*Disposicion*/
@@ -80,7 +84,7 @@
   gap: 8px;
   padding: 0 0.3rem 0 0.3rem;
   /*Apariencia*/
-  background-color: var(--ui-white);
+  background-color: var(--ui-grey);
 }
 
 /* ===== Info Cards ===== */
@@ -109,11 +113,12 @@
   padding: 12px 10px;
   text-align: center;
   /*Apariencia*/
-  background: var(--tabbar-active);
-  color: var(--ui-black);
+  background: var(--background-color);
+  color: var(--ui-white);
   font-weight: 900;
   font-size: xx-large;
   border-radius: 18px 18px 0 0;
+  border-bottom: 2px solid var(--ui-black);
 }
 
 #monumento-periodo-titulo{
@@ -127,7 +132,8 @@
   align-items: center;
   padding: 14px 12px 16px;
   box-sizing: border-box;
-
+  background-color: var(--ui-white);
+  border-radius: 0 0 18px 18px;
   gap: 6px; /* controla separación limpia */
 }
 
@@ -136,7 +142,7 @@
   width: 100%;
   max-width: 300px;
   max-height: 300px;
-  object-fit: contain; 
+  object-fit: contain;
   /*Posicion*/
   display: block;
   margin-top: 0;
@@ -149,7 +155,7 @@
   margin-top: -40px; /* Ajustamos a ojo la imagen pq tienen mucho espacio por debajo */
 }
 
-  
+
 /* ===== Info Card Pequeñas ===== */
 .info-grid{
   /*Disposición*/
@@ -157,7 +163,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 5%;
 }
-  
+
 .info-card-small{
   /*Tamaño*/
   max-width: 150px;
@@ -193,6 +199,8 @@
   padding: 10px;
   gap: 10px;
   flex: 1; /* rellena el resto para igualar altura entre cards */
+  background-color: var(--ui-white);
+  border-radius: 0 0 18px 18px;
 }
 
 .img-small{
@@ -206,7 +214,7 @@
 .info-card-text{
   /*Apariencia*/
   font-size: 0.8rem;
-  font-weight: 600; 
+  font-weight: 600;
 }
 
 #monumento-tipo{
@@ -218,7 +226,7 @@
   font-size: small;
   font-weight: 500;
 }
-  
+
 /* ===== Descripción ===== */
 .description-section {
   /*Disposición*/
@@ -241,7 +249,7 @@
   align-items: center;
   justify-content: center;
   right: 20px;
-  bottom: calc(var(--tabbar-height) + 20px);
+  bottom: 20px;
   z-index: 120;
   /*Tamaño*/
   width: 7vh;

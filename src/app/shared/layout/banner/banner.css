@@ -7,9 +7,8 @@
   height: var(--banner-height);
   display: flex;
   align-items: center;
-  gap: 10px;
   padding: 0 16px;
-  background-color: var(--ui-white);
+  background-color: var(--background-color);
   border-bottom: 2px solid var(--ui-black);
   box-sizing: border-box;
 }
@@ -21,19 +20,29 @@
   border: none;
   padding: 4px;
   cursor: pointer;
-  color: var(--ui-black);
+  color: var(--ui-white);
+}
+
+.banner__center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  /* Compensar el ancho del hamburger para centrado visual */
+  margin-right: 32px;
 }
 
 .banner__logo {
-  width: 36px;
-  height: 36px;
+  width: 48px;
+  height: 48px;
   object-fit: contain;
 }
 
 .banner__title {
   margin: 0;
-  font-size: 1.3rem;
+  font-size: 1.6rem;
   font-weight: 800;
-  color: var(--ui-black);
+  color: var(--ui-white);
   letter-spacing: 0.02em;
 }

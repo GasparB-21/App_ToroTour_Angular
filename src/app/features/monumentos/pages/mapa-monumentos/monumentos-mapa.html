@@ -19,14 +19,21 @@
         </div>
     }
 
+    <button class="btn-favoritos-mapa"
+            [class.btn-favoritos-mapa--active]="soloFavoritos()"
+            type="button"
+            aria-label="Mostrar solo monumentos favoritos"
+            (click)="toggleFavoritos()">
+        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+                     2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09
+                     C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5
+                     c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+    </button>
+
     <section id="map" aria-label="Mapa de monumentos">
         <div class="map-button-group">
-            <btn class="btn-pill" routerLink="/monumentos/listado" alt="Mostrar monumentos como lista"></btn>
-
-            <a routerLink="/monumentos/listado" routerLinkActive="active" class="map-button-list" aria-label="Ir al listado de monumentos">
-                <img src="icons/mapa/icon-lista.png.webp" alt="" aria-hidden="true">
-            </a>
-
             <!--button class="map-button-controls" (click)="toggleFab()" type="button" aria-label="Abrir botones de accesibilidad en el mapa">⛶</button-->
             <button class="map-button-controls" (click)="toggleFab()" type="button" aria-label="Abrir botones de accesibilidad en el mapa">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -87,7 +94,9 @@
                 </div>
             }
         </div>
-    </section>   
+    </section>
+
+    <a routerLink="/monumentos/listado" routerLinkActive="active" class="btn-pill">Mostrar Listado</a>
 
     @if (selectedMonumento()) {
         <app-card-preview 

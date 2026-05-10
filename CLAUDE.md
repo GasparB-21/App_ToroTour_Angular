@@ -104,4 +104,15 @@ feature/
 - Angular 21.2.2, TypeScript 5.9.2
 - Leaflet 1.9.4 (mapas), PapaParse 5.5.3 (CSV)
 - Vitest (testing), Prettier (formato)
-- CSS puro con variables (sin Ionic ni Angular Material)
+- Angular Material (sidenav), CSS puro con variables
+
+# Paleta de colores
+
+```css
+:root {
+  --background-color: #412227; /* Rojo negruzco - fondo, banner, cards, títulos */
+  --tabbar-active: #4a192c;    /* Violeta púrpura - botones, elementos activos */
+  --ui-white: #FFFFFF;         /* Blanco - superficies, texto sobre fondo oscuro */
+  --ui-black: #111;            /* Negro - texto, bordes */
+}
+```

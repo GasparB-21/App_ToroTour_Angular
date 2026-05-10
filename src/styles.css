@@ -6,16 +6,15 @@
 /* ========= */
 :root{
   /* ===== Colores ===== */
-  --background-color:#75A9F6;
-  --tabbar-active: #0A84FF;
-  /*--background-color:  #7A1E3A;
-  --tabbar-active: #C8102E;*/
-  --progress-color:#2BA74C;
-  --ui-white:#FFFFFF;
+  /*--background-color: #412227;*/
+  --background-color: #A64D57;
+  /*--tabbar-active: #4a192c;*/
+  --tabbar-active: #C96B76;
+  --ui-white: #FFFFFF;
   --ui-black: #111;
-  --ui-grey: #f9f9f9;
-  --ui-medium-grey: #b2b6ba;
-  --ui-darker-grey: #595959;
+  --ui-grey: #EDEDED;
+  --ui-medium-grey: #999;
+  --ui-darker-grey: #555;
   /**/
   --ui-event-red: #ee5253;
   --ui-event-green: #6df26d;
@@ -24,7 +23,7 @@
   --ui-event-yellow: #f7eb5e;
 
   /* ===== Alturas ===== */
-  --banner-height: 56px;
+  --banner-height: 88px;
   --toolbar-height: 75px;
   --tabbar-height: 72px;
   --page-side-gap: 16px;
