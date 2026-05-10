@@ -29,6 +29,8 @@
   font-weight: bold;
   margin: 0;
   color: var(--ui-white);
+  text-align: center;
+  width: 100%;
 }
 
 .btn-close {

@@ -54,7 +54,7 @@
 }
 
 .monument-card__title {
-  margin: 0;
+  margin: 0 0 6px;
   /*Formato texto*/
   color: var(--ui-white);
   font-size: 1.05rem;
