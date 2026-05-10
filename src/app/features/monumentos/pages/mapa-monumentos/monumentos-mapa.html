@@ -96,7 +96,9 @@
         </div>
     </section>
 
-    <a routerLink="/monumentos/listado" routerLinkActive="active" class="btn-pill">Mostrar Listado</a>
+    @if (!isFabOpen()) {
+        <a routerLink="/monumentos/listado" routerLinkActive="active" class="btn-pill">Mostrar Listado</a>
+    }
 
     @if (selectedMonumento()) {
         <app-card-preview 

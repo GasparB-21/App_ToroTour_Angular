@@ -16,7 +16,7 @@
 /* Botón filtros */
 /*===============*/
 
-.calbar__picker--top {
+.calbar__picker.calbar__picker--top {
   position: fixed;
   bottom: var(--toolbar-height);
   top: auto;
