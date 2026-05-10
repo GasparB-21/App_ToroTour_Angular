@@ -1,4 +1,4 @@
-import { Component, computed, inject, Signal, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Toolbar } from '../../../shared/layout/toolbar/toolbar';
 import { MonumentoCard } from '../../monumentos/componentes/monument-card/monumentos-card';
 import { MonumentoService } from '../../monumentos/services/monumentos.service';
@@ -24,7 +24,7 @@ export class Favoritos {
   categoriasAbiertas = signal(false);
   filtroCategoria = signal<string | null>(null);
 
-  // Listas de favoritos almacenadas en localStorage u origen equivalente
+  // Listas de favoritos recuperadas desde los servicios
   readonly monumentosFav = this._monumentoService.listaMonumentosFavoritos;
   readonly eventosFav = this._eventoService.listaEventosFavoritos;
   

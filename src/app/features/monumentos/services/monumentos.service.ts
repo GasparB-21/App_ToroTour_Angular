@@ -1,161 +1,215 @@
-import { effect, Injectable, signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { map, Observable } from 'rxjs';
+import { catchError, forkJoin, map, Observable, of, switchMap } from 'rxjs';
 
 import { Monumento } from '../models/monumento.interface';
 
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 
-/*
-Instakar los tipos:
-npm install papaparse
-npm install --save-dev @types/papaparse
-*/
-//declare var Papa: any;
+type FavoritoApi = {
+  tipo?: string;
+  itemID?: string | number;
+  /*itemId?: string | number;
+  item_id?: string | number;
+  elementoId?: string | number;
+  idElemento?: string | number;
+  monumentoId?: string | number;*/
+};
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class MonumentoService {
+  private readonly apiUrl = environment.API_URL;
+  private readonly monumentosUrl = `${this.apiUrl}/monumentos`;
+  private readonly favoritosUrl = `${this.apiUrl}/favoritos`;
+  //Lista con los monumentos favoritos para mostrar en la interfaz, se mantiene sincronizada con la API
+  listaMonumentosFavoritos = signal<Monumento[]>([])
 
-  //TRATAMIENTO DATOS CSV JCyL
-  // Ruta al archivo con los datos de la JCyL
-  //private readonly csv = '/csv/relacion-monumentos.csv';
-  private readonly apiUrl = 'http://localhost:3001/api/monumentos';
-  constructor(private http: HttpClient) {}
-
-  //Esta función devolvera un Observable q emitira un array de monumentos
-  /*
-  getMonumentos(): Observable<Monumento[]> {
-    //Leemos el CSV y especificamos q el formato es "text"
-    return this.http.get(this.csv, { responseType: 'text' }).pipe(
-      //Transformamos los elementos del observable al formato q especifiquemos
-      map(csvData => {
-        //Especificamos q se haga la conversión a objetos JavaScript mediante Papa parse
-        const results = Papa.parse(csvData, {
-          header: true,
-          skipEmptyLines: true,
-          delimiter: ';',
-          transformHeader: (header: string) => header.trim()
-        });
-
-        // Mapeamos los nombres de las columnas del CSV de la JCyL a nuestro modelo
-        const toText = (value: any) => String(value ?? '').trim();
-
-        return results.data
-          .map((item: any) => ({
-            id: toText(item['identificador']),
-            nombre: toText(item['nombre']),
-            tipoMonumento: toText(item['tipoMonumento']),
-            identificadorBienInteresCultural: toText(item['identificadorBienInteresCultural']),
-            calle: toText(item['calle']),
-            clasificacion: toText(item['clasificacion']),
-            tipoConstruccion: toText(item['tipoConstruccion']),
-            codigoPostal: toText(item['codigoPostal']),
-            descripcion: toText(item['Descripcion']),
-            periodoHistorico: toText(item['periodoHistorico']),
-            provincia: toText(item['poblacion_provincia']),
-            municipio: toText(item['poblacion_municipio']),
-            localidad: toText(item['poblacion_localidad']),
-            coordenadas: {
-              latitud: parseFloat(item['coordenadas_latitud']),
-              longitud: parseFloat(item['coordenadas_longitud'])
-            }      
-          }))
-          .filter((m: Monumento) => this.esMonumentoValido(m));
-      })
-    );
+  constructor(private http: HttpClient)
+  {
+    this.cargarMonumentosFavoritos();
   }
-  */
 
   getMonumentos(): Observable<Monumento[]> {
-    return this.http.get<{ data: any[], message: string }>(this.apiUrl).pipe(
-      map(response => response.data),
-      map(dataArray => dataArray.map(item => ({
-        ...item,
-        id: item._id,
-        nombre: item.nombre,
-        tipoMonumento: item.tipoMonumento,
-        identificadorBienInteresCultural: item.identificadorBienInteresCultural,
-        calle: item.calle,
-        clasificacion: item.clasificacion,
-        tipoConstruccion: item.tipoConstruccion,
-        codigoPostal: item.codigoPostal,
-        descripcion: item.Descripcion,
-        periodoHistorico: item.periodoHistorico,
-        provincia: item.poblacion_provincia,
-        municipio: item.poblacion_municipio,
-        localidad: item.poblacion_localidad,
-        coordenadas: {
-          latitud: parseFloat(item.coordenadas?.latitud),
-          longitud: parseFloat(item.coordenadas?.longitud)
-        }
-      }))),
-      map(monumentos => monumentos.filter(m => this.esMonumentoValido(m)))
+    return this.http.get<unknown>(this.monumentosUrl).pipe(
+      map(response => this.extraerLista<Record<string, unknown>>(response, 'monumentos')
+        .map(item => this.normalizarMonumento(item))
+        .filter((monumento): monumento is Monumento => Boolean(monumento))
+      )
     );
   }
 
-  // devuelve undefined si no existe ningún monumento con ese id
-  /*
   getMonumentoById(id: string): Observable<Monumento | undefined> {
     const normalizedId = id.trim();
 
+    return this.http.get<unknown>(`${this.monumentosUrl}/${encodeURIComponent(normalizedId)}`).pipe(
+      map(response => this.extraerDetalle<Record<string, unknown>>(response, 'monumento')),
+      map(monumento => monumento ? this.normalizarMonumento(monumento) : undefined),
+      switchMap(monumento => monumento
+        ? of(monumento)
+        : this.buscarMonumentoEnListado(normalizedId)
+      ),
+      catchError(() => this.buscarMonumentoEnListado(normalizedId))
+    );
+  }
+
+  //Funcion para recuperar los favoritos desde la API al iniciar la app
+  cargarMonumentosFavoritos() {
+    this.obtenerRegistrosFavoritos().pipe(
+      map(favoritos => favoritos
+        .filter(favorito => this.esRegistroDeMonumento(favorito))
+        .map(favorito => this.extraerItemIDFavorito(favorito))
+        .filter((id): id is string => Boolean(id))
+      ),
+      switchMap(ids => ids.length
+        ? forkJoin(ids.map(id => this.getMonumentoById(id).pipe(catchError(() => of(undefined)))))
+        : of([])
+      ),
+      map(monumentos => monumentos.filter((monumento): monumento is Monumento => Boolean(monumento)))
+    ).subscribe({
+      next: monumentos => this.listaMonumentosFavoritos.set(monumentos),
+      error: err => console.error('Error al obtener monumentos favoritos:', err)
+    });
+  }
+
+  actualizarFavorito(monumento: Monumento)
+  {
+    /*
+    Alterna la presencia del monumento en la lista de favoritos:
+    - Si no está, lo añade.
+    - Si ya está, lo elimina.
+    La lista al tratarse de una signal actualizará automaticamente la interfaz.
+    */
+    if (!monumento.id) {
+      console.error('El monumento no tiene id y no puede actualizarse como favorito');
+      return;
+    }
+
+    const yaGuardado = this.esFavorito(monumento.id);
+
+    this.listaMonumentosFavoritos.update(monumentosFavoritos =>
+      yaGuardado
+        ? monumentosFavoritos.filter(m => m.id !== monumento.id)
+        : [...monumentosFavoritos, monumento]
+    );
+
+    const request$ = yaGuardado
+      ? this.http.delete(this.favoritosUrl, {
+          body: { tipo: 'monumentos', itemID: monumento.id }
+        })
+      : this.http.post(this.favoritosUrl, { tipo: 'monumentos', itemID: monumento.id });
+
+    request$.subscribe({
+      error: err => {
+        console.error(`Error al actualizar favorito ${monumento.nombre}:`, err);
+        this.cargarMonumentosFavoritos();
+      }
+    });
+
+    console.log(`Favorito ${monumento.nombre} actualizado en la lista (signal)`);
+  }
+
+  esFavorito(id: string): boolean {
+    return this.listaMonumentosFavoritos().some(m => m.id === id);
+  }
+
+  private esRegistroDeMonumento(favorito: FavoritoApi): boolean {
+    const tipo = favorito.tipo?.toLowerCase();
+    return tipo === 'monumento' || tipo === 'monumentos';
+  }
+
+  private extraerItemIDFavorito(favorito: FavoritoApi): string {
+    return String(
+      favorito.itemID ??
+      /*favorito.itemId ??
+      favorito.item_id ??
+      favorito.elementoId ??
+      favorito.idElemento ??
+      favorito.monumentoId ??*/
+      ''
+    ).trim();
+  }
+
+  private obtenerRegistrosFavoritos(): Observable<FavoritoApi[]> {
+    return this.http.get<unknown>(this.favoritosUrl).pipe(
+      map(response => this.extraerLista<FavoritoApi>(response, 'favoritos'))
+    );
+  }
+
+
+  //FUNCIONES AUXILIARES PARA EXTRAER DATOS DE RESPUESTAS DE API CON ESTRUCTURAS VARIABLES
+  private extraerLista<T>(response: unknown, property: string): T[] {
+    if (Array.isArray(response)) {
+      return response as T[];
+    }
+
+    if (response && typeof response === 'object') {
+      const data = response as Record<string, unknown>;
+      const possibleList = data[property] ?? data['data'] ?? data['items'] ?? data['results'];
+      return Array.isArray(possibleList) ? possibleList as T[] : [];
+    }
+
+    return [];
+  }
+
+  private extraerDetalle<T>(response: unknown, property: string): T | undefined {
+    const listResponse = this.extraerLista<T>(response, `${property}s`);
+    if (listResponse.length > 0) {
+      return listResponse[0];
+    }
+
+    if (response && typeof response === 'object') {
+      const data = response as Record<string, unknown>;
+      return (data[property] ?? data['data'] ?? response) as T;
+    }
+
+    return undefined;
+  }
+
+  private buscarMonumentoEnListado(id: string): Observable<Monumento | undefined> {
     return this.getMonumentos().pipe(
-      map(monumentos => monumentos.find(m => m.id === normalizedId))
-    );
-  }
-  */
-  getMonumentoById(id: string): Observable<Monumento | undefined> {
-    return this.http.get<{ data: any, message: string }>(`${this.apiUrl}/${id}`).pipe(
-      map(response => {
-        const item = response.data;
-        if (!item) return undefined;
-        return {
-          id: item._id,
-          nombre: item.nombre,
-          tipoMonumento: item.tipoMonumento,
-          identificadorBienInteresCultural: item.identificadorBienInteresCultural,
-          calle: item.calle,
-          clasificacion: item.clasificacion,
-          tipoConstruccion: item.tipoConstruccion,
-          codigoPostal: item.codigoPostal,
-          descripcion: item.Descripcion,
-          periodoHistorico: item.periodoHistorico,
-          provincia: item.poblacion_provincia,
-          municipio: item.poblacion_municipio,
-          localidad: item.poblacion_localidad,
-          coordenadas: {
-            latitud: parseFloat(item.coordenadas?.latitud),
-            longitud: parseFloat(item.coordenadas?.longitud)
-          }
-        } as Monumento;
-      })
+      map(monumentos => monumentos.find(m => m.id === id))
     );
   }
 
-  private esMonumentoValido(monumento: Monumento): boolean {
-    const requiredStrings = [
-      monumento.id,
-      monumento.nombre,
-      monumento.tipoMonumento,
-      monumento.clasificacion,
-      monumento.periodoHistorico,
-      monumento.descripcion,
-      monumento.localidad,
-      monumento.provincia,
-    ];
+  private normalizarMonumento(item: Record<string, unknown>): Monumento | undefined {
+    const monumento: Monumento = {
+      id: this.toText(item['_id'] ?? item['id'] ?? item['identificador']),
+      nombre: this.toText(item['nombre']),
+      tipoMonumento: this.toText(item['tipoMonumento']),
+      identificadorBienInteresCultural: this.toText(item['identificadorBienInteresCultural']),
+      calle: this.toText(item['calle']),
+      clasificacion: this.toText(item['clasificacion']),
+      tipoConstruccion: this.toText(item['tipoConstruccion']),
+      codigoPostal: this.toText(item['codigoPostal']),
+      descripcion: this.toText(item['descripcion'] ?? item['Descripcion']),
+      periodoHistorico: this.toText(item['periodoHistorico']),
+      provincia: this.toText(item['provincia'] ?? item['poblacion_provincia']),
+      municipio: this.toText(item['municipio'] ?? item['poblacion_municipio']),
+      localidad: this.toText(item['localidad'] ?? item['poblacion_localidad']),
+      coordenadas: this.normalizarCoordenadas(item)
+    };
 
-    const hasRequiredStrings = requiredStrings.every(v => typeof v === 'string' && v.trim().length > 0);
-    const hasCoords = monumento.coordenadas &&
-      !isNaN(monumento.coordenadas.latitud) &&
-      !isNaN(monumento.coordenadas.longitud);
-
-    return hasRequiredStrings && hasCoords;
+    return monumento.id ? monumento : undefined;
   }
 
+  private normalizarCoordenadas(item: Record<string, unknown>): Monumento['coordenadas'] {
+    const coordenadas = item['coordenadas'] as Record<string, unknown> | undefined;
 
+    return {
+      latitud: Number(coordenadas?.['latitud'] ?? item['coordenadas_latitud'] ?? 0),
+      longitud: Number(coordenadas?.['longitud'] ?? item['coordenadas_longitud'] ?? 0)
+    };
+  }
+
+  private toText(value: unknown): string {
+    return String(value ?? '').trim();
+  }
+
+  /*
   //LOGICA FAVORITOS EN LOCALSTORAGE
   //Lista con los monumentos favoritos
   listaMonumentosFavoritos = signal<Monumento[]>(this.cargarMonumentosFavoritos())
@@ -168,28 +222,6 @@ export class MonumentoService {
     return monumentosFavoritos ? JSON.parse(monumentosFavoritos) : []
   }
 
-  actualizarFavorito(monumento: Monumento)
-  {
-    /*
-    Alterna la presencia del monumento en la lista de favoritos:
-    - Si no está, lo añade.
-    - Si ya está, lo elimina.
-    La lista al tratarse de una signal actualizará el localStorage automaticamente haciendo uso de los effects
-    */
-    this.listaMonumentosFavoritos.update( monumentosFavoritos => {
-      const yaGuardado = monumentosFavoritos.some(m => m.id === monumento.id);
-      return yaGuardado
-        ? monumentosFavoritos.filter(m => m.id !== monumento.id)
-        : [...monumentosFavoritos, monumento];
-    });
-
-    console.log(`Favorito ${monumento.nombre} actualizado en la lista (signal)`);
-  }
-
-  esFavorito(id: string): boolean {
-    return this.listaMonumentosFavoritos().some(m => m.id === id);
-  }
-
   actualizarLocalStorage = effect( () => {
     //"Vinculamos" el effect a nuestra lista de favoritos
     const monumentosFavoritos = this.listaMonumentosFavoritos()
@@ -199,5 +231,6 @@ export class MonumentoService {
     console.log('Listado de monumentos favoritos actualizado en el LocalStorage')
     }
   )
+  */
 
 }
