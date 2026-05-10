@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, signal, inject, NgZone, computed, effect } from '@angular/core';
+import { Component, OnInit, AfterViewInit, signal, inject, NgZone, effect } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import * as L from 'leaflet';
@@ -7,6 +7,8 @@ import { MonumentoService } from '../../services/monumentos.service';
 import { Monumento } from '../../models/monumento.interface';
 import { Toolbar } from '../../../../shared/layout/toolbar/toolbar';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { ImagenesMonumentosService } from '../../services/imagenes-monumentos.service';
+import { ICONOS_TIPO } from '../../services/categorias-tipos';
 
 @Component({
   selector: 'app-mapa-monumentos',
@@ -17,6 +19,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 })
 export class MapaMonumentos implements OnInit, AfterViewInit {
   private _monumentoService = inject(MonumentoService);
+  private _imagenes = inject(ImagenesMonumentosService);
   private _zone = inject(NgZone);
   
   // Estado para controlar el menú de accesibilidad
@@ -144,10 +147,7 @@ export class MapaMonumentos implements OnInit, AfterViewInit {
         break;
     }
   }  
-  categoriasDisponibles = computed(() => {
-    const cats = this.allMonumentos().map(m => m.clasificacion);
-    return [...new Set(cats)];
-  });
+  categoriasDisponibles = Object.keys(ICONOS_TIPO).filter(tipo => tipo !== 'default');
 
   constructor() {
     effect(() => {
@@ -194,7 +194,7 @@ export class MapaMonumentos implements OnInit, AfterViewInit {
       if (isNaN(m.coordenadas.latitud) || isNaN(m.coordenadas.longitud)) return;
 
       const cumpleTexto = !term || m.nombre.toLowerCase().includes(term);
-      const cumpleCat = !cat || m.clasificacion === cat;
+      const cumpleCat = !cat || this._imagenes.getClaveTipo(m.tipoMonumento) === cat;
       const cumpleFav = !favOnly || this._monumentoService.esFavorito(m.id);
 
       if (cumpleTexto && cumpleCat && cumpleFav) {
@@ -207,5 +207,17 @@ export class MapaMonumentos implements OnInit, AfterViewInit {
         this._markers.push(marker);
       }
     });
+  }
+
+  nombreCategoria(cat: string): string {
+    const nombres: Record<string, string> = {
+      religiosa: 'Arquitectura Religiosa',
+      civil: 'Arquitectura Civil',
+      defensa: 'Estructuras Militares',
+      patrimonio: 'Patrimonio Arqueológico',
+      publico: 'Espacio Público',
+    };
+
+    return nombres[cat] ?? cat;
   }
 }

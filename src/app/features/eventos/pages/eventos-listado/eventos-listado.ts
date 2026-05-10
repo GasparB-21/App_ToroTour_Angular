@@ -1,7 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Toolbar } from "../../../../shared/layout/toolbar/toolbar";
 import { EventosService } from '../../services/eventos.service';
-import { combineLatest, map, Observable } from 'rxjs';
+import { combineLatest, finalize, map, Observable, shareReplay } from 'rxjs';
 import { Evento } from '../../models/evento.interface';
 import { EventosCard } from "../../componentes/eventos-card/eventos-card";
 import { AsyncPipe } from '@angular/common';
@@ -22,8 +22,12 @@ export class EventosListado {
   searchTerm = signal('');
   categoriaSeleccionada = signal<string | null>(null);
   categoriasAbiertas = signal(false);
+  cargando = signal(true);
 
-  private allEventos$ = this._eventos.getEventos();
+  private allEventos$ = this._eventos.getEventos().pipe(
+    finalize(() => this.cargando.set(false)),
+    shareReplay(1)
+  );
 
   private eventosData = toSignal(this.allEventos$, { initialValue: [] });
 

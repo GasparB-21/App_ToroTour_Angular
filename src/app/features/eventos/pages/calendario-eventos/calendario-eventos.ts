@@ -5,6 +5,12 @@ import { CardPreview } from "../../../../shared/layout/card-preview/card-preview
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Toolbar } from "../../../../shared/layout/toolbar/toolbar";
 
+type GrupoEvento = {
+  key: string;
+  nombre: string;
+  categorias: string[];
+};
+
 @Component({
   selector: 'app-calendario-eventos',
   imports: [CardPreview, RouterLink, RouterLinkActive, Toolbar],
@@ -14,6 +20,14 @@ import { Toolbar } from "../../../../shared/layout/toolbar/toolbar";
 export class CalendarioEventos implements OnInit {
   readonly MONTHS = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
   readonly DAYS_WEEK = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+  readonly GRUPOS_EVENTOS: GrupoEvento[] = [
+    { key: 'escenicas', nombre: 'Cine y artes escénicas', categorias: ['cine', 'espectaculos', 'teatro', 'danza'] },
+    { key: 'musica', nombre: 'Música y conciertos', categorias: ['musica', 'conciertos'] },
+    { key: 'libros', nombre: 'Libros', categorias: ['libros'] },
+    { key: 'formacion', nombre: 'Exposiciones y formación', categorias: ['exposiciones', 'conferencias', 'cursos', 'educacion'] },
+    { key: 'infantil', nombre: 'Infantil y animación', categorias: ['infantil', 'animacion'] },
+    { key: 'otros', nombre: 'Otros eventos', categorias: [] },
+  ];
 
   // Estado con Signals
   hoy = new Date();
@@ -21,6 +35,7 @@ export class CalendarioEventos implements OnInit {
   anioActual = signal(this.hoy.getFullYear());
   pickerAbierto = signal(false);
   categoriasAbiertas = signal(false);
+  leyendaAbierta = signal(false);
   
   eventoSeleccionado = signal<Evento | null>(null);
   listaEventos = signal<Evento[]>([]);
@@ -58,7 +73,7 @@ export class CalendarioEventos implements OnInit {
       const evento = this.obtenerEventoParaDia(i, m, y, eventos);
 
       const cumpleTexto = !term || evento?.titulo.toLowerCase().includes(term);
-      const cumpleCat = !catFiltro || evento?.categoria === catFiltro;
+      const cumpleCat = !catFiltro || this.getGrupoEvento(evento?.categoria) === catFiltro;
       const esVisible = evento && cumpleTexto && cumpleCat;
       
       cells.push({
@@ -74,11 +89,7 @@ export class CalendarioEventos implements OnInit {
     return cells;
   });
 
-  categoriasDisponibles = computed(() => {
-    const eventos = this.listaEventos();
-    const cats = eventos.map(e => e.categoria);
-    return [...new Set(cats)]; 
-  });
+  categoriasDisponibles = this.GRUPOS_EVENTOS;
 
   // Helpers
 
@@ -108,6 +119,12 @@ export class CalendarioEventos implements OnInit {
     this.pickerAbierto.set(false);
   }
 
+  togglePickerFecha() {
+    this.pickerAbierto.update(v => !v);
+    this.categoriasAbiertas.set(false);
+    this.leyendaAbierta.set(false);
+  }
+
   actualizarBusqueda(texto: string) {
     this.searchTerm.set(texto);
   }
@@ -120,5 +137,20 @@ export class CalendarioEventos implements OnInit {
   abrirPanelCategorias() {
     this.categoriasAbiertas.set(!this.categoriasAbiertas());
     this.pickerAbierto.set(false); 
+    this.leyendaAbierta.set(false);
+  }
+
+  getGrupoEvento(categoria?: string): string {
+    const categoriaNormalizada = this.normalizarCategoria(categoria);
+    const grupo = this.GRUPOS_EVENTOS.find(g => g.categorias.includes(categoriaNormalizada));
+    return grupo?.key ?? 'otros';
+  }
+
+  private normalizarCategoria(categoria?: string): string {
+    return String(categoria ?? '')
+      .trim()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
   }
 }

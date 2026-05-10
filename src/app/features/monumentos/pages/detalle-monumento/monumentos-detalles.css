@@ -43,7 +43,8 @@
 .btn-close {
   /*Posición*/
   position: absolute;
-  top: 15px;
+  top: 50%;
+  transform: translateY(-50%);
   left: 15px;
   display: inline-flex;
   align-items: center;
@@ -84,7 +85,7 @@
   gap: 8px;
   padding: 0 0.3rem 0 0.3rem;
   /*Apariencia*/
-  background-color: var(--ui-grey);
+  background-color: var(--ui-white);
 }
 
 /* ===== Info Cards ===== */

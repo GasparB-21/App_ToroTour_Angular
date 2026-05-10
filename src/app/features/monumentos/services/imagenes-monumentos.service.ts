@@ -135,8 +135,13 @@ export class ImagenesMonumentosService {
   /*TIPO*/
   /*====*/
   getImagenTipo(tipoConstruccion?: string): string {
-    if(!tipoConstruccion) return ICONOS_TIPO.default;
+    const clave = this.getClaveTipo(tipoConstruccion);
+    return ICONOS_TIPO[clave] ?? ICONOS_TIPO.default;
+  }
 
+  getClaveTipo(tipoConstruccion?: string): keyof typeof ICONOS_TIPO {
+    if(!tipoConstruccion) return 'default';
+    
     const tipo = tipoConstruccion.trim().toLowerCase();
 
     // 1. Arquitectura Religiosa
@@ -152,7 +157,7 @@ export class ImagenesMonumentosService {
       tipo.includes('cripta') ||
       tipo.includes('eremitorio')
     ) {
-      return ICONOS_TIPO.religiosa;
+      return 'religiosa';
     }
 
     // 2. Arquitectura Civil y Poder
@@ -167,7 +172,7 @@ export class ImagenesMonumentosService {
       tipo.includes('plaza') ||
       tipo.includes('real sitio')
     ) {
-      return ICONOS_TIPO.civil;
+      return 'civil';
     }
 
     // 3. Defensa y Estructuras Militares
@@ -181,7 +186,7 @@ export class ImagenesMonumentosService {
       tipo.includes('campamento') ||
       tipo.includes('castro')
     ) {
-      return ICONOS_TIPO.defensa;
+      return 'defensa';
     }
 
     // 4. Patrimonio Arqueológico y Tradicional
@@ -201,7 +206,7 @@ export class ImagenesMonumentosService {
       tipo.includes('horreo') ||
       tipo.includes('edificio antiguo')
     ) {
-      return ICONOS_TIPO.patrimonio;
+      return 'patrimonio';
     }
 
     // 5. Infraestructura y Espacio Público
@@ -216,10 +221,10 @@ export class ImagenesMonumentosService {
       tipo.includes('escultura') ||
       tipo.includes('estatua')
     ) {
-      return ICONOS_TIPO.publico;
+      return 'publico';
     }
 
-    return ICONOS_TIPO.default;
+    return 'default';
     
   }
 

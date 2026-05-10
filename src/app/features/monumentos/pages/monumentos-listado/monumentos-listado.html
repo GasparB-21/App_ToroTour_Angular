@@ -14,12 +14,12 @@
                     Todos
                 </button>
 
-                @for (cat of categoriasDisponibles(); track cat) {
+                @for (cat of categoriasDisponibles; track cat) {
                     <button 
                         class="filter-chip"
                         [class.active]="categoriaSeleccionada() === cat"
                         (click)="filtrarPorCategoria(cat)">
-                        {{ cat }}
+                        {{ nombreCategoria(cat) }}
                     </button>
                 }
             </div>
@@ -38,10 +38,16 @@
         }
         @empty
         {
-            <p>No hay monumentos para mostrar.</p>
+            @if (cargando()) {
+                <div class="loading-state" role="status" aria-live="polite">
+                    <span class="loading-spinner" aria-hidden="true"></span>
+                    <span>Cargando monumentos</span>
+                </div>
+            } @else {
+                <p class="empty-state">No hay monumentos para mostrar.</p>
+            }
         }
 
         <a routerLink="/monumentos/mapa" routerLinkActive="active" class="btn-pill" >Mostrar Mapa</a>
     </section>
 </main>
-

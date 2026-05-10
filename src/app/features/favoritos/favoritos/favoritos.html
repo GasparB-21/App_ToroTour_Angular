@@ -52,7 +52,14 @@
   @switch (categoriaSeleccionada()) {
     @case ('monumentos') {
       @if (monumentosFiltrados().length === 0) {
-        <p class="empty-state">Aún no tienes monumentos favoritos.</p>
+        <div class="empty-state" role="status" aria-live="polite">
+          <span class="empty-state__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M12 21s-7.2-4.5-9.5-9.1C.6 8.1 2.8 4 6.8 4c2 0 3.6 1 4.4 2.4C12 5 13.6 4 15.6 4c4 0 6.2 4.1 4.3 7.9C17.6 16.5 12 21 12 21Z" />
+            </svg>
+          </span>
+          <span>Aún no tienes monumentos favoritos.</span>
+        </div>
       } @else {
         @for (monumento of monumentosFiltrados(); track monumento.id) {
           <app-monument-card [monumento]="monumento"></app-monument-card>
@@ -61,7 +68,14 @@
     }
     @case ('eventos') {
       @if (eventosFiltrados().length === 0) {
-        <p class="empty-state">Aún no tienes eventos favoritos.</p>
+        <div class="empty-state" role="status" aria-live="polite">
+          <span class="empty-state__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M12 21s-7.2-4.5-9.5-9.1C.6 8.1 2.8 4 6.8 4c2 0 3.6 1 4.4 2.4C12 5 13.6 4 15.6 4c4 0 6.2 4.1 4.3 7.9C17.6 16.5 12 21 12 21Z" />
+            </svg>
+          </span>
+          <span>Aún no tienes eventos favoritos.</span>
+        </div>
       } @else {
         @for (evento of eventosFiltrados(); track evento.id) {
           <app-eventos-card [evento]="evento"></app-eventos-card>

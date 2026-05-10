@@ -14,12 +14,12 @@
                 Todos
             </button>
 
-            @for (cat of categoriasDisponibles(); track cat) {
+            @for (cat of categoriasDisponibles; track cat.key) {
                 <button 
                     class="filter-chip"
-                    [class.active]="categoriaSeleccionada() === cat"
-                    (click)="filtrarPorCategoria(cat)">
-                    {{ cat }}
+                    [class.active]="categoriaSeleccionada() === cat.key"
+                    (click)="filtrarPorCategoria(cat.key)">
+                    {{ cat.nombre }}
                 </button>
             }
         </div>
@@ -35,9 +35,21 @@
             <h3 class="calbar__title">{{ MONTHS[mesActual()] }} {{ anioActual() }}</h3>
             <button 
                 class="calbar__btn" 
-                (click)="pickerAbierto.set(!pickerAbierto()); categoriasAbiertas.set(false)"
+                (click)="togglePickerFecha()"
                 [attr.aria-expanded]="pickerAbierto()">
                 {{ pickerAbierto() ? '▲' : '▼' }}
+            </button>
+            <button
+                class="calendar-info-btn"
+                type="button"
+                aria-label="Mostrar leyenda de categorías"
+                [attr.aria-expanded]="leyendaAbierta()"
+                (click)="leyendaAbierta.update(v => !v); pickerAbierto.set(false); categoriasAbiertas.set(false)">
+                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"></circle>
+                    <line x1="12" y1="10" x2="12" y2="17" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"></line>
+                    <circle cx="12" cy="7" r="1.4" fill="currentColor"></circle>
+                </svg>
             </button>
         </div>
 
@@ -45,17 +57,17 @@
             <div class="calbar__picker">
                 <div class="picker__group">
                     <label>Mes</label>
-                    <select #selM [value]="mesActual()">
+                    <select #selM>
                         @for (m of MONTHS; track m; let i = $index) {
-                            <option [value]="i">{{ m }}</option>
+                            <option [value]="i" [selected]="i === mesActual()">{{ m }}</option>
                         }
                     </select>
                 </div>
                 <div class="picker__group">
                     <label>Año</label>
-                    <select #selY [value]="anioActual()">
+                    <select #selY>
                         @for (a of [2025, 2026, 2027]; track a) {
-                            <option [value]="a">{{ a }}</option>
+                            <option [value]="a" [selected]="a === anioActual()">{{ a }}</option>
                         }
                     </select>
                 </div>
@@ -84,8 +96,7 @@
                         <p class="cal__num">{{ cell.day }}</p>
 
                         @if (cell.day && cell.hasEvent && cell.evento) {
-                            <span class="cal__badge" 
-                                [class]="'cal__badge--' + cell.evento.categoria.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')">
+                            <span class="cal__badge cal__badge--{{ getGrupoEvento(cell.evento.categoria) }}">
                                 {{ cell.evento.categoria }}
                             </span>
                         }
@@ -94,15 +105,38 @@
             </div>    
         </div>
     </section>  
+
+    @if (leyendaAbierta()) {
+        <section class="calendar-legend" aria-label="Leyenda de categorías de eventos">
+            <button
+                class="legend-close"
+                type="button"
+                aria-label="Ocultar leyenda"
+                (click)="leyendaAbierta.set(false)">
+                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                    <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="3" stroke-linecap="round"></line>
+                    <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="3" stroke-linecap="round"></line>
+                </svg>
+            </button>
+            @for (grupo of GRUPOS_EVENTOS; track grupo.key) {
+                <div class="legend-item">
+                    <span class="legend-dot legend-dot--{{ grupo.key }}"></span>
+                    <span>{{ grupo.nombre }}</span>
+                </div>
+            }
+        </section>
+    }
   
-    <div class="cta-wrap">
-        <a class="btn-pill" 
-            routerLink="/eventos/listado" 
-            routerLinkActive="active" 
-            [class.btn-pill--pushed]="eventoSeleccionado()">
-            Mostrar lista
-        </a>
-    </div>
+    @if (!leyendaAbierta()) {
+        <div class="cta-wrap">
+            <a class="btn-pill" 
+                routerLink="/eventos/listado" 
+                routerLinkActive="active" 
+                [class.btn-pill--pushed]="eventoSeleccionado()">
+                Mostrar lista
+            </a>
+        </div>
+    }
     @if (eventoSeleccionado(); as evento) {
         <div class="card--sticky">
             <app-card-preview 

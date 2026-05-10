@@ -10,9 +10,9 @@
                 <button class="filter-chip" [class.active]="clasificacionSeleccionada() === null" (click)="filtrarPorCategoria(null)">
                     Todos
                 </button>
-                @for (cat of categoriasDisponibles(); track cat) {
+                @for (cat of categoriasDisponibles; track cat) {
                     <button class="filter-chip" [class.active]="clasificacionSeleccionada() === cat" (click)="filtrarPorCategoria(cat)">
-                        {{ cat }}
+                        {{ nombreCategoria(cat) }}
                     </button>
                 }
             </div>

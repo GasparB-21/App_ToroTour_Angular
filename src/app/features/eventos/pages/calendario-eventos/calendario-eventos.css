@@ -72,6 +72,26 @@
   background-color: var(--background-color);
   border-bottom: 2px solid var(--ui-black);
 }
+
+.calendar-info-btn {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin-left: auto;
+  margin-right: 12px;
+  border: none;
+  border-radius: 50%;
+  background: var(--background-color);
+  color: var(--ui-white);
+  cursor: pointer;
+  padding: 0;
+}
+
+.calendar-info-btn svg {
+  display: block;
+}
+
 .calbar__title{
   /*Disposición*/
   margin-left: 2rem;
@@ -250,42 +270,40 @@
 
 /*REVISAR ELECCIÖN COLORES*/
 /*Colores de las "pills" según categorías*/
-.cal__badge--cine,
-.cal__badge--espectaculos,
-.cal__badge--teatro,
-.cal__badge--danza {
+.cal__badge--escenicas,
+.legend-dot--escenicas {
   background-color: var(--ui-event-red);
   color: var(--ui-white);
 }
 
-.cal__badge--música,
 .cal__badge--musica,
-.cal__badge--conciertos {
+.legend-dot--musica {
   background-color: var(--ui-event-green);
   color: var(--ui-black);
 }
 
-.cal__badge--libros {
+.cal__badge--libros,
+.legend-dot--libros {
   background-color: var(--ui-event-purple);
   color: var(--ui-black);
 }
 
-.cal__badge--exposiciones,
-.cal__badge--conferencias,
-.cal__badge--cursos,
-.cal__badge--educación {
+.cal__badge--formacion,
+.legend-dot--formacion {
   background-color: var(--ui-event-orange);
   color: var(--ui-black);
 }
 
 .cal__badge--infantil,
-.cal__badge--animación {
+.legend-dot--infantil {
   background-color: var(--ui-event-yellow);
   color: var(--ui-black);
 }
 
-.cal__badge--default {
-  background-color: var(--ui-darker-grey);
+.cal__badge--otros,
+.cal__badge--default,
+.legend-dot--otros {
+  background-color: #7dd3fc;
   color: var(--ui-black);
 }
 
@@ -295,6 +313,50 @@
 .card--sticky {
   margin-top: 8px;
   flex-shrink: 0;
+}
+
+.calendar-legend {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin: 10px 1rem 0;
+  padding: 14px 42px 14px 10px;
+  background: var(--ui-white);
+  border: 2px solid var(--ui-black);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.legend-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 2px solid var(--ui-black);
+  border-radius: 50%;
+  background: var(--ui-white);
+  color: var(--ui-black);
+  cursor: pointer;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-dot {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--ui-black);
+  border-radius: 50%;
+  flex: 0 0 auto;
 }
 
 

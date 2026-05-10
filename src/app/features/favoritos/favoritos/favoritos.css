@@ -49,10 +49,39 @@ h1 {
 }
 
 .empty-state {
-  margin: 24px 0 0;
+  width: min(100%, 360px);
+  min-height: 150px;
+  margin: 28px auto 0;
+  padding: 24px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
   text-align: center;
-  color: var(--ui-darker-grey);
-  font-weight: 700;
+  color: var(--ui-black);
+  font-weight: 800;
+  line-height: 1.35;
+  background: var(--ui-white);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+}
+
+.empty-state__icon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--tabbar-active) 14%, var(--ui-white));
+}
+
+.empty-state__icon svg {
+  width: 28px;
+  height: 28px;
+  fill: var(--tabbar-active);
 }
 
 /* ================================ */
