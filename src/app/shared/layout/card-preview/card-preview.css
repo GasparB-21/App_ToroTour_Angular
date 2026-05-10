@@ -42,7 +42,8 @@
     padding-top: 5px;
     margin: 4px;
     /*Apariencia*/
-    color: var(--ui-black);
+    color: var(--ui-darker-grey);
+    font-weight: 700;
     font-size: 16px;
     white-space: nowrap;
     overflow: hidden;
