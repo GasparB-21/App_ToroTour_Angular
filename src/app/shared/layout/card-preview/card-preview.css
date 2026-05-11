@@ -7,7 +7,8 @@
     padding: 16px 18px;
     z-index: 1500;
     /*Apariencia*/
-    background: var(--background-color);
+    /*background: var(--background-color);*/
+    background: var(--tabbar-active);
     border-radius: 28px 28px 0 0;
     box-shadow: 0 -4px 15px rgba(0,0,0,0.75);
     border: 1px solid var(--ui-black);
@@ -42,7 +43,7 @@
     padding-top: 5px;
     margin: 4px;
     /*Apariencia*/
-    color: var(--ui-darker-grey);
+    color: var(--ui-black);
     font-weight: 700;
     font-size: 16px;
     white-space: nowrap;
@@ -54,7 +55,8 @@
 .btn-ver-detalles {
     padding: 12px 20px;
     /*Apariencia*/
-    background-color: var(--tabbar-active);
+    /*background-color: var(--tabbar-active);*/
+    background: var(--background-color);
     color: var(--ui-white);
     border-radius: 12px;
     text-decoration: none;

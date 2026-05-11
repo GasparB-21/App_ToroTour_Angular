@@ -2,7 +2,8 @@
     <div class="event-card__image" aria-hidden="true">
         <img [src]="evento().imagen || 'assets/images/event-placeholder.jpg'" 
             [alt]="'Imagen de ' + evento().titulo"
-            loading="lazy">
+            loading="lazy"
+            (error)="onImgError($event)">
     </div>
   
     <div class="event-card__content">

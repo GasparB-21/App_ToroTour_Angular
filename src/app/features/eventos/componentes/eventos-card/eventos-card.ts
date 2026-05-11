@@ -17,4 +17,9 @@ export class EventosCard {
 
   actualizarFavorito(){ this._servicioEventos.actualizarFavorito(this.evento()) }
 
+  onImgError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.src = 'images/placeholder.png';
+  }
+
 }
