@@ -22,8 +22,9 @@
       </section>
   
       <section class="main-visual-container">
-        <img [src]="evento()?.imagen"
-             [alt]="evento()?.titulo" 
+        <img [src]="evento()?.imagen || 'images/placeholder.png'"
+             [alt]="evento()?.titulo"
+             (error)="onImgError($event)" 
              class="event-image-fit" />
       </section>
 
