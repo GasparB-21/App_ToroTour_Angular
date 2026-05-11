@@ -38,4 +38,9 @@ export class DetalleEvento {
       console.error('El evento no puede añadirse a favoritos');
     }
   }
+
+  onImgError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    img.src = 'images/placeholder.png';
+  }
 }
